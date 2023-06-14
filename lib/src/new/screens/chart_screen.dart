@@ -1,0 +1,246 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:mindway/src/auth/time/select_time_screen.dart';
+import 'package:mindway/src/new/screens/gender_screen.dart';
+import 'package:mindway/src/new/util.dart';
+import 'package:mindway/widgets/custom_async_btn.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
+import 'package:wakelock/wakelock.dart';
+
+import '../../auth/time/select_time_screen_new.dart';
+
+class ChartScreen extends StatefulWidget {
+  @override
+  State<ChartScreen> createState() => _ChartScreenState();
+}
+
+class _ChartScreenState extends State<ChartScreen> {
+  TextEditingController nameController = TextEditingController();
+
+  VideoPlayerController? _controller;
+  bool isFinished = false;
+
+  String userName = "";
+  @override
+  void initState() {
+    getUserName();
+    super.initState();
+    Wakelock.enable();
+    _controller =
+        VideoPlayerController.asset("assets/videos/chart_animation.mp4")
+          ..initialize().then((_) {
+            _controller?.play();
+            _controller?.setLooping(false);
+            setState(() {});
+            Future.delayed(const Duration(milliseconds: 3000), () {
+              setState(() {
+                isFinished = true;
+              });
+            });
+          });
+  }
+
+  getUserName() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      userName = sharedPreferences.getString("username")!;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double deviceHeight = MediaQuery.of(context).size.height;
+    return Scaffold(
+        body: Container(
+      height: deviceHeight,
+      width: MediaQuery.of(context).size.width,
+      color: const Color(0xff9BB9EB),
+      child: Container(
+        color: const Color(0xff9BB9EB),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Align(
+              //   alignment: Alignment.topLeft,
+              //   child: InkWell(
+              //     onTap: () {
+              //       Navigator.of(context).pop();
+              //     },
+              //     child: const Padding(
+              //       padding: EdgeInsets.all(10.0),
+              //       child: Text(
+              //         "Back",
+              //         style: TextStyle(fontSize: 20, color: Colors.white),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              const SizedBox(
+                height: 50,
+              ),
+
+              Stack(
+                children: [
+                  SizedBox(
+                      height: deviceHeight / 2 + 50,
+                      child: SizedBox.expand(
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: SizedBox(
+                            width: _controller?.value.size.width ?? 0,
+                            height: _controller?.value.size.height ?? 0,
+                            child: VideoPlayer(_controller!),
+                            //child: Image.network("$imgAndAudio/${sessionDetails.image}"),
+                          ),
+                        ),
+                      )),
+                  const Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 0),
+                      child: Center(
+                        child: Text(
+                          "Your personal plan is\nready!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: Center(
+                        child: Text(
+                          "Your journey is about\nto begin",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Image(
+                      image: AssetImage("assets/images/tick.png"),
+                      width: 16,
+                      height: 16,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Find more self-compassion",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Image(
+                      image: AssetImage("assets/images/tick.png"),
+                      width: 16,
+                      height: 16,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Gain insight to your emotions",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Image(
+                      image: AssetImage("assets/images/tick.png"),
+                      width: 16,
+                      height: 16,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Sleep better at night ",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: CustomAsyncBtn(
+                    btnTxt: isFinished ? "Continue" : "Preparing...",
+                    onPress: () {
+                      isFinished
+                          ? Get.toNamed(SelectTimeAndDayToNotifyNew.routeName)
+                          : null;
+                    }),
+              )
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
+}

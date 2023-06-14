@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "763790031863",
+    "project_id": "mindway-3dfb5",
+    "storage_bucket": "mindway-3dfb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763790031863:android:bf593f57670f6bd17a0cf2",
+        "android_client_info": {
+          "package_name": "com.appmindway.mindway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763790031863-1s2vj0u61jq0mjecvb765oli7ml8utrq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR4Nsdc3q9T5M0MllJh1r88G2MoKFKmUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763790031863-1s2vj0u61jq0mjecvb765oli7ml8utrq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763790031863-8ubslu952bu2deahr1rlmr55dl789h1u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.restncode.mindway"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763790031863:android:5e7733b34bd4b0257a0cf2",
+        "android_client_info": {
+          "package_name": "com.restncode.mindway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763790031863-09negt4ogapmgqsoh0n3p9nd0lpmjk3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.restncode.mindway",
+            "certificate_hash": "25d9a744455af6ccf520528f5ae80c43bfb1e506"
+          }
+        },
+        {
+          "client_id": "763790031863-1fah4ccrle304bgaqqe4bc9cfg8j7q7s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.restncode.mindway",
+            "certificate_hash": "8b56d92687462cbae7788f804316d962fc6ca8b1"
+          }
+        },
+        {
+          "client_id": "763790031863-e01r1k0k0mrpn40tbconjhkvkn0dph5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.restncode.mindway",
+            "certificate_hash": "620050531690d9487a6a92ef3831e6b72094232b"
+          }
+        },
+        {
+          "client_id": "763790031863-j3iusj9tt3t20virnif0b0134k622d9c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.restncode.mindway",
+            "certificate_hash": "9666de736ea038488374c01624f845790dd5cada"
+          }
+        },
+        {
+          "client_id": "763790031863-1s2vj0u61jq0mjecvb765oli7ml8utrq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR4Nsdc3q9T5M0MllJh1r88G2MoKFKmUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763790031863-1s2vj0u61jq0mjecvb765oli7ml8utrq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763790031863-8ubslu952bu2deahr1rlmr55dl789h1u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.restncode.mindway"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

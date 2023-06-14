@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>763790031863-i97fdlp9vb1hulk7g36oo0caqdatao02.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.763790031863-i97fdlp9vb1hulk7g36oo0caqdatao02</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>763790031863-09negt4ogapmgqsoh0n3p9nd0lpmjk3s.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA9xMEvwes6f821cY0eR0ftjE9jjCC4VmY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>763790031863</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.appmindway.mindway</string>
+	<key>PROJECT_ID</key>
+	<string>mindway-3dfb5</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mindway-3dfb5.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:763790031863:ios:4c31e1f315b1c99c7a0cf2</string>
+</dict>
+</plist>
