@@ -36,7 +36,6 @@ class _SplashScreenState extends State<SplashScreen> {
         setState(() {});
       });
        _controller!.addListener(() {
-
       if (_controller!.value.position == _controller!.value.duration) {
         // video has finished playing
         FirebaseAuth.instance.currentUser == null ?Get.offNamed(EntryScreen.routeName) : Get.offNamed(MainScreen.routeName);

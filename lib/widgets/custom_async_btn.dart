@@ -51,7 +51,7 @@ class CustomAsyncBtn extends StatelessWidget {
               elevation: MaterialStateProperty.all(0.0),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(borderRadius),
+                  borderRadius: BorderRadius.circular(90),
                 ),
               ),
             ),

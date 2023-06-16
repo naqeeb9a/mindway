@@ -16,39 +16,43 @@ class WelcomeScreen extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       color: backgroundColorDark,
       child: Container(
-        color: backgroundColorWhite,
+        color: backgroundColorLight,
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Container(
-              //   color: kPrimaryColor,
-              //   height: 50,
-              // ),
-              // InkWell(
-              //   onTap: () {
-              //     Navigator.of(context).pop();
-              //   },
-              //   child: const Padding(
-              //     padding: EdgeInsets.all(10.0),
-              //     child: Text(
-              //       "Back",
-              //       style: TextStyle(fontSize: 20, color: Colors.black),
-              //     ),
-              //   ),
-              // ),
-              const SizedBox(
-                height: 140,
+              Container(
+                color: kPrimaryColor,
+                height: 50,
               ),
-
+              Stack(
+                children: [
+                  Image.asset("assets/images/welcome_background.png"),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Text(
+                        "Back",
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               const Text(
-                "What do your friends \ncall you?",
+                "What's your name?",
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                    color: Colors.white),
               ),
               const SizedBox(
-                height: 40,
+                height: 10,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
@@ -74,7 +78,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 60,
+                height: 50,
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),

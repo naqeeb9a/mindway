@@ -6,6 +6,8 @@ import 'package:mindway/src/new/util.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Experience_With_Mediation.dart';
+
 class GenderScreen extends StatefulWidget {
   @override
   State<GenderScreen> createState() => _GenderScreenState();
@@ -55,7 +57,7 @@ class _GenderScreenState extends State<GenderScreen> {
       width: MediaQuery.of(context).size.width,
       color: backgroundColorDark,
       child: Container(
-        color: backgroundColorLight,
+        color: backgroundColorWhite,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -72,7 +74,7 @@ class _GenderScreenState extends State<GenderScreen> {
                     padding: EdgeInsets.all(10.0),
                     child: Text(
                       "Back",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
                 ),
@@ -87,7 +89,7 @@ class _GenderScreenState extends State<GenderScreen> {
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
               ),
               const Padding(
@@ -98,7 +100,7 @@ class _GenderScreenState extends State<GenderScreen> {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
               ),
               const SizedBox(
@@ -163,7 +165,11 @@ class _GenderScreenState extends State<GenderScreen> {
                 child: CustomAsyncBtn(
                     btnTxt: "Continue",
                     onPress: () {
-                      Get.toNamed(ChooseScreen.routeName);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  ExperienceWithMediation()),
+                      );
+                    //  Get.toNamed(ChooseScreen.routeName);
                     }),
               )
             ],

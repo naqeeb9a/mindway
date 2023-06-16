@@ -60,6 +60,7 @@ dependencies:
   flutter_calendar_widget: ^0.0.2
   form_builder_image_picker: ^3.1.0
   flutter_time_picker_spinner: ^2.0.0
+  google_fonts: ^3.0.1
 
 
   # Firebase Packages

@@ -101,16 +101,17 @@ class MyApp extends StatelessWidget {
     if (firstRun == null) {
       print('First time 1');
       route = SplashScreen.routeName;
-    } else {
-
-      if (FirebaseAuth.instance.currentUser == null) {
-        print('Not login user 2');
-        route = EntryScreen.routeName;
-      } else {
-        print(' login user 3');
-        route = MainScreen.routeName;
-
-      }
+    }
+    else {
+      route = SplashScreen.routeName;
+      // if (FirebaseAuth.instance.currentUser == null) {
+      //   print('Not login user 2');
+      //   route = EntryScreen.routeName;
+      // } else {
+      //   print(' login user 3');
+      //   route = MainScreen.routeName;
+      //
+      // }
     }
 
     return route;

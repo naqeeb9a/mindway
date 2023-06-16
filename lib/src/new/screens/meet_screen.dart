@@ -29,12 +29,13 @@ class _MeetScreenState extends State<MeetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         body: Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       color: backgroundColorDark,
       child: Container(
-        color: backgroundColorLight,
+        color: backgroundColorWhite,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -55,7 +56,7 @@ class _MeetScreenState extends State<MeetScreen> {
                       padding: EdgeInsets.all(10.0),
                       child: Text(
                         "Back",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        style: TextStyle(fontSize: 20, color: Colors.black),
                       ),
                     ),
                   ),
@@ -68,7 +69,7 @@ class _MeetScreenState extends State<MeetScreen> {
                   style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
               ),
               const Padding(
@@ -79,7 +80,7 @@ class _MeetScreenState extends State<MeetScreen> {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
               ),
               const SizedBox(
@@ -89,6 +90,7 @@ class _MeetScreenState extends State<MeetScreen> {
                 padding: const EdgeInsets.all(20.0),
                 child: CustomAsyncBtn(
                     btnTxt: "Continue",
+
                     onPress: () {
                       Navigator.push(
                         context,
