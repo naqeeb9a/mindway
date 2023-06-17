@@ -17,12 +17,12 @@ class ChooseScreen extends StatefulWidget {
 
 class _ChooseScreenState extends State<ChooseScreen> {
   final List<String> _list = [
-    'assets/images/1.png',
-    'assets/images/2.png',
-    'assets/images/3.png',
-    'assets/images/4.png',
-    'assets/images/5.png',
-    'assets/images/6.png',
+    'assets/images/emoji1.png',
+    'assets/images/emoji2.png',
+    'assets/images/emoji3.png',
+    'assets/images/emoji4.png',
+    'assets/images/emoji5.png',
+    'assets/images/emoji6.png',
   ];
 
   final Map<String, bool> _selectedItem = {};
@@ -55,16 +55,17 @@ class _ChooseScreenState extends State<ChooseScreen> {
         },
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/choose_bg.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
+
+
         child: SafeArea(
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             children: [
+              Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: LinearProgressIndicator(
+                    value: 0.70,
+                  )),
               Align(
                 alignment: Alignment.topLeft,
                 child: InkWell(
@@ -85,11 +86,21 @@ class _ChooseScreenState extends State<ChooseScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${userName!}, What do you need',
-                        style: kTitleStyle.copyWith(color: Colors.white)),
-                    Text('to improve',
-                        style:
-                            kTitleStyle.copyWith(color: Colors.blue.shade900)),
+                    Text('${userName!}, Choose Your Main Goal',
+                        style: kTitleStyle.copyWith(color: Colors.black,fontSize: 29)),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, bottom: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Text('To help creat your daily pain',
+                          style: kTitleStyle.copyWith(color: Colors.black,fontSize: 20)),
+                    ),
+
                   ],
                 ),
               ),
@@ -108,19 +119,25 @@ class _ChooseScreenState extends State<ChooseScreen> {
                             }
                             setState(() {});
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(image: AssetImage(e)),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20.0)),
-                              boxShadow: (_selectedItem[e] ?? false) == true
-                                  ? [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        blurRadius: 8.0,
-                                      ),
-                                    ]
-                                  : [],
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height:  95,
+                              width: 151,
+                              decoration: BoxDecoration(
+                                color: Color(0xffDAE1F2),
+                                image: DecorationImage(image: AssetImage(e)),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(20.0)),
+                                boxShadow: (_selectedItem[e] ?? false) == true
+                                    ? [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          blurRadius: 8.0,
+                                        ),
+                                      ]
+                                    : [],
+                              ),
                             ),
                           ),
                         ),

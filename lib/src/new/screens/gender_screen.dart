@@ -83,7 +83,7 @@ class _GenderScreenState extends State<GenderScreen> {
               Container(
                   padding: EdgeInsets.all(20.0),
                   child: LinearProgressIndicator(
-                    value: 0.40,
+                    value: 0.43,
                   )),
               const SizedBox(
                 height: 50,

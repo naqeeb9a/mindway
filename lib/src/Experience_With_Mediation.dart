@@ -83,7 +83,7 @@ class _ExperienceWithMediationState extends State<ExperienceWithMediation> {
               Container(
                   padding: EdgeInsets.all(20.0),
                   child: LinearProgressIndicator(
-                    value: 0.55,
+                    value: 0.58,
                   )),
               SizedBox(
                 height: 30,
@@ -112,9 +112,9 @@ class _ExperienceWithMediationState extends State<ExperienceWithMediation> {
                   child: selected
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
+                          children: const [
                             Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
+                              padding: EdgeInsets.only(left: 8.0),
                               child: Text(
                                 'None, I’m a newbie!',
                                 style: TextStyle(
@@ -124,7 +124,7 @@ class _ExperienceWithMediationState extends State<ExperienceWithMediation> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                              padding: EdgeInsets.only(left: 15.0),
                               child: Icon(
                                 Icons.check,
                                 color: Colors.white,
@@ -137,7 +137,7 @@ class _ExperienceWithMediationState extends State<ExperienceWithMediation> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 45.0),
                             child: Text(
-                              'None, I’m a newbie!',
+                              'Tried it once or twice',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 17,
@@ -165,7 +165,7 @@ class _ExperienceWithMediationState extends State<ExperienceWithMediation> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
-                                'None, I’m a newbie!',
+                                'Meditate Occasionally',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 17,
@@ -186,7 +186,7 @@ class _ExperienceWithMediationState extends State<ExperienceWithMediation> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 45.0),
                             child: Text(
-                              'None, I’m a newbie!',
+                              'Meditate Everyday',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 17,

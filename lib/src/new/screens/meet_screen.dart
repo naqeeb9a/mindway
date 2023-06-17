@@ -61,7 +61,7 @@ class _MeetScreenState extends State<MeetScreen> {
               Container(
                   padding: EdgeInsets.all(20.0),
                   child: LinearProgressIndicator(
-                    value: 0.25,
+                    value: 0.28,
                   )),
               Stack(
                 children: [
