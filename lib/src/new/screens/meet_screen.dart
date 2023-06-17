@@ -38,30 +38,41 @@ class _MeetScreenState extends State<MeetScreen> {
         color: backgroundColorWhite,
         child: SingleChildScrollView(
           child: Column(
+
             children: [
               const SizedBox(
                 height: 50,
               ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 325.0),
+                  child: Text(
+                    "Back",
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: LinearProgressIndicator(
+                    value: 0.25,
+                  )),
               Stack(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(50.0),
                     child: Image.asset("assets/images/meet_you_background.png"),
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(
-                        "Back",
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                      ),
-                    ),
-                  ),
+
                 ],
               ),
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text(

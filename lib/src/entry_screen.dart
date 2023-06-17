@@ -57,9 +57,9 @@ child: Column(
     SizedBox(
       height: 100,
     ),
-    Container (
-     child: Image.asset('assets/images/Cloud.png'),
-    ),
+    // Container (
+    //  child: Image.asset('assets/images/Cloud.png'),
+    // ),
 Container (
   height: 300,
   child: Image.asset('assets/images/main-image.png'),

@@ -64,6 +64,7 @@ class _GenderScreenState extends State<GenderScreen> {
               const SizedBox(
                 height: 50,
               ),
+
               Align(
                 alignment: Alignment.topLeft,
                 child: InkWell(
@@ -73,12 +74,17 @@ class _GenderScreenState extends State<GenderScreen> {
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Text(
-                      "Back",
+                      "   Back",
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
                 ),
               ),
+              Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: LinearProgressIndicator(
+                    value: 0.40,
+                  )),
               const SizedBox(
                 height: 50,
               ),

@@ -1,247 +1,318 @@
 import 'package:flutter/material.dart';
+import 'package:mindway/src/new/util.dart';
 import 'package:mindway/utils/textfield.dart';
+
+import '../widgets/custom_async_btn.dart';
+import 'auth/choose_screen.dart';
+
 class ExperienceWithMediation extends StatefulWidget {
   static const String routeName1 = "/experience_with_mediation";
+
   const ExperienceWithMediation({Key? key}) : super(key: key);
 
   @override
-  State<ExperienceWithMediation> createState() => _ExperienceWithMediationState();
+  State<ExperienceWithMediation> createState() =>
+      _ExperienceWithMediationState();
 }
 
 class _ExperienceWithMediationState extends State<ExperienceWithMediation> {
+  bool selected = false;
+  bool selected1 = false;
+  bool selected2 = false;
+  bool selected3 = false;
+
+
+  void toggleSelection() {
+    setState(() {
+      selected = !selected;
+
+    });
+  }
+  void toggleSelection1() {
+    setState(() {
+
+      selected1 = !selected1;
+
+    });
+  }
+  void toggleSelection2() {
+    setState(() {
+
+      selected2 = !selected2;
+
+    });
+  }
+  void toggleSelection3() {
+    setState(() {
+
+      selected3 = !selected3;
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    double baseWidth = 377;
-    double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
-    return Container(
-      width: double.infinity,
+    return Scaffold(
+        body: Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      color: backgroundColorDark,
       child: Container(
-        // frame19Li (4:855)
-        width: double.infinity,
-        height: 861*fem,
-        decoration: BoxDecoration (
-          color: Color(0xffffffff),
-        ),
-        child: Stack(
-          children: [
-
-            Positioned(
-              // whatsyourexperiencewithmediati (4:829)
-              left: 75.5*fem,
-              top: 174*fem,
-              child: Align(
-                child: SizedBox(
-                  width: 223*fem,
-                  height: 123*fem,
-                  child: Text(
-                    'What’s Your \nExperience With Mediation? ',
-                    textAlign: TextAlign.center,
-                    style: SafeGoogleFont (
-                      'Anteb',
-                      fontSize: 33*ffem,
-                      fontWeight: FontWeight.w400,
-                      height: 1.2424242424*ffem/fem,
-                      letterSpacing: 0.1221000016*fem,
-                      color: Color(0xff454545),
+        color: backgroundColorWhite,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      "   Back",
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              // buttontTx (4:833)
-              left: 15*fem,
-              top: 632*fem,
-              child: Container(
-                width: 343*fem,
-                height: 56*fem,
-                decoration: BoxDecoration (
-                  color: Color(0xff688edc),
-                  borderRadius: BorderRadius.circular(90*fem),
-                ),
-                child: Center(
-                  child: Text(
-                    'Continue',
-                    textAlign: TextAlign.center,
-                    style: SafeGoogleFont (
-                      'Anteb',
-                      fontSize: 17*ffem,
-                      fontWeight: FontWeight.w400,
-                      height: 1.2941176471*ffem/fem,
-                      letterSpacing: 0.068000001*fem,
-                      color: Color(0xffffffff),
-                    ),
-                  ),
+              Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: LinearProgressIndicator(
+                    value: 0.55,
+                  )),
+              SizedBox(
+                height: 30,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  "    What’s Your \nExperience With \n      Mediation? ",
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
               ),
-            ),
-            Positioned(
-              // button7bc (4:836)
-              left: 16*fem,
-              top: 545*fem,
-              child: Container(
-                padding: EdgeInsets.fromLTRB(17*fem, 17*fem, 17*fem, 17*fem),
-                width: 343*fem,
-                height: 56*fem,
-                decoration: BoxDecoration (
-                  color: Color(0xffdae1f2),
-                  borderRadius: BorderRadius.circular(8*fem),
-                ),
+              SizedBox(
+                height: 30,
+              ),
+              GestureDetector(
+                onTap: toggleSelection,
                 child: Container(
-                  // contentbFt (I4:836;120:24)
-                  padding: EdgeInsets.fromLTRB(0*fem, 0*fem, 2.74*fem, 0*fem),
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        // learnmoreWNr (I4:836;120:25)
-                        margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 139.74*fem, 0*fem),
-                        child: Text(
-                          'Meditate Everyday',
-                          style: SafeGoogleFont (
-                            'DM Sans',
-                            fontSize: 17*ffem,
-                            fontWeight: FontWeight.w500,
-                            height: 1.2941176471*ffem/fem,
-                            letterSpacing: 0.068000001*fem,
-                            color: Color(0xff3c3c3c),
+                  height: 56,
+                  width: 343,
+                  decoration: BoxDecoration(
+                      color: selected ? Color(0xff688EDC) : Color(0xffDAE1F2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: selected
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                'None, I’m a newbie!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 45.0),
+                            child: Text(
+                              'None, I’m a newbie!',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        // checkmarkCWa (I4:836;120:26)
-                        margin: EdgeInsets.fromLTRB(0*fem, 0.26*fem, 0*fem, 0*fem),
-                        width: 14.52*fem,
-                        height: 10.11*fem,
-                        child: Image.asset(
-                          'assets/page-1/images/checkmark-T34.png',
-                          width: 14.52*fem,
-                          height: 10.11*fem,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
-            ),
-            Positioned(
-              // buttonWnA (4:837)
-              left: 16*fem,
-              top: 473*fem,
-              child: Container(
-                padding: EdgeInsets.fromLTRB(17*fem, 17*fem, 17*fem, 17*fem),
-                width: 343*fem,
-                height: 56*fem,
-                decoration: BoxDecoration (
-                  color: Color(0xffdae1f2),
-                  borderRadius: BorderRadius.circular(8*fem),
-                ),
-                child: Container(
-                  // contentzxE (I4:837;120:24)
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Text(
-                    'Meditate Occasionally',
-                    style: SafeGoogleFont (
-                      'DM Sans',
-                      fontSize: 17*ffem,
-                      fontWeight: FontWeight.w500,
-                      height: 1.2941176471*ffem/fem,
-                      letterSpacing: 0.068000001*fem,
-                      color: Color(0xff3c3c3c),
-                    ),
-                  ),
-                ),
+              SizedBox(
+                height: 20,
               ),
-            ),
-            Positioned(
-              // button6Ea (4:838)
-              left: 16*fem,
-              top: 401*fem,
-              child: Container(
-                padding: EdgeInsets.fromLTRB(17*fem, 17*fem, 17*fem, 17*fem),
-                width: 343*fem,
-                height: 56*fem,
-                decoration: BoxDecoration (
-                  color: Color(0xffdae1f2),
-                  borderRadius: BorderRadius.circular(8*fem),
-                ),
+              GestureDetector(
+                onTap: toggleSelection1,
                 child: Container(
-                  // contentavS (I4:838;120:24)
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Text(
-                    'Tried it once or twice',
-                    style: SafeGoogleFont (
-                      'DM Sans',
-                      fontSize: 17*ffem,
-                      fontWeight: FontWeight.w500,
-                      height: 1.2941176471*ffem/fem,
-                      letterSpacing: 0.068000001*fem,
-                      color: Color(0xff3c3c3c),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              // buttontgE (4:839)
-              left: 16*fem,
-              top: 329*fem,
-              child: Container(
-                padding: EdgeInsets.fromLTRB(17*fem, 17*fem, 17*fem, 17*fem),
-                width: 343*fem,
-                height: 56*fem,
-                decoration: BoxDecoration (
-                  color: Color(0xff688edc),
-                  borderRadius: BorderRadius.circular(8*fem),
-                ),
-                child: Container(
-                  // contentnWi (I4:839;120:24)
-                  padding: EdgeInsets.fromLTRB(0*fem, 0*fem, 2.74*fem, 0*fem),
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        // learnmorev78 (I4:839;120:25)
-                        margin: EdgeInsets.fromLTRB(0*fem, 0*fem, 135.74*fem, 0*fem),
-                        child: Text(
-                          'None, I’m a newbie!',
-                          style: SafeGoogleFont (
-                            'DM Sans',
-                            fontSize: 17*ffem,
-                            fontWeight: FontWeight.w500,
-                            height: 1.2941176471*ffem/fem,
-                            letterSpacing: 0.068000001*fem,
-                            color: Color(0xffffffff),
+                  height: 56,
+                  width: 343,
+                  decoration: BoxDecoration(
+                      color: selected1 ? Color(0xff688EDC) : Color(0xffDAE1F2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: selected1
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                'None, I’m a newbie!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 45.0),
+                            child: Text(
+                              'None, I’m a newbie!',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        // checkmark2fx (I4:839;120:26)
-                        margin: EdgeInsets.fromLTRB(0*fem, 0.26*fem, 0*fem, 0*fem),
-                        width: 14.52*fem,
-                        height: 10.11*fem,
-                        child: Image.asset(
-                          'assets/page-1/images/checkmark.png',
-                          width: 14.52*fem,
-                          height: 10.11*fem,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: toggleSelection2,
+                child: Container(
+                  height: 56,
+                  width: 343,
+                  decoration: BoxDecoration(
+                      color: selected2 ? Color(0xff688EDC) : Color(0xffDAE1F2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: selected2
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                'None, I’m a newbie!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 45.0),
+                            child: Text(
+                              'None, I’m a newbie!',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: toggleSelection3,
+                child: Container(
+                  height: 56,
+                  width: 343,
+                  decoration: BoxDecoration(
+                      color: selected3 ? Color(0xff688EDC) : Color(0xffDAE1F2),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: selected3
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                'None, I’m a newbie!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 45.0),
+                            child: Text(
+                              'None, I’m a newbie!',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: CustomAsyncBtn(
+                    btnTxt: "Continue",
+                    onPress: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  ChooseScreen()),
+                      );
+                      //  Get.toNamed(ChooseScreen.routeName);
+                    }),
+              )
+            ],
+          ),
         ),
       ),
-    );
+    ));
   }
 }

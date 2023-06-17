@@ -5,8 +5,16 @@ import 'package:mindway/utils/constants.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+
+
   TextEditingController nameController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +47,11 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 140,
               ),
+              Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: LinearProgressIndicator(
+                    value: 0.1,
+                  )),
 
               const Text(
                 "What do your friends \ncall you?",
