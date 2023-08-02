@@ -21,7 +21,8 @@ import 'package:mindway/widgets/calender_widget.dart';
 import '../../../utils/firebase_collections.dart';
 import '../../home/models/home_emoji.dart';
 import '../add_note_screen.dart';
-
+import 'package:table_calendar/table_calendar.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 class EmotionTrackerScreen extends StatefulWidget {
   static const String routeName = '/emotion-tracker';
 
@@ -159,7 +160,7 @@ class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
       }
     });
   }
-
+  DateTime selectedDay = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,23 +170,29 @@ class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
       body: ListView(
         children: [
           const SizedBox(height: 20.0),
-          FlutterCalendar(
-            selectionMode: CalendarSelectionMode.single,
-            calendarBuilder: CustomCalenderBuilder(),
-            onDayPressed: (selectedDate) {
-              debugPrint("Notes selectedDate " + selectedDate.toString());
-              displayDate = DateFormat('EEEE, MMMM dd').format(selectedDate);
-              date = DateFormat('dd-MM-yyyy').format(selectedDate);
-              getTodayNotes(date);
-              getFeelfromFirebase(selectedDate);
-              getFactorfromFirebase(selectedDate);
-              getMoodFromFirebase(selectedDate);
-              this.selectedDate = selectedDate;
-              // if (dateOnly(today: date) == dateOnly(today: DateTime.now())) {
-              // Get.toNamed(EmotionScreen.routeName);
-              // }
-            },
+          // FlutterCalendar(
+          //   maxDate: DateTime.now().subtract(Duration(days: 1)),
+          //   minDate: DateTime(2100),
+          //   selectionMode: CalendarSelectionMode.single,
+          //   calendarBuilder: CustomCalenderBuilder(),
+          //   onDayPressed: (selectedDate) {
+          //     debugPrint("Notes selectedDate " + selectedDate.toString());
+          //     displayDate = DateFormat('EEEE, MMMM dd').format(selectedDate);
+          //     date = DateFormat('dd-MM-yyyy').format(selectedDate);
+          //     getTodayNotes(date);
+          //     getFeelfromFirebase(selectedDate);
+          //     getFactorfromFirebase(selectedDate);
+          //     getMoodFromFirebase(selectedDate);
+          //     this.selectedDate = selectedDate;
+          //     // if (dateOnly(today: date) == dateOnly(today: DateTime.now())) {
+          //     // Get.toNamed(EmotionScreen.routeName);
+          //     // }
+          //   },
+          // ),
+          SfDateRangePicker(
+            enablePastDates: false,
           ),
+
           const Divider(thickness: 2.0, indent: 10.0, endIndent: 10.0),
           GetBuilder<JourneyController>(
             builder: (journeyCtrl) {
