@@ -4,7 +4,7 @@ import 'package:mindway/src/subscription/utils/size_utils.dart';
 
 class CustomTextFormField extends StatelessWidget {
   CustomTextFormField(
-      {this.variant,
+      {super.key, this.variant,
       this.fontStyle,
       this.alignment,
       this.width,

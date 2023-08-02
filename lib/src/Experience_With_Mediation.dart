@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mindway/src/new/util.dart';
-import 'package:mindway/utils/textfield.dart';
 
+import '../utils/constants.dart';
 import '../widgets/custom_async_btn.dart';
 import 'auth/choose_screen.dart';
 
@@ -16,303 +16,295 @@ class ExperienceWithMediation extends StatefulWidget {
 }
 
 class _ExperienceWithMediationState extends State<ExperienceWithMediation> {
-  bool selected = false;
-  bool selected1 = false;
-  bool selected2 = false;
-  bool selected3 = false;
+  Color buttonColor = const Color(0xffD4E2FF); // Initial button color
 
+  int selectedContainerIndex = -1;
 
-  void toggleSelection() {
+  void toggleSelection(int containerIndex) {
     setState(() {
-      selected = !selected;
-
-    });
-  }
-  void toggleSelection1() {
-    setState(() {
-
-      selected1 = !selected1;
-
-    });
-  }
-  void toggleSelection2() {
-    setState(() {
-
-      selected2 = !selected2;
-
-    });
-  }
-  void toggleSelection3() {
-    setState(() {
-
-      selected3 = !selected3;
-
+      if (selectedContainerIndex == containerIndex) {
+        // Deselect the container if it's already selected
+        selectedContainerIndex = -1;
+      } else {
+        // Select the clicked container and deselect others
+        selectedContainerIndex = containerIndex;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      color: backgroundColorDark,
-      child: Container(
-        color: backgroundColorWhite,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 50,
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: backgroundColorDark,
+        child: Container(
+          color: backgroundColorWhite,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 100,
+                ),
+              Padding (
+                padding: const EdgeInsets.only(left: 12.0,right: 12),
+                child: Container(
+
+                    padding: const EdgeInsets.all(20.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5), // Set the desired radius
+
+                      child: const LinearProgressIndicator(
+
+                        minHeight: 6,
+                        value: 0.7,
+                      ),
+                    )),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pop();
+
+                const SizedBox(
+                  height: 75,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    "    What’s Your \nExperience With \n      Mediation? ",
+                    style: kBodyStyle.copyWith(fontSize: 30),
+                  ),
+                ),
+                const SizedBox(
+                  height: 33,
+                ),
+                GestureDetector(
+                  onTap: () {toggleSelection(0);
+
+                  setState(() {
+                    buttonColor = const Color(0xff688EDC);
+                   });
+
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(
-                      "   Back",
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                  child:
+                  Container(
+                    height: 56,
+                    width: 360,
+                    decoration: BoxDecoration(
+                      color: selectedContainerIndex == 0
+                          ? const Color(0xff688EDC)
+                          : const Color(0xffDAE1F2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: selectedContainerIndex == 0
+                        ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'None, I’m a newbie!',
+                            style: kBodyStyle.copyWith(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.white),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 15.0),
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    )
+                        : Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 45.0),
+                        child: Text(
+                          'None, I’m a newbie!',
+                          style: kBodyStyle.copyWith(fontSize: 17,fontWeight: FontWeight.w500),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                  padding: EdgeInsets.all(20.0),
-                  child: LinearProgressIndicator(
-                    value: 0.58,
-                  )),
-              SizedBox(
-                height: 30,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  "    What’s Your \nExperience With \n      Mediation? ",
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              GestureDetector(
-                onTap: toggleSelection,
-                child: Container(
-                  height: 56,
-                  width: 343,
-                  decoration: BoxDecoration(
-                      color: selected ? Color(0xff688EDC) : Color(0xffDAE1F2),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: selected
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                'None, I’m a newbie!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 15.0),
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 45.0),
-                            child: Text(
-                              'Tried it once or twice',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                              ),
-                            ),
+                GestureDetector(
+                  onTap: () {toggleSelection(1);
+
+                  setState(() {
+                    buttonColor = const Color(0xff688EDC);
+                  });
+
+                  },
+                  child: Container(
+                    height: 56,
+                    width: 360,
+                    decoration: BoxDecoration(
+                      color: selectedContainerIndex == 1
+                          ? const Color(0xff688EDC)
+                          : const Color(0xffDAE1F2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: selectedContainerIndex == 1
+                        ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'Tried it once or twice',
+                            style: kBodyStyle.copyWith(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.white),
                           ),
                         ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: toggleSelection1,
-                child: Container(
-                  height: 56,
-                  width: 343,
-                  decoration: BoxDecoration(
-                      color: selected1 ? Color(0xff688EDC) : Color(0xffDAE1F2),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: selected1
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                'Meditate Occasionally',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 45.0),
-                            child: Text(
-                              'Meditate Everyday',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                              ),
-                            ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 15.0),
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
                           ),
                         ),
+                      ],
+                    )
+                        : Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 45.0),
+                        child: Text(
+                          'Tried it once or twice',
+                          style: kBodyStyle.copyWith(fontSize: 17,fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: toggleSelection2,
-                child: Container(
-                  height: 56,
-                  width: 343,
-                  decoration: BoxDecoration(
-                      color: selected2 ? Color(0xff688EDC) : Color(0xffDAE1F2),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: selected2
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                'None, I’m a newbie!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 45.0),
-                            child: Text(
-                              'None, I’m a newbie!',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                              ),
-                            ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    toggleSelection(2);
+
+                  setState(() {
+                    buttonColor = const Color(0xff688EDC);
+                  });
+
+                  },
+                  child: Container(
+                    height: 56,
+                    width: 360,
+                    decoration: BoxDecoration(
+                      color: selectedContainerIndex == 2
+                          ? const Color(0xff688EDC)
+                          : const Color(0xffDAE1F2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: selectedContainerIndex == 2
+                        ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'Meditate Occasionally',
+                            style: kBodyStyle.copyWith(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.white),
                           ),
                         ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: toggleSelection3,
-                child: Container(
-                  height: 56,
-                  width: 343,
-                  decoration: BoxDecoration(
-                      color: selected3 ? Color(0xff688EDC) : Color(0xffDAE1F2),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: selected3
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                'None, I’m a newbie!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 45.0),
-                            child: Text(
-                              'None, I’m a newbie!',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                              ),
-                            ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 15.0),
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
                           ),
                         ),
+                      ],
+                    )
+                        : Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 45.0),
+                        child: Text(
+                          'Meditate Occasionally',
+                          style: kBodyStyle.copyWith(fontSize: 17,fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: CustomAsyncBtn(
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {toggleSelection(3);
+
+                  setState(() {
+                    buttonColor = const Color(0xff688EDC);
+                  });
+
+                  },
+                  child: Container(
+                    height: 56,
+                    width: 360,
+                    decoration: BoxDecoration(
+                      color: selectedContainerIndex == 3
+                          ? const Color(0xff688EDC)
+                          : const Color(0xffDAE1F2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: selectedContainerIndex == 3
+                        ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'Meditate Everyday',
+                            style: kBodyStyle.copyWith(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.white),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 15.0),
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    )
+                        : Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 45.0),
+                        child: Text(
+                          'Meditate Everyday',
+                          style: kBodyStyle.copyWith(fontSize: 17,fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: CustomAsyncBtn(
+                    btnColor: buttonColor,
                     btnTxt: "Continue",
                     onPress: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  ChooseScreen()),
+                        MaterialPageRoute(builder: (context) => const ChooseScreen()),
                       );
-                      //  Get.toNamed(ChooseScreen.routeName);
-                    }),
-              )
-            ],
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 }
+

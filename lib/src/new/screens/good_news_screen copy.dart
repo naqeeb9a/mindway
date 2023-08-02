@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:mindway/src/auth/time/select_time_screen.dart';
 import 'package:mindway/src/auth/time/select_time_screen_new.dart';
-import 'package:mindway/src/new/screens/gender_screen.dart';
 import 'package:mindway/src/new/util.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GoodNewsScreen extends StatefulWidget {
+  const GoodNewsScreen({super.key});
+
   @override
   State<GoodNewsScreen> createState() => _GoodNewsScreenState();
 }
@@ -58,12 +57,12 @@ class _GoodNewsScreenState extends State<GoodNewsScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Image(
                       image: AssetImage("assets/images/left.png"),
                       height: 30,
@@ -91,9 +90,9 @@ class _GoodNewsScreenState extends State<GoodNewsScreen> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   child: Text(
-                    "You are in the right place, \n${userName}",
+                    "You are in the right place, \n$userName",
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontSize: 25,

@@ -16,7 +16,7 @@ class FavControllerNew extends GetxController {
     recentCourseList = getRecentList();
     if (favCourseList != null) {
       for (FavoriteModel favoriteModel in favCourseList!) {
-        log('favCourseList ' + favCourseList!.first.image.toString());
+        log('favCourseList ${favCourseList!.first.image}');
       }
     }
 
@@ -32,6 +32,7 @@ class FavControllerNew extends GetxController {
       'audio': favoriteModel.audio,
       'image': favoriteModel.image,
       'color': favoriteModel.color,
+      'duration': favoriteModel.duration
     };
     String encodedJson = json.encode(data);
     List<String>? favList = sharedPreferences.getStringList('favnew');
@@ -61,6 +62,7 @@ class FavControllerNew extends GetxController {
       'audio': favoriteModel.audio,
       'image': favoriteModel.image,
       'color': favoriteModel.color,
+      'duration': favoriteModel.duration,
     };
     String encodedJson = json.encode(data);
     List<String>? favList = sharedPreferences.getStringList('favrecent');
@@ -113,6 +115,7 @@ class FavControllerNew extends GetxController {
       'audio': favoriteModel.audio,
       'image': favoriteModel.image,
       'color': favoriteModel.color,
+      'duration': favoriteModel.duration,
     };
     String encodedJson = json.encode(data);
     List<String>? favList = sharedPreferences.getStringList('favnew');

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mindway/src/home/controller/home_controller.dart';
-import 'package:mindway/src/journal/add_journal_screen.dart';
-import 'package:mindway/src/journal/controller/journal_controller.dart';
+import 'package:mindway/src/home/navigation_bar_journey.dart';
 import 'package:mindway/src/journey/add_note_screen.dart';
 import 'package:mindway/src/journey/journey_controller.dart';
 import 'package:mindway/src/journey/models/emotion.dart';
@@ -32,6 +31,7 @@ class EmotionScreen extends StatefulWidget {
 
 class _EmotionScreenState extends State<EmotionScreen> {
   final JourneyController _journeyCtrl = Get.find();
+  // final _tabCtrl = Get.put(TabScreenController());
   var notes;
   String displayDate = "";
   String date = "";
@@ -67,7 +67,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
   }
 
   getTodayNotes(sdate) async {
-    print("Notes TodayDate " + sdate.toString());
+    print("Notes TodayDate $sdate");
     await FirebaseService().getNoteByDate(sdate).then((value) {
       setState(() {
         noteModel = value;
@@ -105,10 +105,15 @@ class _EmotionScreenState extends State<EmotionScreen> {
             await _journeyCtrl.addFeelingEmojiList(widget.selectedDate);
             await _journeyCtrl.addEmotionTracker(widget.selectedDate);
             await _journeyCtrl.addFactor();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NavBarJourney()),
+            );
             if (widget.onCompleted != null) {
               widget.onCompleted();
             }
-            Get.back();
+
+
           },
         ),
       ),
@@ -213,7 +218,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
                             color: Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
+                            const BorderRadius.all(Radius.circular(10))),
                         child: Text(
                           todayNote.isEmpty ? "Add Note" : todayNote,
                           style: const TextStyle(fontSize: 15),
@@ -223,21 +228,21 @@ class _EmotionScreenState extends State<EmotionScreen> {
                   ],
                 )
 
-                // child: TextField(
-                //   controller: notesController,
-                //   decoration: InputDecoration(
-                //       enabled: false,
-                //       filled: true,
-                //       fillColor: Colors.white,
-                //       hintText: 'Add Note',
-                //       contentPadding: const EdgeInsets.all(15),
-                //       border: OutlineInputBorder(
-                //           borderRadius: BorderRadius.circular(10))),
-                //   onChanged: (value) {
-                //     // do something
-                //   },
-                // ),
-                ),
+              // child: TextField(
+              //   controller: notesController,
+              //   decoration: InputDecoration(
+              //       enabled: false,
+              //       filled: true,
+              //       fillColor: Colors.white,
+              //       hintText: 'Add Note',
+              //       contentPadding: const EdgeInsets.all(15),
+              //       border: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(10))),
+              //   onChanged: (value) {
+              //     // do something
+              //   },
+              // ),
+            ),
           ],
         ),
       ),
@@ -263,7 +268,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
               child: Row(
                 children: [
                   ...homeCtrl.emojiList.map(
-                    (e) {
+                        (e) {
                       return Row(
                         children: [
                           InkWell(
@@ -277,9 +282,9 @@ class _EmotionScreenState extends State<EmotionScreen> {
                                 border: Border.all(
                                   width: 4.0,
                                   color:
-                                      _journeyCtrl.selectedDayEmoji?.id == e.id
-                                          ? Colors.blue.shade700
-                                          : const Color(0xFFEAEDF4),
+                                  _journeyCtrl.selectedDayEmoji?.id == e.id
+                                      ? Colors.blue.shade700
+                                      : const Color(0xFFEAEDF4),
                                 ),
                                 borderRadius: BorderRadius.circular(50.0),
                               ),
@@ -353,10 +358,10 @@ class _EmotionScreenState extends State<EmotionScreen> {
                           horizontal: 8.0, vertical: 2.0),
                       decoration: BoxDecoration(
                         color: _journeyCtrl.selectedFeelEmoji.indexWhere(
-                                    (element) =>
-                                        element.id ==
-                                        _journeyCtrl.emojiList[i].id) >
-                                -1
+                                (element) =>
+                            element.id ==
+                                _journeyCtrl.emojiList[i].id) >
+                            -1
                             ? const Color(0xFF688EDC)
                             : const Color(0xFFEAEDF4),
                         borderRadius: BorderRadius.circular(30.0),
@@ -366,10 +371,10 @@ class _EmotionScreenState extends State<EmotionScreen> {
                         style: TextStyle(
                           fontSize: 13.0,
                           color: _journeyCtrl.selectedFeelEmoji.indexWhere(
-                                      (element) =>
-                                          element.id ==
-                                          _journeyCtrl.emojiList[i].id) >
-                                  -1
+                                  (element) =>
+                              element.id ==
+                                  _journeyCtrl.emojiList[i].id) >
+                              -1
                               ? Colors.white
                               : Colors.black,
                         ),

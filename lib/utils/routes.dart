@@ -1,30 +1,36 @@
 import 'package:get/get.dart';
+import 'package:mindway/my%20folder/paywall_intro.dart';
+import 'package:mindway/my%20folder/paywall_screen.dart';
 import 'package:mindway/src/account/controller/account_controller.dart';
 import 'package:mindway/src/account/upload_profile_pic_screen.dart';
 import 'package:mindway/src/auth/choose_screen.dart';
-import 'package:mindway/src/auth/time/select_time_screen.dart';
 import 'package:mindway/src/auth/time/select_time_screen_new.dart';
 import 'package:mindway/src/auth/views/login_screen.dart';
 import 'package:mindway/src/auth/views/signup_form_screen.dart';
 import 'package:mindway/src/auth/views/signup_screen.dart';
 import 'package:mindway/src/entry_screen.dart';
-import 'package:mindway/src/favourite/fav_controller.dart';
 import 'package:mindway/src/favourite/fav_controller_new.dart';
 import 'package:mindway/src/favourite/favourite_screen.dart';
 import 'package:mindway/src/home/controller/home_controller.dart';
+import 'package:mindway/src/home/views/home_audio_course_screen.dart';
+import 'package:mindway/src/home/views/home_audio_mediate_screen.dart';
 import 'package:mindway/src/home/views/home_audio_screen.dart';
+import 'package:mindway/src/home/views/home_audio_sleep_screen.dart';
 import 'package:mindway/src/journal/add_journal_screen.dart';
 import 'package:mindway/src/journal/controller/journal_controller.dart';
 import 'package:mindway/src/journey/journey_controller.dart';
 import 'package:mindway/src/journey/views/emotion_screen.dart';
 import 'package:mindway/src/journey/views/emotion_tracker_screen.dart';
 import 'package:mindway/src/main_screen.dart';
+
 import 'package:mindway/src/meditate/controller/meditate_controller.dart';
 import 'package:mindway/src/meditate/views/course_outline_screen.dart';
 import 'package:mindway/src/meditate/views/meditate_course_detail_screen.dart';
 import 'package:mindway/src/meditate/views/meditate_course_screen.dart';
 import 'package:mindway/src/music/controller/music_controller.dart';
 import 'package:mindway/src/music/music_screen.dart';
+import 'package:mindway/src/new/screens/chart_screen.dart';
+import 'package:mindway/src/new/screens/good_news_screen.dart';
 import 'package:mindway/src/onboarding/onboarding_screen1.dart';
 import 'package:mindway/src/onboarding/onboarding_screen2.dart';
 import 'package:mindway/src/player/course_meditate_audio_screen.dart';
@@ -48,7 +54,7 @@ final List<GetPage<dynamic>> routes = [
   ),
   GetPage(
     name: SplashScreenImage.routeName,
-    page: () => SplashScreenImage(),
+    page: () => const SplashScreenImage(),
   ),
   GetPage(
     name: EntryScreen.routeName,
@@ -107,7 +113,7 @@ final List<GetPage<dynamic>> routes = [
   ),
   GetPage(
     name: CourseOutlineScreen.routeName,
-    page: () => CourseOutlineScreen(),
+    page: () => const CourseOutlineScreen(),
   ),
   GetPage(
     name: CourseSessionAudioPlayerScreen.routeName,
@@ -124,6 +130,10 @@ final List<GetPage<dynamic>> routes = [
   GetPage(
     name: SleepDedicatedAudioPlayerScreen.routeName,
     page: () => const SleepDedicatedAudioPlayerScreen(),
+  ),
+  GetPage(
+    name: HomeAudioSleepScreen.routeName,
+    page: () => const HomeAudioSleepScreen(),
   ),
   GetPage(
     name: SingleAudioPlayerScreen.routeName,
@@ -153,11 +163,19 @@ final List<GetPage<dynamic>> routes = [
   ),
   GetPage(
     name: EmotionTrackerScreen.routeName,
-    page: () => EmotionTrackerScreen(),
+    page: () => const EmotionTrackerScreen(),
   ),
   GetPage(
     name: HomeAudioPlayerScreen.routeName,
-    page: () => HomeAudioPlayerScreen(),
+    page: () => const HomeAudioPlayerScreen(),
+  ),
+  GetPage(
+    name: HomeAudioMediateScreen.routeName,
+    page: () => const HomeAudioMediateScreen(),
+  ),
+  GetPage(
+    name: HomeCourseAudioPlayerScreen.routeName,
+    page: () => const HomeCourseAudioPlayerScreen(),
   ),
   GetPage(
     name: AddJournalScreen.routeName,
@@ -169,11 +187,11 @@ final List<GetPage<dynamic>> routes = [
   // Subscription Screens
   GetPage(
     name: SubscriptionScreen.routeName,
-    page: () => SubscriptionScreen(),
+    page: () => const SubscriptionScreen(),
   ),
   GetPage(
     name: SubscriptionOfferScreen.routeName,
-    page: () => SubscriptionOfferScreen(),
+    page: () => const SubscriptionOfferScreen(),
   ),
   GetPage(
     name: MusicScreen.routeName,
@@ -184,6 +202,22 @@ final List<GetPage<dynamic>> routes = [
   ),
   GetPage(
     name: MusicAudioPlayerScreen.routeName,
-    page: () => MusicAudioPlayerScreen(),
+    page: () => const MusicAudioPlayerScreen(),
+  ),
+  GetPage(
+    name: GoodNewsScreen1.routeName,
+    page: () => const GoodNewsScreen1(),
+  ),
+  GetPage(
+    name: ChartScreen.routeName,
+    page: () => const ChartScreen(),
+  ),
+  GetPage(
+    name: PayWallIntro.routeName,
+    page: () => const PayWallIntro(),
+  ),
+  GetPage(
+    name: PayWallScreen.routeName,
+    page: () => const PayWallScreen(),
   ),
 ];

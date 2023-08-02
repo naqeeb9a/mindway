@@ -21,13 +21,15 @@ class CustomCalenderBuilder extends CalendarBuilder {
     String locale,
   ) {
     final month = DateFormat.yMMMM(locale).format(dateTime);
-    return Row(
+    return
+      Row(
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 10.0),
           child: Text(
             month,
             style: textStyle.headerTextStyle,
+
           ),
         ),
         const Spacer(),
@@ -56,6 +58,7 @@ class CustomCalenderBuilder extends CalendarBuilder {
         buildDayText(
           dateTime,
           textStyle.dayOfWeekTextColor,
+
         ),
       ],
     );

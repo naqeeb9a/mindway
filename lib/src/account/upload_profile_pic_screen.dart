@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mindway/src/main_screen.dart';
@@ -59,7 +57,7 @@ class _UploadProfilePicScreenState extends State<UploadProfilePicScreen> {
               child: Image.asset('assets/images/profile_pic.png'),
             ),
             const SizedBox(height: 30.0),
-            Text('Welcome, ${userName}', style: kTitleStyle),
+            Text('Welcome, $userName', style: kTitleStyle),
             const SizedBox(height: 22.0),
             Text(
               'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit',

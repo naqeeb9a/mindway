@@ -11,6 +11,8 @@ class CustomInputField extends StatelessWidget {
     this.obscureText = false,
     this.isAutoFocus = false,
     this.suffixIcon,
+
+    
     Key? key,
   }) : super(key: key);
 
@@ -21,6 +23,8 @@ class CustomInputField extends StatelessWidget {
   final bool isAutoFocus;
   final Widget? suffixIcon;
 
+
+
   @override
   Widget build(BuildContext context) {
     return keyboardType == TextInputType.phone
@@ -30,7 +34,7 @@ class CustomInputField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: const TextStyle(fontSize: 14.0),
-              contentPadding: const EdgeInsets.only(left: 12.0, top: 12.0),
+              contentPadding: const EdgeInsets.only(left: 22.0, top: 12.0),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(kBorderRadius),
                 borderSide: BorderSide(

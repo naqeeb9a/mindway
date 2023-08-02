@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:mindway/src/favourite/fav_controller.dart';
 import 'package:mindway/src/favourite/fav_controller_new.dart';
 import 'package:mindway/src/player/favorite_audio_player_screen.dart';
-import 'package:mindway/src/subscription/utils/size_utils.dart';
-import 'package:mindway/utils/api.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/helper.dart';
 import 'package:mindway/widgets/cache_img_widget.dart';
@@ -79,9 +75,7 @@ class FavouiteScreen extends StatelessWidget {
                                               Text(
                                                 e.session!.isEmpty
                                                     ? e.course.toString()
-                                                    : e.course.toString() +
-                                                        " | " +
-                                                        e.session.toString(),
+                                                    : "${e.course} | ${e.session}",
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.w400,
@@ -232,9 +226,7 @@ class FavouiteScreen extends StatelessWidget {
                                               Text(
                                                 e.session!.isEmpty
                                                     ? e.course.toString()
-                                                    : e.course.toString() +
-                                                        " | " +
-                                                        e.session.toString(),
+                                                    : "${e.course} | ${e.session}",
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.w400,

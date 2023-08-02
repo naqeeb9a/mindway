@@ -1,9 +1,7 @@
-import 'dart:collection';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mindway/src/new/models/note_model.dart';
-import 'package:mindway/utils/app_theme.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:mindway/utils/firebase_collections.dart';
 
@@ -22,7 +20,7 @@ class AddNoteScreen extends StatelessWidget {
     notesController.text = notes;
     return Scaffold(
         body: Container(
-      color: Color(0xffEFEFEF),
+      color: const Color(0xffEFEFEF),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -40,7 +38,7 @@ class AddNoteScreen extends StatelessWidget {
               decoration: const InputDecoration(
                   enabled: true,
                   hintText: 'Add Note',
-                  contentPadding: const EdgeInsets.all(15),
+                  contentPadding: EdgeInsets.all(15),
                   border: InputBorder.none),
               onChanged: (value) {
                 text = value;

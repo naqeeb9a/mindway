@@ -11,3 +11,13 @@ void displayToastMessage(text) {
     fontSize: 16.0,
   );
 }
+void displayToastMessageSuccess(text) {
+  Fluttertoast.showToast(
+    msg: "$text",
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 2,
+    backgroundColor: Colors.green,
+    textColor: Colors.white,
+    fontSize: 16.0,
+  );
+}

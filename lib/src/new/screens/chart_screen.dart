@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:mindway/src/auth/time/select_time_screen.dart';
-import 'package:mindway/src/new/screens/gender_screen.dart';
-import 'package:mindway/src/new/util.dart';
+import 'package:mindway/src/auth/views/signup_screen.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
-import '../../auth/time/select_time_screen_new.dart';
 
 class ChartScreen extends StatefulWidget {
+  static const String routeName = '/chart-screeb';
+
+  const ChartScreen({super.key});
   @override
   State<ChartScreen> createState() => _ChartScreenState();
 }
@@ -52,6 +51,9 @@ class _ChartScreenState extends State<ChartScreen> {
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
+    final args = Get.arguments as Map<String, dynamic>;
+    DateTime time = args['time'] as DateTime;
+    List<String> days = args['days'];
     return Scaffold(
         body: Container(
       height: deviceHeight,
@@ -62,21 +64,7 @@ class _ChartScreenState extends State<ChartScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Align(
-              //   alignment: Alignment.topLeft,
-              //   child: InkWell(
-              //     onTap: () {
-              //       Navigator.of(context).pop();
-              //     },
-              //     child: const Padding(
-              //       padding: EdgeInsets.all(10.0),
-              //       child: Text(
-              //         "Back",
-              //         style: TextStyle(fontSize: 20, color: Colors.white),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+
               const SizedBox(
                 height: 50,
               ),
@@ -140,13 +128,13 @@ class _ChartScreenState extends State<ChartScreen> {
                 height: 10,
               ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(
+              const Padding(
+                padding: EdgeInsets.symmetric(
                   horizontal: 20,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Image(
                       image: AssetImage("assets/images/tick.png"),
                       width: 16,
@@ -156,7 +144,7 @@ class _ChartScreenState extends State<ChartScreen> {
                       width: 10,
                     ),
                     Text(
-                      "Find more self-compassion",
+                      " Find more self-compassion",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 18,
@@ -169,17 +157,20 @@ class _ChartScreenState extends State<ChartScreen> {
               const SizedBox(
                 height: 5,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
+              const Padding(
+                padding: EdgeInsets.symmetric(
                   horizontal: 20,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Image(
-                      image: AssetImage("assets/images/tick.png"),
-                      width: 16,
-                      height: 16,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.0),
+                      child: Image(
+                        image: AssetImage("assets/images/tick.png"),
+                        width: 16,
+                        height: 16,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
@@ -198,28 +189,34 @@ class _ChartScreenState extends State<ChartScreen> {
               const SizedBox(
                 height: 5,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
+              const Padding(
+                padding: EdgeInsets.symmetric(
                   horizontal: 20,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Image(
-                      image: AssetImage("assets/images/tick.png"),
-                      width: 16,
-                      height: 16,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 0.0),
+                      child: Image(
+                        image: AssetImage("assets/images/tick.png"),
+                        width: 16,
+                        height: 16,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      "Sleep better at night ",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.white),
+                    Padding(
+                      padding: EdgeInsets.only(right: 55.0),
+                      child: Text (
+                        "Sleep better at night ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -233,8 +230,14 @@ class _ChartScreenState extends State<ChartScreen> {
                     btnTxt: isFinished ? "Continue" : "Preparing...",
                     onPress: () {
                       isFinished
-                          ? Get.toNamed(SelectTimeAndDayToNotifyNew.routeName)
-                          : null;
+                          ?  Get.toNamed(
+                        SignUpScreen.routeName,
+                        arguments: {
+                          'time': time,
+                          'days': days,
+                        },
+                      )
+                          : '';
                     }),
               )
             ],

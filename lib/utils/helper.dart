@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -66,13 +65,13 @@ hapticFeedbackMedium() {
 
 Color hexToColor(String? code) {
   if (code == null || code.isEmpty) {
-    return Color.fromARGB(255, 255, 181, 96);
+    return const Color.fromARGB(255, 255, 181, 96);
   }
   Color? color;
   try {
     color = Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   } catch (e) {
-    color = Color.fromARGB(255, 255, 181, 96);
+    color = const Color.fromARGB(255, 255, 181, 96);
   }
   return color;
 }
@@ -82,8 +81,8 @@ Future updatePlayCount({
   required id,
 }) async {
   var url = Uri.parse("https://mindwayadmin.com/public/API.php");
-  var response;
-  var body;
+  http.Response response;
+  Map<String, dynamic> body;
 
   body = {
     'update_play': '',
@@ -94,7 +93,7 @@ Future updatePlayCount({
   };
 
   try {
-    print("APIHELPER " + "executed");
+    print("APIHELPER " "executed");
     response = await http.post(url,
         headers: {
           "Accept": "application/json",
@@ -102,7 +101,7 @@ Future updatePlayCount({
         },
         body: body);
   } catch (e) {
-    print("APIHELPER " + e.toString());
+    print("APIHELPER $e");
     return;
   }
 

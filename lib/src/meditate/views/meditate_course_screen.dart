@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:mindway/src/meditate/controller/meditate_controller.dart';
@@ -294,9 +293,7 @@ class MeditateCourseScreen extends StatelessWidget {
                 mainAxisSpacing: 1.0,
               ),
               itemBuilder: (BuildContext context, int i) {
-                debugPrint("SingleAudio " +
-                    _meditateCtrl.singleMeditationAudioList[i].createdAt
-                        .toString());
+                debugPrint("SingleAudio ${_meditateCtrl.singleMeditationAudioList[i].createdAt}");
                 return InkWell(
                   onTap: () {
                     showModalBottomSheet(

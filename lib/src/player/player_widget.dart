@@ -4,7 +4,7 @@ import 'package:mindway/utils/api.dart';
 import 'package:mindway/utils/helper.dart';
 
 class PlayerWidget extends StatefulWidget {
-  PlayerWidget(this.audio, this.audioPlayer, this.tableName, this.id,
+  const PlayerWidget(this.audio, this.audioPlayer, this.tableName, this.id,
       {super.key});
 
   final String audio;

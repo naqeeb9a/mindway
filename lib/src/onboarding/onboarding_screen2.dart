@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:mindway/src/account/upload_profile_pic_screen.dart';
 import 'package:mindway/src/auth/views/signup_screen.dart';
 import 'package:mindway/src/new/util.dart';
 import 'package:mindway/src/onboarding/widgets/dot_widget.dart';

@@ -7,7 +7,7 @@ class CustomAsyncBtn extends StatelessWidget {
     Key? key,
     required this.btnTxt,
     this.width = double.infinity,
-    this.height = 50.0,
+    this.height = 56.0,
     this.btnColor = kPrimaryColor,
     this.textSize = 16,
     this.borderRadius = 6.0,
@@ -62,12 +62,13 @@ class CustomAsyncBtn extends StatelessWidget {
       },
       child: Text(
         btnTxt,
-        style: TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: textSize,
-          color: btnColor == Colors.white ? Colors.black87 : Colors.white,
+          style: kBodyStyle.copyWith(fontSize: 17.0,color: Colors.white,fontWeight: FontWeight.w400)
+        // style: TextStyle(
+        //   fontWeight: FontWeight.w600,
+        //   fontSize: textSize,
+        //   color: btnColor == Colors.white ? Colors.black87 : Colors.white,
         ),
-      ),
+
     );
   }
 }

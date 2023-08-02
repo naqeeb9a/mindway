@@ -84,21 +84,24 @@ class SosAudio {
     required this.id,
     required this.audioTitle,
     required this.sosAudio,
+    required this.duration,
   });
 
   String id;
   String audioTitle;
   String sosAudio;
-
+  String duration;
   factory SosAudio.fromJson(Map<String, dynamic> json) => SosAudio(
         id: json["id"],
         audioTitle: json["audio_title"],
         sosAudio: json["sos_audio"],
+    duration: json["duration"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "audio_title": audioTitle,
         "sos_audio": sosAudio,
+    "duration": duration,
       };
 }

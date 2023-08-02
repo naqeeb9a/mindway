@@ -22,6 +22,7 @@ class AuthService {
     required String name,
     required String email,
     required String password,
+    required String goal_id,
   }) async {
     return await dio.post(
       '$apiURL/signup',
@@ -30,6 +31,8 @@ class AuthService {
         "name": name,
         "password": password,
         "password_confirmation": password,
+        "goal_id": goal_id,
+
       },
     );
   }

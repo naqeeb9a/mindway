@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mindway/src/music/music_model.dart';
-import 'package:mindway/src/player/player_widget.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -11,7 +9,6 @@ import '../../utils/api.dart';
 import '../favourite/fav_controller_new.dart';
 import '../new/models/favorite_model.dart';
 import '../new/screens/player_widget_new.dart';
-import '../sleep/sleep_course.dart';
 
 class MusicAudioPlayerScreen extends StatefulWidget {
   static const String routeName = '/music-audio';
@@ -48,12 +45,14 @@ class _MusicAudioPlayerScreenState extends State<MusicAudioPlayerScreen> {
         course: "Music",
         session: "Mindway",
         title: musicData.title,
+        duration:musicData.duration ,
         audio: "$imgAndAudio/${musicData.musicAudio}",
         image: "$musicURL/${musicData.image}",
         color: "#2A4576");
     favControllerNew.addToRecent(favoriteModel: favoriteModel!);
     PlayerWidgetNew.favoriteModel = favoriteModel;
     debugPrint("MusicDataImage ${musicData.image}");
+
   }
 
   @override
@@ -84,14 +83,8 @@ class _MusicAudioPlayerScreenState extends State<MusicAudioPlayerScreen> {
                 _buildAppBarView(),
 
                 Expanded(
-                    child: PlayerWidgetNew('music', musicData.id.toString())),
-                // const SizedBox(height: 200.0),
-                // Text(
-                //   musicData.title,
-                // ),
-                // const SizedBox(height: 20.0),
-                // PlayerWidget(musicData.musicAudio, _audioPlayer, 'music',
-                //     musicData.id.toString()),
+                    child: PlayerWidgetNew('music', musicData.id.toString(),musicData.duration,'mediate')),
+
               ],
             ),
           ],
@@ -115,7 +108,7 @@ class _MusicAudioPlayerScreenState extends State<MusicAudioPlayerScreen> {
               // color: Colors.white,
             ),
           ),
-          const Text('Music'),
+          const Text('Music-'),
         ],
       ),
     );

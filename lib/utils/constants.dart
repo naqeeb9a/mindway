@@ -8,7 +8,7 @@ const Color kPrimaryColor = Color(0xFF688EDC);
 const Color kAccentColor = Color(0xFFABC1F8);
 
 TextStyle kTitleStyle = TextStyle(
-  fontFamily: fontName,
+  fontFamily: 'Anteb',
   color: Colors.grey.shade800,
   fontWeight: FontWeight.bold,
   fontSize: 22.0,

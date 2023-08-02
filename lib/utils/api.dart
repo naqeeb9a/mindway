@@ -6,6 +6,7 @@ const String emojiURL = '$imgAndAudio/emoji';
 const String homeEmojiURL = '$imgAndAudio/homeEmoji';
 const String musicURL = '$imgAndAudio/music';
 const String sleepAudioURL = '$imgAndAudio/SleepScreen';
+//const String sleepHomeAudioImg = '$imgAndAudio/sleepimage';
 const String singleAudioURL = '$imgAndAudio/SingleCourse';
-
+const String quoteURL = '$imgAndAudio/SingleCourse';
 const String appAuth = "Waseem#2023MobAPP";

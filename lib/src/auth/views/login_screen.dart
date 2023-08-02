@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindway/src/auth/auth_controller.dart';
-import 'package:mindway/src/auth/choose_screen.dart';
 import 'package:mindway/src/auth/widgets/header_widget.dart';
 import 'package:mindway/src/auth/widgets/or_divider.dart';
 import 'package:mindway/src/auth/widgets/social_media_btn.dart';
@@ -13,7 +12,6 @@ import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:mindway/widgets/custom_input_field.dart';
-
 class LogInScreen extends StatefulWidget {
   static const String routeName = '/login';
 
@@ -31,8 +29,16 @@ class _LogInScreenState extends State<LogInScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -44,6 +50,7 @@ class _LogInScreenState extends State<LogInScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   const Text('Email Address'),
                   const SizedBox(height: 8.0),
                   CustomInputField(
@@ -82,7 +89,11 @@ class _LogInScreenState extends State<LogInScreen> {
                         }
                         await _authCtrl.handleLogIn(
                             _emailController.text, _passwordController.text);
+
                       }
+
+
+
                     },
                   ),
                   const OrDivider(),
@@ -123,11 +134,11 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          // Get.toNamed(ChooseScreen.routeName);
+                        //   Get.toNamed(ChooseScreen.routeName);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => WelcomeScreen()),
+                                builder: (context) => const WelcomeScreen()),
                           );
                         },
                         child: Text(

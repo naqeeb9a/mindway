@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:mindway/src/favourite/fav_controller.dart';
 import 'package:mindway/src/meditate/meditate.dart';
 import 'package:mindway/src/meditate/views/course_outline_screen.dart';
 import 'package:mindway/src/player/course_meditate_audio_screen.dart';
@@ -41,6 +39,7 @@ class MeditateCourseDetailScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+            //  Text(courseDetails.id.toString() +"lllll"),
               Text(courseDetails.courseTitle.capitalizeFirst ?? '',
                   style: kTitleStyle),
               // GetBuilder<FavController>(
@@ -199,6 +198,7 @@ class MeditateCourseDetailScreen extends StatelessWidget {
               CourseMeditateAudioPlayerScreen.courseColor =
                   courseDetails.color ?? "";
               CourseOutlineScreen.courseColor = courseDetails.color ?? "";
+
               Get.toNamed(CourseOutlineScreen.routeName,
                   arguments: courseDetails);
             },

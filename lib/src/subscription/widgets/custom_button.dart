@@ -1,10 +1,13 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:mindway/src/subscription/utils/color_constant.dart';
 import 'package:mindway/src/subscription/utils/size_utils.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton(
-      {this.shape,
+  const CustomButton(
+      {super.key,
+      this.shape,
       this.padding,
       this.variant,
       this.fontStyle,
@@ -17,29 +20,29 @@ class CustomButton extends StatelessWidget {
       this.prefixWidget,
       this.suffixWidget});
 
-  ButtonShape? shape;
+  final ButtonShape? shape;
 
-  ButtonPadding? padding;
+  final ButtonPadding? padding;
 
-  ButtonVariant? variant;
+  final ButtonVariant? variant;
 
-  ButtonFontStyle? fontStyle;
+  final ButtonFontStyle? fontStyle;
 
-  Alignment? alignment;
+  final Alignment? alignment;
 
-  EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? margin;
 
-  VoidCallback? onTap;
+  final VoidCallback? onTap;
 
-  double? width;
+  final double? width;
 
-  double? height;
+  final double? height;
 
-  String? text;
+  final String? text;
 
-  Widget? prefixWidget;
+  final Widget? prefixWidget;
 
-  Widget? suffixWidget;
+  final Widget? suffixWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +70,13 @@ class CustomButton extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          prefixWidget ?? SizedBox(),
+          prefixWidget ?? const SizedBox(),
           Text(
             text ?? "",
             textAlign: TextAlign.center,
             style: _setFontStyle(),
           ),
-          suffixWidget ?? SizedBox(),
+          suffixWidget ?? const SizedBox(),
         ],
       );
     } else {
@@ -147,6 +150,15 @@ class CustomButton extends StatelessWidget {
           fontFamily: 'Anteb',
           fontWeight: FontWeight.w400,
         );
+      case ButtonFontStyle.AntebBold18:
+        return TextStyle(
+          color: ColorConstant.whiteA700,
+          fontSize: getFontSize(
+            18,
+          ),
+          fontFamily: 'Anteb',
+          fontWeight: FontWeight.w400,
+        );
       default:
         return TextStyle(
           color: ColorConstant.whiteA700,
@@ -177,5 +189,6 @@ enum ButtonVariant {
 
 enum ButtonFontStyle {
   AntebBold13,
+  AntebBold18,
   AntebBold22,
 }

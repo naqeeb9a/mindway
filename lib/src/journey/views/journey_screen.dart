@@ -1,17 +1,14 @@
 import 'dart:collection';
-import 'dart:ffi';
+//import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mindway/src/auth/auth_controller.dart';
 import 'package:mindway/src/home/controller/home_controller.dart';
 import 'package:mindway/src/home/models/home_emoji.dart';
-import 'package:mindway/src/journal/add_journal_screen.dart';
-import 'package:mindway/src/journal/controller/journal_controller.dart';
 import 'package:mindway/src/journey/add_note_screen.dart';
 import 'package:mindway/src/journey/journey_controller.dart';
 import 'package:mindway/src/journey/views/emotion_screen.dart';
@@ -22,7 +19,6 @@ import 'package:mindway/utils/api.dart';
 import 'package:mindway/utils/app_theme.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/firebase_collections.dart';
-import 'package:mindway/utils/helper.dart';
 import 'package:mindway/widgets/cache_img_widget.dart';
 
 import '../../new/models/note_model.dart';
@@ -30,7 +26,7 @@ import '../../new/models/note_model.dart';
 class JourneyScreen extends StatefulWidget {
   static const String routeName = '/journey';
 
-  JourneyScreen({super.key});
+  const JourneyScreen({super.key});
 
   @override
   State<JourneyScreen> createState() => _JourneyScreenState();
@@ -39,11 +35,11 @@ class JourneyScreen extends StatefulWidget {
 class _JourneyScreenState extends State<JourneyScreen> {
   final AuthController _authCtrl = Get.find();
 
-  JourneyController _journeyCtrl = Get.find();
+  final JourneyController _journeyCtrl = Get.find();
   final HomeController _homeCtrl = Get.find();
 
   var notes;
-  TextEditingController notesController = new TextEditingController();
+  TextEditingController notesController = TextEditingController();
   String displayDate = "";
   String date = "";
   NoteModel? noteModel;
@@ -99,11 +95,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
   bool isMoodVsFeelBadData = false;
 
   List<Color> colorList = [
-    Color(0xffF7CE64),
-    Color(0xffA0B8E8),
-    Color(0xff708dd6),
-    Color(0xff5169A3),
-    Color(0xff49577A)
+    const Color(0xffF7CE64),
+    const Color(0xffA0B8E8),
+    const Color(0xff708dd6),
+    const Color(0xff5169A3),
+    const Color(0xff49577A)
   ];
   List arrayData = [];
   List<HomeEmoji> homeEmojiMonthly = [];
@@ -242,11 +238,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$happyFeelAndFactorArray");
 
-        happyFeelVsFactorMap = LinkedHashMap<String, int>();
-        happyFeelAndFactorArray.forEach((element) {
+        happyFeelVsFactorMap = <String, int>{};
+        for (var element in happyFeelAndFactorArray) {
           happyFeelVsFactorMap![element] =
               (happyFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("Element $happyFeelVsFactorMap");
         setState(() {
           happyFeelVsFactorData = true;
@@ -267,11 +263,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$goodFeelAndFactorArray");
 
-        goodFeelVsFactorMap = LinkedHashMap<String, int>();
-        goodFeelAndFactorArray.forEach((element) {
+        goodFeelVsFactorMap = <String, int>{};
+        for (var element in goodFeelAndFactorArray) {
           goodFeelVsFactorMap![element] =
               (goodFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("ElementGoodFeelVsFactor $goodFeelVsFactorMap");
         setState(() {
           goodFeelVsFactorData = true;
@@ -294,11 +290,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$averageFeelAndFactorArray");
 
-        averageFeelVsFactorMap = LinkedHashMap<String, int>();
-        averageFeelAndFactorArray.forEach((element) {
+        averageFeelVsFactorMap = <String, int>{};
+        for (var element in averageFeelAndFactorArray) {
           averageFeelVsFactorMap![element] =
               (averageFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("Element $averageFeelVsFactorMap");
         setState(() {
           averageFeelVsFactorData = true;
@@ -319,11 +315,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$sadFeelAndFactorArray");
 
-        sadFeelVsFactorMap = LinkedHashMap<String, int>();
-        sadFeelAndFactorArray.forEach((element) {
+        sadFeelVsFactorMap = <String, int>{};
+        for (var element in sadFeelAndFactorArray) {
           sadFeelVsFactorMap![element] =
               (sadFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("Element $sadFeelVsFactorMap");
         setState(() {
           sadFeelVsFactorData = true;
@@ -346,11 +342,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$terribleFeelAndFactorArray");
 
-        terribleFeelVsFactorMap = LinkedHashMap<String, int>();
-        terribleFeelAndFactorArray.forEach((element) {
+        terribleFeelVsFactorMap = <String, int>{};
+        for (var element in terribleFeelAndFactorArray) {
           terribleFeelVsFactorMap![element] =
               (terribleFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("Element $terribleFeelVsFactorMap");
         setState(() {
           terribleFeelVsFactorData = true;
@@ -479,11 +475,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$happyFeelAndFactorArray");
 
-        happyFeelVsFactorMap = LinkedHashMap<String, int>();
-        happyFeelAndFactorArray.forEach((element) {
+        happyFeelVsFactorMap = <String, int>{};
+        for (var element in happyFeelAndFactorArray) {
           happyFeelVsFactorMap![element] =
               (happyFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("Element $happyFeelVsFactorMap");
         setState(() {
           happyFeelVsFactorData = true;
@@ -504,11 +500,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$goodFeelAndFactorArray");
 
-        goodFeelVsFactorMap = LinkedHashMap<String, int>();
-        goodFeelAndFactorArray.forEach((element) {
+        goodFeelVsFactorMap = <String, int>{};
+        for (var element in goodFeelAndFactorArray) {
           goodFeelVsFactorMap![element] =
               (goodFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("ElementGoodFeelVsFactor $goodFeelVsFactorMap");
         setState(() {
           goodFeelVsFactorData = true;
@@ -531,11 +527,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$averageFeelAndFactorArray");
 
-        averageFeelVsFactorMap = LinkedHashMap<String, int>();
-        averageFeelAndFactorArray.forEach((element) {
+        averageFeelVsFactorMap = <String, int>{};
+        for (var element in averageFeelAndFactorArray) {
           averageFeelVsFactorMap![element] =
               (averageFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("Element $averageFeelVsFactorMap");
         setState(() {
           averageFeelVsFactorData = true;
@@ -556,11 +552,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$sadFeelAndFactorArray");
 
-        sadFeelVsFactorMap = LinkedHashMap<String, int>();
-        sadFeelAndFactorArray.forEach((element) {
+        sadFeelVsFactorMap = <String, int>{};
+        for (var element in sadFeelAndFactorArray) {
           sadFeelVsFactorMap![element] =
               (sadFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("Element $sadFeelVsFactorMap");
         setState(() {
           sadFeelVsFactorData = true;
@@ -583,11 +579,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
         debugPrint("Element FeelFactor$terribleFeelAndFactorArray");
 
-        terribleFeelVsFactorMap = LinkedHashMap<String, int>();
-        terribleFeelAndFactorArray.forEach((element) {
+        terribleFeelVsFactorMap = <String, int>{};
+        for (var element in terribleFeelAndFactorArray) {
           terribleFeelVsFactorMap![element] =
               (terribleFeelVsFactorMap![element] ?? 0) + 1;
-        });
+        }
         debugPrint("Element $terribleFeelVsFactorMap");
         setState(() {
           terribleFeelVsFactorData = true;
@@ -604,8 +600,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
     for (int i in emotionsFlex) {
       totalEmotionFlexValue += i;
     }
-    print("MonthlyEmojiList totalEmotionFlexValue " +
-        totalEmotionFlexValue.toString());
+    print("MonthlyEmojiList totalEmotionFlexValue $totalEmotionFlexValue");
     if (totalEmotionFlexValue == 0) {
       return;
     }
@@ -729,8 +724,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
       if (moodVsFeelGoodIds.isNotEmpty) {
         //print("MoodVsFeel " + moodVsFeelGoodIds.toString());
         moodVsFeelGood = SplayTreeMap<int, int>();
-        moodVsFeelGoodIds.forEach(
-            (item) => moodVsFeelGood[item] = (moodVsFeelGood[item] ?? 0) + 1);
+        for (var item in moodVsFeelGoodIds) {
+          moodVsFeelGood[item] = (moodVsFeelGood[item] ?? 0) + 1;
+        }
         //print('MoodVsFeel ' + moodVsFeelGood.toString());
         setState(() {
           isMoodVsFeelGoodData = true;
@@ -740,8 +736,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
       if (moodVsFeelBadIds.isNotEmpty) {
         //print("MoodVsFeel " + moodVsFeelBadIds.toString());
         moodVsFeelBad = SplayTreeMap<int, int>();
-        moodVsFeelBadIds.forEach(
-            (item) => moodVsFeelBad[item] = (moodVsFeelBad[item] ?? 0) + 1);
+        for (var item in moodVsFeelBadIds) {
+          moodVsFeelBad[item] = (moodVsFeelBad[item] ?? 0) + 1;
+        }
         // print('MoodVsFeel ' + moodVsFeelBad.toString());
 
         setState(() {
@@ -819,8 +816,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
       if (moodVsFeelGoodIds.isNotEmpty) {
         //print("MoodVsFeel " + moodVsFeelGoodIds.toString());
         moodVsFeelGood = SplayTreeMap<int, int>();
-        moodVsFeelGoodIds.forEach(
-            (item) => moodVsFeelGood[item] = (moodVsFeelGood[item] ?? 0) + 1);
+        for (var item in moodVsFeelGoodIds) {
+          moodVsFeelGood[item] = (moodVsFeelGood[item] ?? 0) + 1;
+        }
         //print('MoodVsFeel ' + moodVsFeelGood.toString());
         setState(() {
           isMoodVsFeelGoodData = true;
@@ -830,8 +828,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
       if (moodVsFeelBadIds.isNotEmpty) {
         //print("MoodVsFeel " + moodVsFeelBadIds.toString());
         moodVsFeelBad = SplayTreeMap<int, int>();
-        moodVsFeelBadIds.forEach(
-            (item) => moodVsFeelBad[item] = (moodVsFeelBad[item] ?? 0) + 1);
+        for (var item in moodVsFeelBadIds) {
+          moodVsFeelBad[item] = (moodVsFeelBad[item] ?? 0) + 1;
+        }
         // print('MoodVsFeel ' + moodVsFeelBad.toString());
 
         setState(() {
@@ -863,7 +862,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
     for (int i = 0; i < _journeyCtrl.emojiList.length; i++) {
       if (id == _journeyCtrl.emojiList[i].id) {
-        image = emojiURL + "/" + _journeyCtrl.emojiList[i].emoji;
+        image = "$emojiURL/${_journeyCtrl.emojiList[i].emoji}";
       }
     }
 
@@ -911,7 +910,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
   }
 
   getTodayNotes(sdate) async {
-    print("Notes TodayDate " + sdate.toString());
+    print("Notes TodayDate $sdate");
     await FirebaseService().getNoteByDate(sdate).then((value) {
       setState(() {
         noteModel = value;
@@ -1316,10 +1315,8 @@ class _JourneyScreenState extends State<JourneyScreen> {
                                             const SizedBox(
                                               height: 5,
                                             ),
-                                            Text(emotionsPercent[e.id - 4]
-                                                    .toInt()
-                                                    .toString() +
-                                                "%")
+                                            Text("${emotionsPercent[e.id - 4]
+                                                    .toInt()}%")
                                           ],
                                         ),
                                         const SizedBox(width: 16.0),
@@ -1341,7 +1338,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 20, left: 14, right: 14),
+          margin: const EdgeInsets.only(top: 20, left: 14, right: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.grey.shade200,
@@ -1360,9 +1357,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
                         ? <Widget>[
                             for (int i = 0; i < 4; i++)
                               Text(
-                                (i + 1).toString() + ". Not enough data, yet",
+                                "${i + 1}. Not enough data, yet",
                                 style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
+                                    const TextStyle(fontSize: 14, color: Colors.grey),
                               ),
                           ]
                         :
@@ -1392,9 +1389,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
                         ? <Widget>[
                             for (int i = 0; i < 4; i++)
                               Text(
-                                (i + 1).toString() + ". Not enough data, yet",
+                                "${i + 1}. Not enough data, yet",
                                 style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
+                                    const TextStyle(fontSize: 14, color: Colors.grey),
                               ),
                           ]
                         : buildMoodVsFeelDataView(moodVsFeelBad),
@@ -1418,11 +1415,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
           color: Colors.grey.shade200,
         ),
         child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 Text(
                   "Feel",
                   style: TextStyle(
@@ -1624,12 +1621,12 @@ class _JourneyScreenState extends State<JourneyScreen> {
   }
 
   Row topEmojiMoodVsFeel() {
-    return Row(
+    return const Row(
       children: [
         Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Image(
                 image: AssetImage("assets/images/laugh.png"),
                 height: 40,
@@ -1649,7 +1646,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
         Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Image(
                 image: AssetImage("assets/images/bored.png"),
                 height: 40,
@@ -1758,7 +1755,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 16.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kBorderRadius),
-          color: Color(0xffA0B8E9),
+          color: const Color(0xffA0B8E9),
         ),
         child: InkWell(
           onTap: () async {
@@ -1775,13 +1772,13 @@ class _JourneyScreenState extends State<JourneyScreen> {
               });
             }
           },
-          child: SizedBox(
+          child: const SizedBox(
             height: 50,
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: Text('Add note',
@@ -1857,7 +1854,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
               children: [
                 Text(
                   (i + 1).toString(),
-                  style: TextStyle(color: Colors.blue),
+                  style: const TextStyle(color: Colors.blue),
                 ),
                 const SizedBox(
                   width: 10,
@@ -1888,11 +1885,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
     final sorted = LinkedHashMap.fromEntries(sortedEntries);
 
-    debugPrint("SortedMap " + sorted.toString());
+    debugPrint("SortedMap $sorted");
 
     return Container(
       height: 35,
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
@@ -1927,11 +1924,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
     final sorted = LinkedHashMap.fromEntries(sortedEntries);
 
-    debugPrint("GoodFeelVsFactorDataSortedMap " + sorted.toString());
+    debugPrint("GoodFeelVsFactorDataSortedMap $sorted");
 
     return Container(
       height: 35,
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.grey.shade200,
@@ -1966,11 +1963,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
     final sorted = LinkedHashMap.fromEntries(sortedEntries);
 
-    debugPrint("SortedMap " + sorted.toString());
+    debugPrint("SortedMap $sorted");
 
     return Container(
       height: 35,
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
@@ -2005,11 +2002,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
     final sorted = LinkedHashMap.fromEntries(sortedEntries);
 
-    debugPrint("SortedMap " + sorted.toString());
+    debugPrint("SortedMap $sorted");
 
     return Container(
       height: 35,
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.grey.shade200,
@@ -2044,11 +2041,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
     final sorted = LinkedHashMap.fromEntries(sortedEntries);
 
-    debugPrint("SortedMap " + sorted.toString());
+    debugPrint("SortedMap $sorted");
 
     return Container(
       height: 35,
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,

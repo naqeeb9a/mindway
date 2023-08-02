@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:mindway/src/favourite/fav_controller.dart';
 import 'package:mindway/src/favourite/fav_controller_new.dart';
 import 'package:mindway/src/favourite/favourite_screen.dart';
 import 'package:mindway/src/meditate/views/meditate_course_detail_screen.dart';
@@ -9,7 +7,6 @@ import 'package:mindway/src/meditate/views/meditate_course_screen.dart';
 import 'package:mindway/src/music/music_screen.dart';
 import 'package:mindway/src/player/favorite_audio_player_screen.dart';
 import 'package:mindway/src/sleep/views/sleep_screen.dart';
-import 'package:mindway/utils/api.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/helper.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
@@ -211,9 +208,7 @@ class ExploreScreen extends StatelessWidget {
                                                 Text(
                                                   e.session!.isEmpty
                                                       ? e.course.toString()
-                                                      : e.course.toString() +
-                                                          " | " +
-                                                          e.session.toString(),
+                                                      : "${e.course} | ${e.session}",
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
@@ -415,7 +410,7 @@ class ExploreScreen extends StatelessWidget {
                   Text(
                     'HAPPINESS',
                     style: kBodyStyle.copyWith(
-                      color: Color(0x0ffFFC34B),
+                      color: const Color(0xffffc34b),
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,

@@ -8,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class WelcomeScreen extends StatelessWidget {
   TextEditingController nameController = TextEditingController();
 
+  WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                 height: 10,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
                   textAlign: TextAlign.center,
                   style: const TextStyle(
@@ -70,7 +72,7 @@ class WelcomeScreen extends StatelessWidget {
                         fontSize: 35,
                         color: backgroundColorDark,
                         fontWeight: FontWeight.bold),
-                    contentPadding: const EdgeInsets.all(15),
+                    contentPadding: EdgeInsets.all(15),
                   ),
                   onChanged: (value) {
                     // do something
@@ -95,7 +97,7 @@ class WelcomeScreen extends StatelessWidget {
                           .then((value) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MeetScreen()),
+                          MaterialPageRoute(builder: (context) => const MeetScreen()),
                         );
                       });
                     }),

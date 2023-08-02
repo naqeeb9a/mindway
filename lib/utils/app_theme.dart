@@ -4,8 +4,6 @@ import 'package:mindway/utils/constants.dart';
 const String fontName = 'Anteb';
 
 final lightThemeData = ThemeData(
-  colorScheme: ColorScheme.fromSwatch(primarySwatch: customPrimaryColor),
-  errorColor: Colors.red[800],
   iconTheme: IconThemeData(color: Colors.grey.shade800),
   visualDensity: VisualDensity.adaptivePlatformDensity,
   fontFamily: fontName,
@@ -15,8 +13,10 @@ final lightThemeData = ThemeData(
     centerTitle: true,
     color: Colors.grey.shade50,
     actionsIconTheme: const IconThemeData(color: kPrimaryColor),
-    iconTheme: IconThemeData(color: Colors.grey.shade800),
-  ),
+    iconTheme: const IconThemeData(color: Color(0xff454545)),
+
+    //iconTheme: IconThemeData(color: Colors.grey.shade800),
+  ), colorScheme: ColorScheme.fromSwatch(primarySwatch: customPrimaryColor).copyWith(error: Colors.red[800]),
 );
 
 Map<int, Color> color = const {

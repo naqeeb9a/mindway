@@ -31,11 +31,11 @@ class AppDecoration {
       );
   static BoxDecoration get gradientWhiteA70016WhiteA700 => BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment(
+          begin: const Alignment(
             0.5,
             0,
           ),
-          end: Alignment(
+          end: const Alignment(
             0.5,
             1,
           ),

@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mindway/src/new/util.dart';
 import 'package:mindway/src/player/sleep_session_audio_screen.dart';
@@ -32,7 +30,7 @@ class SleepCourseDetailScreen extends StatelessWidget {
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 26.0),
               itemCount: audioDetails.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 26.0,
                 mainAxisSpacing: 1.0,
@@ -179,7 +177,7 @@ class SleepCourseDetailScreen extends StatelessWidget {
                         //   height: 100.0,
                         // ),
                         child: CacheImgWidget(
-                          imgAndAudio + "/" + audioDetails[i].image,
+                          "$imgAndAudio/${audioDetails[i].image}",
                           width: double.infinity,
                           height: 101.0,
                         ),
@@ -328,7 +326,7 @@ class SleepCourseDetailScreen extends StatelessWidget {
             //   height: 100.0,
             // ),
             child: CacheImgWidget(
-              imgAndAudio + "/" + session.image,
+              "$imgAndAudio/${session.image}",
               width: 200.0,
               height: 100.0,
             ),

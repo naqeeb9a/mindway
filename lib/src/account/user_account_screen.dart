@@ -1,18 +1,13 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mindway/src/account/controller/account_controller.dart';
 import 'package:mindway/src/account/personal_information_screen.dart';
 import 'package:mindway/src/auth/auth_controller.dart';
-import 'package:mindway/src/auth/time/select_time_screen_profile.dart';
 import 'package:mindway/src/auth/time/select_time_screen_profile_new.dart';
-import 'package:mindway/src/auth/user.dart';
 import 'package:mindway/src/journey/journey_controller.dart';
 import 'package:mindway/src/journey/views/emotion_tracker_screen.dart';
 import 'package:mindway/src/new/util.dart';
@@ -24,7 +19,6 @@ import 'package:mindway/widgets/cache_img_widget.dart';
 import 'package:mindway/widgets/loading_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../entry_screen.dart';
 
 class UserAccountScreen extends StatefulWidget {
   static const String routeName = '/account';
@@ -166,7 +160,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PersonalInformation()),
+                      builder: (context) => const PersonalInformation()),
                 );
               },
               child: Padding(

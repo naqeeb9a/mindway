@@ -4,7 +4,11 @@ import 'package:mindway/src/new/util.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../utils/constants.dart';
+
 class MeetScreen extends StatefulWidget {
+  const MeetScreen({super.key});
+
   @override
   State<MeetScreen> createState() => _MeetScreenState();
 }
@@ -43,26 +47,11 @@ class _MeetScreenState extends State<MeetScreen> {
               const SizedBox(
                 height: 50,
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(right: 325.0),
-                  child: Text(
-                    "Back",
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                ),
-              ),
-              SizedBox(
+
+              const SizedBox(
                 height: 20,
               ),
-              Container(
-                  padding: EdgeInsets.all(20.0),
-                  child: LinearProgressIndicator(
-                    value: 0.28,
-                  )),
+
               Stack(
                 children: [
                   Padding(
@@ -74,38 +63,34 @@ class _MeetScreenState extends State<MeetScreen> {
               ),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 0),
                 child: Text(
-                  "Nice to meet you, ${userName}",
-                  style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                  "Nice to meet you, $userName",
+                    style: kBodyStyle.copyWith(fontSize: 33,fontWeight: FontWeight.w900)
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                const SizedBox(height: 10,),
+                Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: Text(
-                  "To help me create your personal development plan, please answer a few questions",
+                  "To help me create your personal development plan, please answer \na few questions",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black),
+                    style: kBodyStyle.copyWith(fontSize: 20,fontWeight: FontWeight.w400)
                 ),
               ),
               const SizedBox(
-                height: 50,
+                height: 45,
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: CustomAsyncBtn(
                     btnTxt: "Continue",
 
+
                     onPress: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => GenderScreen()),
+                        MaterialPageRoute(builder: (context) => const GenderScreen()),
                       );
                     }),
               )

@@ -7,11 +7,12 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mindway/src/auth/auth_controller.dart';
 import 'package:mindway/src/auth/user.dart';
-import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/firebase_collections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalInformation extends StatefulWidget {
+  const PersonalInformation({super.key});
+
   @override
   State<PersonalInformation> createState() => _PersonalInformationState();
 }
@@ -19,8 +20,8 @@ class PersonalInformation extends StatefulWidget {
 class _PersonalInformationState extends State<PersonalInformation> {
   UserDataModel? userModel;
   late SharedPreferences sharedPreferences;
-  var _textFieldController = TextEditingController();
-  var _textFieldController2 = TextEditingController();
+  final _textFieldController = TextEditingController();
+  final _textFieldController2 = TextEditingController();
 
   @override
   void initState() {
@@ -271,7 +272,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
     }
 
     User user = FirebaseAuth.instance.currentUser!;
-    String userId = user.uid!;
+    String userId = user.uid;
     UserCredential userCredential;
     try {
       userCredential = await user.reauthenticateWithCredential(
@@ -326,7 +327,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
     //if(password.toString().)
 
     User user = FirebaseAuth.instance.currentUser!;
-    String userId = user.uid!;
+    String userId = user.uid;
     UserCredential userCredential;
     try {
       userCredential = await user.reauthenticateWithCredential(
@@ -376,7 +377,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
     //if(password.toString().)
 
     User user = FirebaseAuth.instance.currentUser!;
-    String userId = user.uid!;
+    String userId = user.uid;
     UserCredential userCredential;
     try {
       userCredential = await user.reauthenticateWithCredential(
@@ -424,8 +425,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
         Fluttertoast.showToast(msg: e.toString());
       }
     } else {
-      GoogleSignIn _googleSignIn = GoogleSignIn();
-      await _googleSignIn.disconnect().then((value) {
+      GoogleSignIn googleSignIn = GoogleSignIn();
+      await googleSignIn.disconnect().then((value) {
         userCollection
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({"gmail": ""}).then((value) async {

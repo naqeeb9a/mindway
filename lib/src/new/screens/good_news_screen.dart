@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:mindway/src/auth/time/select_time_screen.dart';
 import 'package:mindway/src/new/screens/chart_screen.dart';
-import 'package:mindway/src/new/screens/gender_screen.dart';
 import 'package:mindway/src/new/util.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
-class GoodNewsScreen extends StatefulWidget {
+class GoodNewsScreen1 extends StatefulWidget {
+  static const String routeName = "/good-new-screen";
+
+  const GoodNewsScreen1({super.key});
+
   @override
-  State<GoodNewsScreen> createState() => _GoodNewsScreenState();
+  State<GoodNewsScreen1> createState() => _GoodNewsScreen1State();
 }
 
-class _GoodNewsScreenState extends State<GoodNewsScreen> {
+class _GoodNewsScreen1State extends State<GoodNewsScreen1> {
   TextEditingController nameController = TextEditingController();
 
   VideoPlayerController? _controller;
@@ -49,6 +50,9 @@ class _GoodNewsScreenState extends State<GoodNewsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments as Map<String, dynamic>;
+    DateTime time = args['time'] as DateTime;
+    List<String> days = args['days'];
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
@@ -89,9 +93,9 @@ class _GoodNewsScreenState extends State<GoodNewsScreen> {
                     ),
                   )),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: Text(
-                  "You are in the right place, \n${userName}",
+                  "You are in the right place, \n$userName",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 28,
@@ -129,12 +133,20 @@ class _GoodNewsScreenState extends State<GoodNewsScreen> {
                 child: CustomAsyncBtn(
                     btnTxt: isFinished ? "Continue" : "Preparing...",
                     onPress: () {
+                     // Navigator.push(context, MaterialPageRoute(builder: (context) => ChartScreen(),));
                       isFinished
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChartScreen()),
-                            )
+                          ? Get.toNamed(
+                        ChartScreen.routeName,
+                        arguments: {
+                          'time': time,
+                          'days': days,
+                        },
+                      )
+                      // Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => ChartScreen()),
+
                           : null;
                     }),
               )

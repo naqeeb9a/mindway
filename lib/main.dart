@@ -8,11 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:mindway/firebase_options.dart';
-import 'package:mindway/src/splash_screen_image.dart';
 import 'package:mindway/src/auth/auth_controller.dart';
-import 'package:mindway/src/entry_screen.dart';
 import 'package:mindway/src/initial_binding.dart';
-import 'package:mindway/src/main_screen.dart';
 import 'package:mindway/src/splash_screen.dart';
 import 'package:mindway/utils/app_theme.dart';
 import 'package:mindway/utils/constants.dart';
@@ -85,6 +82,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         title: 'Mindway',
         theme: lightThemeData,
+        debugShowCheckedModeBanner: false,
         initialBinding: InitialBinding(),
         getPages: routes,
         // initialRoute: sharedPreferences.getString('user') == null
@@ -100,10 +98,13 @@ class MyApp extends StatelessWidget {
     String route = "";
     if (firstRun == null) {
       print('First time 1');
-      route = SplashScreen.routeName;
+     route = SplashScreen.routeName;
+     // route = LogInScreen.routeName;
+
     }
     else {
       route = SplashScreen.routeName;
+      //route = LogInScreen.routeName;
       // if (FirebaseAuth.instance.currentUser == null) {
       //   print('Not login user 2');
       //   route = EntryScreen.routeName;

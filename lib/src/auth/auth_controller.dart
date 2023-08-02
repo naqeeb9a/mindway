@@ -11,20 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl/intl.dart';
 import 'package:mindway/src/auth/auth_service.dart';
 import 'package:mindway/src/auth/user.dart';
 import 'package:mindway/src/auth/views/signup_form_screen.dart';
 import 'package:mindway/src/entry_screen.dart';
 import 'package:mindway/src/main_screen.dart';
 import 'package:mindway/src/network_manager.dart';
-import 'package:mindway/src/onboarding/onboarding_screen1.dart';
+
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/custom_snack_bar.dart';
 import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/utils/firebase_collections.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-import '../account/upload_profile_pic_screen.dart';
 
 class AuthController extends NetworkManager {
   final AuthService _authService = AuthService();
@@ -44,12 +45,33 @@ class AuthController extends NetworkManager {
     update();
   }
 
+   String goalIdForLogin = '';
+
+  Future<void> checkGoalId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    bool isGoalIdSet = prefs.containsKey("goal_id");
+    if (isGoalIdSet) {
+      goalIdForLogin = prefs.getString("goal_id").toString();
+    } else {
+      print("goal_id is not set");
+    }
+  }
+
   Future<void> handleLogIn(String email, String password) async {
     if (connectionType != 0) {
       try {
         dio.Response response = await _authService.logInUser(email, password);
         log('${response.data}', name: 'Log In Response');
         if (response.data['code'] == 200) {
+          print(response.data['data'][0]['bearer_token']);
+      var token =    response.data['data'][0]['bearer_token'];
+          // await    checkGoalId();
+          // if (goalIdForLogin.isNotEmpty) {
+          //   int gId = int.parse(goalIdForLogin);
+          //   await updateCustomerGoalId(email, gId, token);
+          // }
+
           await logInFirebaseUser(response.data['data'][0], email, password);
         } else {
           displayToastMessage('Invalid Credentials!');
@@ -66,38 +88,52 @@ class AuthController extends NetworkManager {
     }
   }
 
+
+
   Future<void> handleSignUp({
     required String name,
     required String email,
     required String password,
     required DateTime time,
     required String gender,
+    required String goal_id,
     required List<String> days,
     String? referralCode,
   }) async {
     if (connectionType != 0) {
       try {
         dio.Response response = await _authService.signUp(
-          name: name,
-          email: email,
-          password: password,
-        );
+            name: name, email: email, password: password, goal_id: goal_id);
         log('${response.data}', name: 'API Sign Up');
         if (response.data['code'] == 200) {
           await signUpFirebaseUser(
-            id: response.data['data']['id'],
-            name: name,
-            email: email,
-            password: password,
-            gender: gender,
-            time: Timestamp.fromDate(time),
-            days: days,
-          );
+              id: response.data['data']['id'],
+              name: name,
+              email: email,
+              password: password,
+              gender: gender,
+              time: Timestamp.fromDate(time),
+              days: days,
+              goal_id: goal_id);
           String data = json.encode(response.data['data']);
           await sharedPreferences.setString('user', data);
           user = getSavedUser();
           //Get.offAllNamed(OnboardingScreen1.routeName);
           //Get.toNamed(UploadProfilePicScreen.routeName);
+          final goalIds =goal_id;
+          int gId = int.parse(goalIds);
+          List<Map<String, dynamic>> everydayRecordForTile2 = [
+            {
+              'course': gId,
+              'date': DateTime.now(),
+              'day': 1,
+              'is_completed': 'no'
+            },
+          ];
+
+          User? firebaseUser = FirebaseAuth.instance.currentUser;
+          final users = firebaseUser?.uid;
+          await tile2CountCourseDays(users.toString(), everydayRecordForTile2);
           Get.offAllNamed(MainScreen.routeName);
         } else {
           displayToastMessage('Authentication Failed!');
@@ -121,6 +157,7 @@ class AuthController extends NetworkManager {
     required String password,
     required Timestamp time,
     required String gender,
+    required String goal_id,
     required List<String> days,
   }) async {
     try {
@@ -134,6 +171,7 @@ class AuthController extends NetworkManager {
           email: email,
           time: time,
           days: days,
+          goal_id: goal_id,
           gmail: "");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -170,6 +208,7 @@ class AuthController extends NetworkManager {
       required Timestamp time,
       required List<String> days,
       required String userName,
+      required String goal_id,
       required String gender}) async {
     // Trigger the authentication flow
 
@@ -189,6 +228,7 @@ class AuthController extends NetworkManager {
           time: Timestamp.fromDate(time.toDate()),
           days: days,
           googleUser: googleUser,
+          goal_id: goal_id,
           gender: gender);
     }
   }
@@ -236,6 +276,7 @@ class AuthController extends NetworkManager {
     required String password,
     required Timestamp time,
     required List<String> days,
+    required String goal_id,
     required gender,
     required GoogleSignInAccount googleUser,
   }) async {
@@ -244,6 +285,7 @@ class AuthController extends NetworkManager {
       name: name,
       email: email,
       password: password,
+      goal_id: goal_id,
     )
         .catchError((e) {
       if (e is dio.DioError) {
@@ -271,12 +313,27 @@ class AuthController extends NetworkManager {
           email: email,
           time: time,
           days: days,
+          goal_id: goal_id,
           gmail: userCredential.user!.email!);
       String data = json.encode(response.data['data']);
       await sharedPreferences.setString('user', data);
       user = getSavedUser();
       //Get.offAllNamed(OnboardingScreen1.routeName);
       //Get.toNamed(UploadProfilePicScreen.routeName);
+      final goalIds =goal_id;
+      int gId = int.parse(goalIds);
+      List<Map<String, dynamic>> everydayRecordForTile2 = [
+        {
+          'course': gId,
+          'date': DateTime.now(),
+          'day': 1,
+          'is_completed': 'no'
+        },
+      ];
+
+      User? firebaseUser = FirebaseAuth.instance.currentUser;
+      final users = firebaseUser?.uid;
+      await tile2CountCourseDays(users.toString(), everydayRecordForTile2);
       Get.offAllNamed(MainScreen.routeName);
     } else {
       displayToastMessage('Authentication Failed!');
@@ -347,6 +404,7 @@ class AuthController extends NetworkManager {
       {required Timestamp time,
       required List<String> days,
       required userName,
+      required goal_id,
       required gender}) async {
     String sha256ofString(String input) {
       final bytes = utf8.encode(input);
@@ -374,6 +432,7 @@ class AuthController extends NetworkManager {
           time: Timestamp.fromDate(time.toDate()),
           days: days,
           appleUser: appleCredential,
+          goal_id: goal_id,
           gender: gender);
     }
   }
@@ -384,15 +443,12 @@ class AuthController extends NetworkManager {
     required String password,
     required Timestamp time,
     required String gender,
+    required String goal_id,
     required List<String> days,
     required AuthorizationCredentialAppleID appleUser,
   }) async {
     dio.Response response = await _authService
-        .signUp(
-      name: name,
-      email: email,
-      password: password,
-    )
+        .signUp(name: name, email: email, password: password, goal_id: goal_id)
         .catchError((e) {
       if (e is dio.DioError) {
         log('Dio error ${e.response?.data}');
@@ -418,6 +474,7 @@ class AuthController extends NetworkManager {
         gender: gender,
         time: time,
         days: days,
+        goal_id: goal_id,
         gmail: "",
       );
       String data = json.encode(response.data['data']);
@@ -425,6 +482,20 @@ class AuthController extends NetworkManager {
       user = getSavedUser();
       //Get.offAllNamed(OnboardingScreen1.routeName);
       // Get.toNamed(UploadProfilePicScreen.routeName);
+      final goalIds =goal_id;
+      int gId = int.parse(goalIds);
+      List<Map<String, dynamic>> everydayRecordForTile2 = [
+        {
+          'course': gId,
+          'date': DateTime.now(),
+          'day': 1,
+          'is_completed': 'no'
+        },
+      ];
+
+      User? firebaseUser = FirebaseAuth.instance.currentUser;
+      final users = firebaseUser?.uid;
+      await tile2CountCourseDays(users.toString(), everydayRecordForTile2);
       Get.offAllNamed(MainScreen.routeName);
     } else {
       displayToastMessage('Authentication Failed!');
@@ -504,6 +575,7 @@ class AuthController extends NetworkManager {
     required Timestamp time,
     required String gmail,
     required String gender,
+    required String goal_id,
     required List<String> days,
   }) async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -515,6 +587,7 @@ class AuthController extends NetworkManager {
       "time": time,
       "gmail": gmail,
       "gender": gender,
+      "goal_id": goal_id,
       "days": days,
       'token': await FirebaseMessaging.instance.getToken(),
     };
@@ -544,6 +617,7 @@ class AuthController extends NetworkManager {
     try {
       await sharedPreferences.remove('user');
       await sharedPreferences.remove('fav');
+      await sharedPreferences.remove('goal_id');
     } catch (e) {
       log('$e', name: 'Logout');
     }
@@ -555,5 +629,63 @@ class AuthController extends NetworkManager {
 
     Navigator.of(context).pop();
     Get.offAllNamed(EntryScreen.routeName);
+  }
+}
+Future<void> tile2CountCourseDays(
+    String email, List<Map<String, dynamic>> records) async {
+  final CollectionReference collection =
+  FirebaseFirestore.instance.collection('tile2_count_course_days');
+
+  final DocumentSnapshot document = await collection.doc(email).get();
+  if (document.exists) {
+    final List<Map<String, dynamic>> existingRecords =
+    List<Map<String, dynamic>>.from(document['tile2']);
+
+    // Check if a record with the same date already exists
+    final String currentDate =
+    DateFormat('yyyy-MM-dd').format(DateTime.now());
+    final bool recordExistsForToday = existingRecords.any((record) {
+      final String recordDate = record['date'] as String;
+      return recordDate == currentDate;
+    });
+
+    if (!recordExistsForToday) {
+      final int lastDay =
+      existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
+      final int newDay = lastDay + 1;
+
+      for (var record in records) {
+        record['day'] = newDay;
+        record['date'] = currentDate; // Add the current date to the record
+      }
+
+      existingRecords.addAll(records);
+
+      await collection.doc(email).update({'tile2': existingRecords});
+      print('Record inserted for $currentDate');
+    } else {
+      // Update the course field for the existing record
+      final Map<String, dynamic> existingRecord = existingRecords
+          .firstWhere((record) => record['date'] == currentDate);
+
+      final int updatedCourse = records.first['course'] as int;
+
+      existingRecord['course'] = updatedCourse;
+      existingRecord['day'] = 1;
+
+      await collection.doc(email).update({'tile2': existingRecords});
+
+      print('Record updated for $currentDate');
+    }
+  } else {
+    final String currentDate =
+    DateFormat('yyyy-MM-dd').format(DateTime.now());
+    for (var record in records) {
+      record['day'] = 1;
+      record['date'] = currentDate; // Add the current date to the record
+    }
+
+    await collection.doc(email).set({'tile2': records});
+    print('Record inserted for $currentDate');
   }
 }

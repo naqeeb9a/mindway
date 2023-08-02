@@ -1,12 +1,7 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 import 'package:mindway/src/auth/time/select_time_screen_profile_new.dart';
-import 'package:mindway/src/auth/views/signup_screen.dart';
-import 'package:mindway/src/new/util.dart';
-import 'package:mindway/src/onboarding/onboarding_screen1.dart';
+import 'package:mindway/src/new/screens/good_news_screen.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
@@ -39,7 +34,7 @@ class _SelectTimeAndDayToNotifyNewState
       name: "Morning",
       image: "assets/images/morning.png",
       size: 50,
-      selectColor: Colors.white.withOpacity(0.3),
+      selectColor: const Color(0xffBAD4FF),
       textColor: kPrimaryColor,
       timeOfDay: const TimeOfDay(hour: 8, minute: 0),
       selectedTime: "08.00 AM");
@@ -47,7 +42,7 @@ class _SelectTimeAndDayToNotifyNewState
       name: "AfterNoon",
       image: "assets/images/afternoon.png",
       size: 45,
-      selectColor: Colors.white.withOpacity(0.3),
+      selectColor: const Color(0xffBAD4FF),
       textColor: kPrimaryColor,
       timeOfDay: const TimeOfDay(hour: 12, minute: 0),
       selectedTime: "12.00 PM");
@@ -55,7 +50,7 @@ class _SelectTimeAndDayToNotifyNewState
       name: "Night",
       image: "assets/images/night.png",
       size: 40,
-      selectColor: const Color(0xff435284),
+      selectColor:  const Color(0xff3F5388),
       textColor: Colors.white,
       timeOfDay: const TimeOfDay(hour: 20, minute: 0),
       selectedTime: "08.00 PM");
@@ -63,7 +58,7 @@ class _SelectTimeAndDayToNotifyNewState
   List<DayTimeDivider> daytimeDividerList = [];
   Color dividerColor = Colors.white.withOpacity(0.5);
   Color dividerTextColor = Colors.white;
-  List<Color> dividerColorList = List.filled(3, Colors.white.withOpacity(0.5));
+  List<Color> dividerColorList = List.filled(3, const Color(0xffEEF4FF));
   List<Color> dividerTextColorList = List.filled(3, kPrimaryColor);
   String selectedTime = "06.00 AM";
   TimeOfDay timeOfDay = const TimeOfDay(hour: 6, minute: 0);
@@ -100,27 +95,23 @@ class _SelectTimeAndDayToNotifyNewState
     daytimeDividerList.add(nightTimeDivider);
 
     return Scaffold(
-      backgroundColor: backgroundColorLight,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding:   const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
               Image.asset("assets/images/mindway_notification.png"),
-              const SizedBox(height: 40.0),
+                const SizedBox(height: 40.0),
               Text(
                 'When do you want to\nmeditate?',
-                style: kTitleStyleNew,
+                style: kTitleStyleNew.copyWith(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 33),
                 textAlign: TextAlign.center,
+
               ),
               const SizedBox(height: 10.0),
-              const Center(
-                child: Text('Success isn’t overnight, build consistency',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400)),
-              ),
+                Text('Success isn’t overnight, build consistency',
+                    style: kTitleStyleNew.copyWith(color: Colors.black,fontWeight: FontWeight.w400,fontSize: 19 ),),
               const SizedBox(height: 20.0),
               GridView.count(
                 crossAxisCount: 3,
@@ -130,11 +121,14 @@ class _SelectTimeAndDayToNotifyNewState
                 children: List.generate(
                   daytimeDividerList.length,
                   (index) {
+                    print( dividerColorList[index]);
+                    print('sssssssss');
                     return Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Container(
                         decoration: BoxDecoration(
                           color: dividerColorList[index],
+                          //color: dividerColorList[index],
                           borderRadius: const BorderRadius.all(
                             Radius.circular(20.0),
                           ),
@@ -185,7 +179,8 @@ class _SelectTimeAndDayToNotifyNewState
                                       color: dividerTextColorList[index],
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500),
-                                )
+                                ),
+
                               ]),
                         ),
                       ),
@@ -197,7 +192,7 @@ class _SelectTimeAndDayToNotifyNewState
               const Center(
                 child: Text('We’ll remind you at...',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w400)),
               ),
@@ -253,12 +248,17 @@ class _SelectTimeAndDayToNotifyNewState
                       borderRadius: 50,
                       btnTxt: 'Set Reminder',
                       onPress: () {
+                         //Navigator.push(context, MaterialPageRoute(builder: (context) => GoodNewsScreen1(),));
                         debugPrint("SelectedDateTime $selectedDateTime");
                         if (selectedDateTime != null && days.isNotEmpty) {
-                          Get.toNamed(OnboardingScreen1.routeName, arguments: {
-                            'time': selectedDateTime,
-                            'days': days,
-                          });
+                         Get.toNamed(GoodNewsScreen1.routeName, arguments: {
+                                                      'time': selectedDateTime,
+                                                      'days': days,
+                                                    });
+                          // Get.toNamed(OnboardingScreen1.routeName, arguments: {
+                          //   'time': selectedDateTime,
+                          //   'days': days,
+                          // });
                         } else {
                           displayToastMessage('Please select time');
                         }

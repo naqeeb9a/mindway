@@ -3,6 +3,8 @@ class UserDataModel {
       {required this.id,
       required this.name,
       required this.email,
+        required this.goal_id,
+
       // this.password,
       // this.image,
       // this.improve,
@@ -24,7 +26,10 @@ class UserDataModel {
   int id;
   String name;
   String email;
+  String goal_id;
+
   String? gmail;
+
   // String? password;
   // String? image;
   // String? improve;
@@ -45,6 +50,7 @@ class UserDataModel {
         id: json["id"],
         name: json["name"],
         email: json["email"],
+    goal_id: json["goal_id"],
         gmail: json["gmail"],
         // password: json["password"],
         // image: json["image"],
@@ -67,6 +73,8 @@ class UserDataModel {
         "id": id,
         "name": name,
         "email": email,
+    "goal_id": goal_id,
+
         "gmail": gmail,
         // "password": password,
         // "image": image,

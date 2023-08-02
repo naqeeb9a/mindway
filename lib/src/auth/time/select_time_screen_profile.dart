@@ -2,10 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
-import 'package:get/get.dart';
-import 'package:mindway/src/auth/views/signup_screen.dart';
 import 'package:mindway/src/new/util.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/display_toast_message.dart';

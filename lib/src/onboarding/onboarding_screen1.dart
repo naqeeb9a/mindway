@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:mindway/src/new/util.dart';
 import 'package:mindway/src/onboarding/onboarding_screen2.dart';
@@ -27,11 +26,11 @@ class OnboardingScreen1 extends StatelessWidget {
           children: [
             const DotWidget(color1: kPrimaryColor),
             const SizedBox(height: 24.0),
-            Padding(
-              padding: const EdgeInsets.only(right: 40.0, left: 40.0),
+            const Padding(
+              padding: EdgeInsets.only(right: 40.0, left: 40.0),
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.label, color: Colors.white),
                   Text(
                     '  2 Courses',

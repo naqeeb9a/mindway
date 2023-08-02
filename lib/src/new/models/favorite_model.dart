@@ -9,7 +9,7 @@ class FavoriteModel {
   String? audio;
   String? image;
   String? color;
-
+  String? duration;
   FavoriteModel(
       {required this.type,
       required this.id,
@@ -18,7 +18,9 @@ class FavoriteModel {
       required this.title,
       required this.audio,
       required this.image,
-      required this.color});
+      required this.color,
+        required this.duration
+      });
 
   factory FavoriteModel.fromJson(Map<String, dynamic> json) => FavoriteModel(
       id: json['id'],
@@ -28,7 +30,9 @@ class FavoriteModel {
       title: json['title'],
       audio: json['audio'],
       image: json['image'],
-      color: json['color']);
+      color: json['color'],
+      duration: json['duration']
+  );
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -39,6 +43,7 @@ class FavoriteModel {
         'audio': audio,
         'image': image,
         'color': color,
+    'duration': duration,
       };
 
   factory FavoriteModel.fromFirestore(DocumentSnapshot snap) {
@@ -51,7 +56,10 @@ class FavoriteModel {
         title: d['title'],
         audio: d['audio'],
         image: d['image'],
-        color: d['color']);
+        color: d['color'],
+        duration: d['duration']
+    );
+
   }
 
   static Map<String, dynamic> getMap(FavoriteModel d) {
@@ -64,6 +72,7 @@ class FavoriteModel {
       'audio': d.audio,
       'image': d.image,
       'color': d.color,
+      'duration': d.duration,
     };
   }
 }

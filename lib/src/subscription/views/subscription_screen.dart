@@ -1215,11 +1215,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                         ),
                                       ),
                                       gradient: LinearGradient(
-                                        begin: Alignment(
+                                        begin: const Alignment(
                                           0.5,
                                           0,
                                         ),
-                                        end: Alignment(
+                                        end: const Alignment(
                                           0.5,
                                           1,
                                         ),
@@ -1236,7 +1236,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                   child: Card(
                                     clipBehavior: Clip.antiAlias,
                                     elevation: 0,
-                                    margin: EdgeInsets.all(0),
+                                    margin: const EdgeInsets.all(0),
                                     color: ColorConstant.indigo300,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(

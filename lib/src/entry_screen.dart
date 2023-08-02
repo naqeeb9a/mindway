@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mindway/src/auth/choose_screen.dart';
 import 'package:mindway/src/auth/views/login_screen.dart';
 import 'package:mindway/src/new/screens/welcome_screen.dart';
 import 'package:mindway/src/new/util.dart';
 import 'package:mindway/utils/constants.dart';
-import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:video_player/video_player.dart';
 
 class EntryScreen extends StatefulWidget {
   static const String routeName = "/entry";
@@ -38,7 +34,6 @@ class _EntryScreenState extends State<EntryScreen> {
   //   setFirstRun();
   // }
 
-
   void setFirstRun() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('firstRun', false);
@@ -46,65 +41,89 @@ class _EntryScreenState extends State<EntryScreen> {
 
   @override
   Widget build(BuildContext context) {
-return Scaffold(
-    body: Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      color: backgroundColorDark,
-child: Column(
+    return Scaffold(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: backgroundColorDark,
+        child: Column(
+          children: [
+            const SizedBox(
 
-  children: [
-    SizedBox(
-      height: 100,
-    ),
-    // Container (
-    //  child: Image.asset('assets/images/Cloud.png'),
-    // ),
-Container (
-  height: 300,
-  child: Image.asset('assets/images/main-image.png'),
-),
-
-Text("                 Hi there \nGlad to see youre on the \n     way to a better life",style: TextStyle(fontSize: 22,color: Colors.white),),
-    SizedBox(height: 74,),
-    Text("Do you have an \n      account?",style: TextStyle(fontSize: 33,color: Colors.white),),
-SizedBox(
-  height: 30,
-),
-Row(
-mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  children: [
-
-        SizedBox(
-          height: 59,
-          width: 121,
-          child: ElevatedButton(
-            
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Color(0xffDAE1F2)),
-shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)))
             ),
-              onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomeScreen(),));
-              }, child: Text('Yes',style: TextStyle(color: Colors.black,fontSize: 25))),
+            // Container (
+            //  child: Image.asset('assets/images/Cloud.png'),
+            // ),
+            SizedBox(
+              height: 440,
+              child: Image.asset('assets/images/cloud-heart.png'),
+            ),
+
+            Text(
+              "                Hi there!👋 \nGlad to see you're on the \n     way to a better life",
+                style: kBodyStyle.copyWith(fontSize: 20.0,color: Colors.white)
+            ),
+            const SizedBox(
+              height: 70,
+            ),
+            Text(
+              "Do you have an \n      account?",
+                style: kBodyStyle.copyWith(fontSize: 33.0,color: Colors.white,fontWeight: FontWeight.bold)
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Row(
+               children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 75.0,right: 30),
+                  child: SizedBox(
+                    height: 59,
+                    width: 121,
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                const MaterialStatePropertyAll(Color(0xffDAE1F2)),
+                            shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(90)))),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LogInScreen(),
+                              ));
+                        },
+                        child: Text('Yes',
+                            style: kBodyStyle.copyWith(fontSize: 25.0,color: Colors.black,fontWeight: FontWeight.bold)
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  height: 59,
+                  width: 121,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              const MaterialStatePropertyAll(Color(0xff4468BE)),
+                          shape: MaterialStatePropertyAll(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(90)))),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const WelcomeScreen(),
+                            ));
+                      },
+                      child: Text('No',
+                          style: kBodyStyle.copyWith(fontSize: 25.0,color: Colors.white,fontWeight: FontWeight.bold))),
+                ),
+              ],
+            )
+          ],
         ),
-    SizedBox(
-      height: 59,
-      width: 121,
-      child: ElevatedButton(
-
-          style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Color(0xff4468BE)),
-              shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)))
-          ),
-          onPressed: (){}, child: Text('No',style: TextStyle(color: Colors.white,fontSize: 25))),
-    ),
-  ],
-)
-  ],
-),
-    ),
-);
+      ),
+    );
   }
-
 }

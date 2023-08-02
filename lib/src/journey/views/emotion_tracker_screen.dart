@@ -5,8 +5,6 @@ import 'package:flutter_calendar_widget/flutter_calendar_widget.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mindway/src/home/controller/home_controller.dart';
-import 'package:mindway/src/journal/add_journal_screen.dart';
-import 'package:mindway/src/journal/controller/journal_controller.dart';
 import 'package:mindway/src/journey/journey_controller.dart';
 import 'package:mindway/src/journey/views/emotion_screen.dart';
 import 'package:mindway/src/new/models/note_model.dart';
@@ -21,8 +19,6 @@ import 'package:mindway/widgets/calender_widget.dart';
 import '../../../utils/firebase_collections.dart';
 import '../../home/models/home_emoji.dart';
 import '../add_note_screen.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 class EmotionTrackerScreen extends StatefulWidget {
   static const String routeName = '/emotion-tracker';
 
@@ -34,7 +30,7 @@ class EmotionTrackerScreen extends StatefulWidget {
 
 class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
   var notes;
-  TextEditingController notesController = new TextEditingController();
+  TextEditingController notesController = TextEditingController();
   String displayDate = "";
   String date = "";
   NoteModel? noteModel;
@@ -57,7 +53,7 @@ class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
   }
 
   getTodayNotes(sdate) async {
-    print("Notes TodayDate " + sdate.toString());
+    print("Notes TodayDate $sdate");
     await FirebaseService().getNoteByDate(sdate).then((value) {
       setState(() {
         noteModel = value;
@@ -121,7 +117,7 @@ class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
           if (dateOnly(today: (element['date'] as Timestamp).toDate()) ==
               dateOnly(today: sdate)) {
             // feels = element['name'] as List<String>;
-            debugPrint("FeelFromFirebase " + element['name'].toString());
+            debugPrint("FeelFromFirebase ${element['name']}");
             setState(() {
               feelsOnSelectedDate = element['name'];
             });
@@ -154,13 +150,14 @@ class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
               factorsOnSelectedData = element['factorNames'];
             });
 
-            debugPrint("FeelFromFirebase " + element['factorNames'].toString());
+            debugPrint("FeelFromFirebase ${element['factorNames']}");
           }
         }
       }
     });
   }
   DateTime selectedDay = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,10 +168,10 @@ class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
         children: [
           const SizedBox(height: 20.0),
           // FlutterCalendar(
-          //   maxDate: DateTime.now().subtract(Duration(days: 1)),
-          //   minDate: DateTime(2100),
+          //
           //   selectionMode: CalendarSelectionMode.single,
           //   calendarBuilder: CustomCalenderBuilder(),
+          //
           //   onDayPressed: (selectedDate) {
           //     debugPrint("Notes selectedDate " + selectedDate.toString());
           //     displayDate = DateFormat('EEEE, MMMM dd').format(selectedDate);
@@ -184,13 +181,29 @@ class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
           //     getFactorfromFirebase(selectedDate);
           //     getMoodFromFirebase(selectedDate);
           //     this.selectedDate = selectedDate;
-          //     // if (dateOnly(today: date) == dateOnly(today: DateTime.now())) {
-          //     // Get.toNamed(EmotionScreen.routeName);
-          //     // }
+          //
           //   },
           // ),
-          SfDateRangePicker(
-            enablePastDates: false,
+          FlutterCalendar(
+            textStyle:   const CalendarTextStyle(
+                outsideDayTextColor: Colors.white,
+              selectedDayTextColor: Colors.white,
+            ),
+            selectionMode: CalendarSelectionMode.single,
+            calendarBuilder: CustomCalenderBuilder(),
+            onDayPressed: (selectedDate) {
+              debugPrint("Notes selectedDate $selectedDate");
+              displayDate = DateFormat('EEEE, MMMM dd').format(selectedDate);
+              date = DateFormat('dd-MM-yyyy').format(selectedDate);
+              getTodayNotes(date);
+              getFeelfromFirebase(selectedDate);
+              getFactorfromFirebase(selectedDate);
+              getMoodFromFirebase(selectedDate);
+              this.selectedDate = selectedDate;
+              // if (dateOnly(today: date) == dateOnly(today: DateTime.now())) {
+              // Get.toNamed(EmotionScreen.routeName);
+              // }
+            },
           ),
 
           const Divider(thickness: 2.0, indent: 10.0, endIndent: 10.0),
@@ -345,7 +358,7 @@ class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 16.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kBorderRadius),
-          color: Color(0xffA0B8E9),
+          color: const Color(0xffA0B8E9),
         ),
         child: InkWell(
           onTap: () async {
@@ -362,13 +375,13 @@ class _EmotionTrackerScreenState extends State<EmotionTrackerScreen> {
               });
             }
           },
-          child: SizedBox(
+          child: const SizedBox(
             height: 50,
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: Text('Add note',

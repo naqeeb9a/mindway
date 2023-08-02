@@ -13,6 +13,7 @@ import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String routeName = '/signup';
@@ -32,6 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   String userName = "";
   String gender = "";
+  String goal_id = "";
   @override
   void initState() {
     getUserName();
@@ -43,11 +45,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       userName = sharedPreferences.getString("username")!;
       gender = sharedPreferences.getString("gender")!;
+      goal_id = sharedPreferences.getString("goal_id")!;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
     DateTime time = args['time'] as DateTime;
     List<String> days = args['days'];
     return Scaffold(
@@ -66,6 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  //Text(goal_id),
                   SocialMediaBtn(
                     onTapped: () async {
                       await _authCtrl.verifyGoogleEmailNew(
@@ -73,6 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           time: Timestamp.fromDate(time),
                           days: days,
                           userName: userName,
+                          goal_id: goal_id,
                           gender: gender);
                     },
                   ),
@@ -88,6 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             time: Timestamp.fromDate(time),
                             days: days,
                             gender: gender,
+                            goal_id: goal_id,
                             userName: userName);
                       }
                     },
@@ -97,8 +104,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: CustomAsyncBtn(
                       width: MediaQuery.of(context).size.width * 0.8,
                       borderRadius: 50.0,
-                      btnColor: Colors.blue.shade400,
-                      btnTxt: 'Create account',
+                      btnColor: const Color(0xff688EDC),
+                      btnTxt: 'Continue with email',
                       onPress: () {
                         Get.toNamed(
                           SignUpFormScreen.routeName,
@@ -144,33 +151,67 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget privacyPolicyLinkAndTermsOfService() {
-    return Container(
-      alignment: Alignment.center,
-      child: Center(
-        child: Text.rich(
-          TextSpan(
-            text: 'By signing up to Mindway you agree to our',
-            style: kBodyStyle.copyWith(color: Colors.grey),
-            children: <TextSpan>[
+    return
+      Container(
+        alignment: Alignment.center,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 30.0),
+          child: Center(
+            child: Text.rich(
               TextSpan(
-                text: ' Medical Disclaimer',
-                style: kBodyStyle.copyWith(color: kPrimaryColor),
-                recognizer: TapGestureRecognizer()..onTap = () {},
-              ),
-              TextSpan(
-                text: ' & ',
+                text: 'By signing up to Mindway you agree to our',
+                style: kBodyStyle.copyWith(color: Colors.grey,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500),
                 children: <TextSpan>[
                   TextSpan(
-                    text: 'Privacy Policy',
-                    style: kBodyStyle.copyWith(color: kPrimaryColor),
-                    recognizer: TapGestureRecognizer()..onTap = () {},
+                    text: ' Terms of Use',
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launchUrlStart(url: "https://mindwayapp.com/terms");
+                      },
+                    style: const TextStyle(
+                      color: Color(0xff688EDC),
+                      // decoration: TextDecoration.underline,
+                    ),
+
+
+                  ),
+
+                  TextSpan(
+                    text: ' & ',
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '\nPrivacy Policy',
+                        style: const TextStyle(
+                          color: Color(0xff688EDC),
+                          //decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            launchUrlStart1(url: "https://mindwayapp.com/privacypolicy");
+                          },
+
+                      ),
+
+                    ],
+
                   )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
         ),
-      ),
-    );
+      );
+  }
+  Future<void> launchUrlStart({required String url}) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw 'Could not launch $url';
+    }
+  }
+  Future<void> launchUrlStart1({required String url}) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw 'Could not launch $url';
+    }
   }
 }

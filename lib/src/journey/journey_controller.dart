@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mindway/src/home/models/home_emoji.dart';
 import 'package:mindway/src/journey/journey_service.dart';
@@ -14,7 +13,6 @@ import 'package:mindway/src/journey/models/emotion_tracker.dart';
 import 'package:mindway/src/journey/models/factor_data.dart';
 import 'package:mindway/src/network_manager.dart';
 import 'package:mindway/utils/constants.dart';
-import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/utils/firebase_collections.dart';
 import 'package:mindway/utils/helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -105,7 +103,7 @@ class JourneyController extends NetworkManager {
       log('${e.response}', name: 'Dio Error Emoji');
     } catch (e) {
       log('$e', name: 'Error Emoji');
-      displayToastMessage('Failed to load');
+      //displayToastMessage('Failed to load');
     }
   }
 
@@ -244,7 +242,7 @@ class JourneyController extends NetworkManager {
     List<int> factorIds = [];
     List<String> factorNames = [];
 
-    debugPrint("selectedFeelEmoji " + selectedFeelEmoji.toString());
+    debugPrint("selectedFeelEmoji $selectedFeelEmoji");
 
     for (EmotionModel emotionModel in selectedFeelEmoji) {
       ids.add(emotionModel.id);
@@ -298,7 +296,7 @@ class JourneyController extends NetworkManager {
       debugPrint("ArrayData firebase Database Updated ");
     } else {
       for (var element in arrayData) {
-        print("Element " + element.toString());
+        print("Element $element");
 
         if (dateOnly(today: (element['date'] as Timestamp).toDate()) ==
             dateOnly(today: selectedDate)) {
