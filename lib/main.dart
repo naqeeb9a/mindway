@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -15,7 +16,11 @@ import 'package:mindway/utils/app_theme.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/firebase_collections.dart';
 import 'package:mindway/utils/routes.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'my folder/constants.dart';
+import 'my folder/store_config.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -25,6 +30,17 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 bool? firstRun;
 
 Future<void> main() async {
+  if (Platform.isIOS || Platform.isMacOS) {
+    StoreConfig(
+      store: Store.appStore,
+      apiKey: appleApiKey,
+    );
+  } else if (Platform.isAndroid) {
+    StoreConfig(
+      store: Store.playStore,
+      apiKey: googleApiKey,
+    );
+  }
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
     androidNotificationChannelName: 'Audio playback',
@@ -98,11 +114,9 @@ class MyApp extends StatelessWidget {
     String route = "";
     if (firstRun == null) {
       print('First time 1');
-     route = SplashScreen.routeName;
-     // route = LogInScreen.routeName;
-
-    }
-    else {
+      route = SplashScreen.routeName;
+      // route = LogInScreen.routeName;
+    } else {
       route = SplashScreen.routeName;
       //route = LogInScreen.routeName;
       // if (FirebaseAuth.instance.currentUser == null) {

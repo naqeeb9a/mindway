@@ -86,6 +86,7 @@ dependencies:
   hooks_riverpod: ^2.3.6
   flutter_native_splash: ^2.2.10
   chewie: ^1.5.0
+  purchases_flutter: ^5.5.0
 
 flutter_native_splash:
   color: "#ebe134"
