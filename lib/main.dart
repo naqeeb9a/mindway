@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:mindway/firebase_options.dart';
+import 'package:mindway/my%20folder/notification_service.dart';
 import 'package:mindway/src/auth/auth_controller.dart';
 import 'package:mindway/src/initial_binding.dart';
 import 'package:mindway/src/splash_screen.dart';
@@ -16,11 +16,8 @@ import 'package:mindway/utils/app_theme.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/firebase_collections.dart';
 import 'package:mindway/utils/routes.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'my folder/constants.dart';
-import 'my folder/store_config.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -30,17 +27,17 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 bool? firstRun;
 
 Future<void> main() async {
-  if (Platform.isIOS || Platform.isMacOS) {
-    StoreConfig(
-      store: Store.appStore,
-      apiKey: appleApiKey,
-    );
-  } else if (Platform.isAndroid) {
-    StoreConfig(
-      store: Store.playStore,
-      apiKey: googleApiKey,
-    );
-  }
+  // if (Platform.isIOS || Platform.isMacOS) {
+  //   StoreConfig(
+  //     store: Store.appStore,
+  //     apiKey: appleApiKey,
+  //   );
+  // } else if (Platform.isAndroid) {
+  //   StoreConfig(
+  //     store: Store.playStore,
+  //     apiKey: googleApiKey,
+  //   );
+  // }
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
     androidNotificationChannelName: 'Audio playback',
@@ -81,6 +78,8 @@ Future<void> main() async {
       });
     }
   });
+  await NotificationService().initNotification();
+  tz.initializeTimeZones();
   runApp(const MyApp());
 }
 

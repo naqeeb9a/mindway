@@ -442,7 +442,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.2,
                             child: Image.asset(
-                              "assets/icons/black_tick.png",
+                              "assets/icons/white_tick.png",
                               height: 20,
                               width: 20,
                             ),
@@ -474,7 +474,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.2,
                             child: Image.asset(
-                              "assets/icons/black_tick.png",
+                              "assets/icons/white_tick.png",
                               height: 20,
                               width: 20,
                             ),
@@ -506,7 +506,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.2,
                             child: Image.asset(
-                              "assets/icons/black_tick.png",
+                              "assets/icons/white_tick.png",
                               height: 20,
                               width: 20,
                             ),
@@ -537,7 +537,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.2,
                             child: Image.asset(
-                              "assets/icons/black_tick.png",
+                              "assets/icons/white_tick.png",
                               height: 20,
                               width: 20,
                             ),
@@ -568,7 +568,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.2,
                             child: Image.asset(
-                              "assets/icons/black_tick.png",
+                              "assets/icons/white_tick.png",
                               height: 20,
                               width: 20,
                             ),

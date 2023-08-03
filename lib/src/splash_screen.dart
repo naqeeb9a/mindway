@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mindway/my%20folder/paywall_intro.dart';
 import 'package:mindway/utils/constants.dart';
+
+import 'auth/time/select_time_screen_new.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = "/";
@@ -11,7 +12,7 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -50,7 +51,8 @@ class _SplashScreenState extends State<SplashScreen> {
     // FirebaseAuth.instance.currentUser == null
     //     ? Get.offNamed(EntryScreen.routeName)
     //     : Get.offNamed(MainScreen.routeName, arguments: {'checkFromSpalsh': 1});
-    Get.offNamed(PayWallIntro.routeName);
+    // Get.offNamed(PayWallIntro.routeName);
+    Get.offNamed(SelectTimeAndDayToNotifyNew.routeName);
   }
 
   @override

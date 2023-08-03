@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:mindway/my%20folder/notification_service.dart';
 import 'package:mindway/src/auth/time/select_time_screen_profile_new.dart';
-import 'package:mindway/src/new/screens/good_news_screen.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
@@ -50,7 +49,7 @@ class _SelectTimeAndDayToNotifyNewState
       name: "Night",
       image: "assets/images/night.png",
       size: 40,
-      selectColor:  const Color(0xff3F5388),
+      selectColor: const Color(0xff3F5388),
       textColor: Colors.white,
       timeOfDay: const TimeOfDay(hour: 20, minute: 0),
       selectedTime: "08.00 PM");
@@ -98,20 +97,27 @@ class _SelectTimeAndDayToNotifyNewState
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding:   const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
               Image.asset("assets/images/mindway_notification.png"),
-                const SizedBox(height: 40.0),
+              const SizedBox(height: 40.0),
               Text(
                 'When do you want to\nmeditate?',
-                style: kTitleStyleNew.copyWith(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 33),
+                style: kTitleStyleNew.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 33),
                 textAlign: TextAlign.center,
-
               ),
               const SizedBox(height: 10.0),
-                Text('Success isn’t overnight, build consistency',
-                    style: kTitleStyleNew.copyWith(color: Colors.black,fontWeight: FontWeight.w400,fontSize: 19 ),),
+              Text(
+                'Success isn’t overnight, build consistency',
+                style: kTitleStyleNew.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 19),
+              ),
               const SizedBox(height: 20.0),
               GridView.count(
                 crossAxisCount: 3,
@@ -121,8 +127,6 @@ class _SelectTimeAndDayToNotifyNewState
                 children: List.generate(
                   daytimeDividerList.length,
                   (index) {
-                    print( dividerColorList[index]);
-                    print('sssssssss');
                     return Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Container(
@@ -180,7 +184,6 @@ class _SelectTimeAndDayToNotifyNewState
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500),
                                 ),
-
                               ]),
                         ),
                       ),
@@ -247,14 +250,20 @@ class _SelectTimeAndDayToNotifyNewState
                   ? CustomAsyncBtn(
                       borderRadius: 50,
                       btnTxt: 'Set Reminder',
-                      onPress: () {
-                         //Navigator.push(context, MaterialPageRoute(builder: (context) => GoodNewsScreen1(),));
+                      onPress: () async {
+                        //Navigator.push(context, MaterialPageRoute(builder: (context) => GoodNewsScreen1(),));
                         debugPrint("SelectedDateTime $selectedDateTime");
                         if (selectedDateTime != null && days.isNotEmpty) {
-                         Get.toNamed(GoodNewsScreen1.routeName, arguments: {
-                                                      'time': selectedDateTime,
-                                                      'days': days,
-                                                    });
+                          await NotificationService().scheduleNotification(
+                              title: "Mindfulness Time",
+                              body:
+                                  "It's you time ⭐ Take some time to meditate & journal your emotions.",
+                              scheduledNotificationDateTime:
+                                  selectedDateTime ?? DateTime.now());
+                          // Get.toNamed(GoodNewsScreen1.routeName, arguments: {
+                          //   'time': selectedDateTime,
+                          //   'days': days,
+                          // });
                           // Get.toNamed(OnboardingScreen1.routeName, arguments: {
                           //   'time': selectedDateTime,
                           //   'days': days,

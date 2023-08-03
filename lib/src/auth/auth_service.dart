@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mindway/utils/api.dart';
@@ -32,7 +34,6 @@ class AuthService {
         "password": password,
         "password_confirmation": password,
         "goal_id": goal_id,
-
       },
     );
   }
