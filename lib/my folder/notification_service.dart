@@ -51,7 +51,7 @@ class NotificationService {
           tz.local,
         ),
         await notificationDetails(),
-        androidAllowWhileIdle: true,
+        androidScheduleMode: AndroidScheduleMode.alarmClock,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }

@@ -112,7 +112,6 @@ class MyApp extends StatelessWidget {
   String getInitialRoute() {
     String route = "";
     if (firstRun == null) {
-      print('First time 1');
       route = SplashScreen.routeName;
       // route = LogInScreen.routeName;
     } else {
