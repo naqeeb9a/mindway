@@ -13,7 +13,7 @@ import 'package:mindway/utils/constants.dart';
 import 'package:mindway/widgets/cache_img_widget.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:expandable/expandable.dart';
 import '../../../utils/helper.dart';
 
 class EmotionScreen extends StatefulWidget {
@@ -112,8 +112,6 @@ class _EmotionScreenState extends State<EmotionScreen> {
             if (widget.onCompleted != null) {
               widget.onCompleted();
             }
-
-
           },
         ),
       ),
@@ -218,7 +216,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
                             color: Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                                const BorderRadius.all(Radius.circular(10))),
                         child: Text(
                           todayNote.isEmpty ? "Add Note" : todayNote,
                           style: const TextStyle(fontSize: 15),
@@ -228,21 +226,21 @@ class _EmotionScreenState extends State<EmotionScreen> {
                   ],
                 )
 
-              // child: TextField(
-              //   controller: notesController,
-              //   decoration: InputDecoration(
-              //       enabled: false,
-              //       filled: true,
-              //       fillColor: Colors.white,
-              //       hintText: 'Add Note',
-              //       contentPadding: const EdgeInsets.all(15),
-              //       border: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(10))),
-              //   onChanged: (value) {
-              //     // do something
-              //   },
-              // ),
-            ),
+                // child: TextField(
+                //   controller: notesController,
+                //   decoration: InputDecoration(
+                //       enabled: false,
+                //       filled: true,
+                //       fillColor: Colors.white,
+                //       hintText: 'Add Note',
+                //       contentPadding: const EdgeInsets.all(15),
+                //       border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(10))),
+                //   onChanged: (value) {
+                //     // do something
+                //   },
+                // ),
+                ),
           ],
         ),
       ),
@@ -268,7 +266,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
               child: Row(
                 children: [
                   ...homeCtrl.emojiList.map(
-                        (e) {
+                    (e) {
                       return Row(
                         children: [
                           InkWell(
@@ -282,9 +280,9 @@ class _EmotionScreenState extends State<EmotionScreen> {
                                 border: Border.all(
                                   width: 4.0,
                                   color:
-                                  _journeyCtrl.selectedDayEmoji?.id == e.id
-                                      ? Colors.blue.shade700
-                                      : const Color(0xFFEAEDF4),
+                                      _journeyCtrl.selectedDayEmoji?.id == e.id
+                                          ? Colors.blue.shade700
+                                          : const Color(0xFFEAEDF4),
                                 ),
                                 borderRadius: BorderRadius.circular(50.0),
                               ),
@@ -318,72 +316,137 @@ class _EmotionScreenState extends State<EmotionScreen> {
         color: const Color(0xFFEAEDF4),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('Feel', style: kBodyStyle),
-          const SizedBox(height: 8.0),
-          GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 1.1,
-              crossAxisCount: 4,
-            ),
-            itemCount: _journeyCtrl.emojiList.length,
-            itemBuilder: (BuildContext context, int i) {
-              return InkWell(
-                onTap: () {
-                  EmotionModel data = EmotionModel(
-                    id: _journeyCtrl.emojiList[i].id,
-                    name: _journeyCtrl.emojiList[i].name,
-                    emoji: _journeyCtrl.emojiList[i].emoji,
-                  );
-                  int index = _journeyCtrl.selectedFeelEmoji
-                      .indexWhere((element) => element.id == data.id);
-                  if (index > -1) {
-                    _journeyCtrl.selectedFeelEmoji
-                        .removeWhere((item) => item.id == data.id);
-                  } else {
-                    _journeyCtrl.selectedFeelEmoji.add(data);
-                  }
-                  _journeyCtrl.update();
-                  sharedPreferences!.setString("feelDate", dateNow);
-                },
-                child: Column(
-                  children: [
-                    CacheImgWidget(
-                        '$emojiURL/${_journeyCtrl.emojiList[i].emoji}'),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 2.0),
-                      decoration: BoxDecoration(
-                        color: _journeyCtrl.selectedFeelEmoji.indexWhere(
-                                (element) =>
-                            element.id ==
-                                _journeyCtrl.emojiList[i].id) >
-                            -1
-                            ? const Color(0xFF688EDC)
-                            : const Color(0xFFEAEDF4),
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      child: Text(
-                        _journeyCtrl.emojiList[i].name,
-                        style: TextStyle(
-                          fontSize: 13.0,
+          Text('What are you feeling?', style: kBodyStyle),
+          const SizedBox(height: 10.0),
+          ExpandablePanel(
+            collapsed: GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 1.1,
+                crossAxisCount: 4,
+              ),
+              itemCount: _journeyCtrl.emojiList.length,
+              itemBuilder: (BuildContext context, int i) {
+                return InkWell(
+                  onTap: () {
+                    EmotionModel data = EmotionModel(
+                      id: _journeyCtrl.emojiList[i].id,
+                      name: _journeyCtrl.emojiList[i].name,
+                      emoji: _journeyCtrl.emojiList[i].emoji,
+                    );
+                    int index = _journeyCtrl.selectedFeelEmoji
+                        .indexWhere((element) => element.id == data.id);
+                    if (index > -1) {
+                      _journeyCtrl.selectedFeelEmoji
+                          .removeWhere((item) => item.id == data.id);
+                    } else {
+                      _journeyCtrl.selectedFeelEmoji.add(data);
+                    }
+                    _journeyCtrl.update();
+                    sharedPreferences!.setString("feelDate", dateNow);
+                  },
+                  child: Column(
+                    children: [
+                      CacheImgWidget(
+                          '$emojiURL/${_journeyCtrl.emojiList[i].emoji}'),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 2.0),
+                        decoration: BoxDecoration(
                           color: _journeyCtrl.selectedFeelEmoji.indexWhere(
-                                  (element) =>
-                              element.id ==
-                                  _journeyCtrl.emojiList[i].id) >
-                              -1
-                              ? Colors.white
-                              : Colors.black,
+                                      (element) =>
+                                          element.id ==
+                                          _journeyCtrl.emojiList[i].id) >
+                                  -1
+                              ? const Color(0xFF688EDC)
+                              : const Color(0xFFEAEDF4),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: Text(
+                          _journeyCtrl.emojiList[i].name,
+                          style: TextStyle(
+                            fontSize: 13.0,
+                            color: _journeyCtrl.selectedFeelEmoji.indexWhere(
+                                        (element) =>
+                                            element.id ==
+                                            _journeyCtrl.emojiList[i].id) >
+                                    -1
+                                ? Colors.white
+                                : Colors.black,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
+                    ],
+                  ),
+                );
+              },
+            ),
+            expanded: GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 1.1,
+                crossAxisCount: 4,
+              ),
+              itemCount: _journeyCtrl.emojiList.length,
+              itemBuilder: (BuildContext context, int i) {
+                return InkWell(
+                  onTap: () {
+                    EmotionModel data = EmotionModel(
+                      id: _journeyCtrl.emojiList[i].id,
+                      name: _journeyCtrl.emojiList[i].name,
+                      emoji: _journeyCtrl.emojiList[i].emoji,
+                    );
+                    int index = _journeyCtrl.selectedFeelEmoji
+                        .indexWhere((element) => element.id == data.id);
+                    if (index > -1) {
+                      _journeyCtrl.selectedFeelEmoji
+                          .removeWhere((item) => item.id == data.id);
+                    } else {
+                      _journeyCtrl.selectedFeelEmoji.add(data);
+                    }
+                    _journeyCtrl.update();
+                    sharedPreferences!.setString("feelDate", dateNow);
+                  },
+                  child: Column(
+                    children: [
+                      CacheImgWidget(
+                          '$emojiURL/${_journeyCtrl.emojiList[i].emoji}'),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 2.0),
+                        decoration: BoxDecoration(
+                          color: _journeyCtrl.selectedFeelEmoji.indexWhere(
+                                      (element) =>
+                                          element.id ==
+                                          _journeyCtrl.emojiList[i].id) >
+                                  -1
+                              ? const Color(0xFF688EDC)
+                              : const Color(0xFFEAEDF4),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: Text(
+                          _journeyCtrl.emojiList[i].name,
+                          style: TextStyle(
+                            fontSize: 13.0,
+                            color: _journeyCtrl.selectedFeelEmoji.indexWhere(
+                                        (element) =>
+                                            element.id ==
+                                            _journeyCtrl.emojiList[i].id) >
+                                    -1
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
