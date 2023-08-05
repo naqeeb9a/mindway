@@ -11,8 +11,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 class MainScreen extends StatefulWidget {
   static const String routeName = '/main';
 
-
-  const MainScreen({ Key? key}) : super(key: key);
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -28,17 +27,16 @@ class _MainScreenState extends State<MainScreen> {
     var connectivityResult = await Connectivity().checkConnectivity();
     return connectivityResult != ConnectivityResult.none;
   }
-int  checkFromSpalsh = 0;
+
+  int checkFromSpalsh = 0;
   @override
   void initState() {
     super.initState();
-    checkFromSpalsh = Get.arguments != null ? Get.arguments['checkFromSpalsh']  : 0;
+    checkFromSpalsh =
+        Get.arguments != null ? Get.arguments['checkFromSpalsh'] : 0;
 
-    print(checkFromSpalsh);
-    print('yes form spalsh');
     if (checkFromSpalsh == 1) {
       checkInternetConnectivity().then((isConnected) {
-        print('ssssss');
         if (!isConnected) {
           setState(() {
             _isError = true;
@@ -60,8 +58,6 @@ int  checkFromSpalsh = 0;
 
   @override
   Widget build(BuildContext context) {
-    print(_timer);
-    print('timer');
     List<Widget> widgetOptions = <Widget>[
       const HomeScreen(),
       ExploreScreen(),
@@ -79,26 +75,24 @@ int  checkFromSpalsh = 0;
                 child: Image.asset('assets/images/splash-logo.png'),
               )),
               if (_isError)
-                Container(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 600),
-                        const CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                            'Ooops... It seems your internet connection is unstable.',
-                            style: kBodyStyle.copyWith(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white)),
-                      ],
-                    ),
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 600),
+                      const CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                          'Ooops... It seems your internet connection is unstable.',
+                          style: kBodyStyle.copyWith(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white)),
+                    ],
                   ),
                 ),
             ]),
@@ -148,5 +142,4 @@ class TabScreenController extends GetxController {
     selectedIndex = index;
     update();
   }
-
 }

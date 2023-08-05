@@ -105,7 +105,6 @@ int order_id=0;
       int id = _authCtrl.user?.id as int;
       dio.Response response = await _homeService.getQuote(id);
      // log('${response.data}', name: 'API Home Quote');
-      print('${response.data['data']}');
       //
       homeQuoteList = (response.data['data'] as List)
           .map((e) => HomeQuoteModel.fromJson(e))
@@ -119,8 +118,6 @@ int order_id=0;
     } on dio.DioError catch (e) {
       log('${e.response}', name: 'Dio Error Home Quote');
     } catch (e) {
-      print('$e');
-      print('Quote not working');
       displayToastMessage('Failed to load');
     }
   }

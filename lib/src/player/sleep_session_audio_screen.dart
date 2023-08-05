@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,12 +18,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
+
 class SleepSessionAudioPlayerScreen extends StatefulWidget {
   static const String routeName = '/sleep-session-audio';
   static String courseName = '';
   static String sessionImage = '';
   static String courseColor = '';
-
 
   const SleepSessionAudioPlayerScreen({super.key});
 
@@ -42,9 +43,7 @@ class _SleepSessionAudioPlayerScreenState
   FavControllerNew favControllerNew = FavControllerNew();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
-  Map<String, dynamic>? _latestRecord;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  int? _counterTime;
+
   int totalMinutes = 0;
   Future<void> calculateTotalMinutes() async {
     final User? user = _auth.currentUser;
@@ -62,7 +61,7 @@ class _SleepSessionAudioPlayerScreenState
       int sum = 0;
       if (querySnapshot.exists) {
         final List<Map<String, dynamic>> records =
-        List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
+            List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
 
         for (var record in records) {
           sum += record['time_count_in_minutes'] as int;
@@ -74,7 +73,6 @@ class _SleepSessionAudioPlayerScreenState
       });
     }
   }
-
 
   @override
   void initState() {
@@ -103,13 +101,14 @@ class _SleepSessionAudioPlayerScreenState
     PlayerWidgetNew.favoriteModel = favoriteModel;
     _audioPlayer.playerStateStream.listen((playerState) {
       if (playerState.processingState == ProcessingState.completed) {
-     //  _isPlaying = true;
+        //  _isPlaying = true;
         _audioPlayer.stop();
         _audioPlayer.seek(const Duration(seconds: 0));
         _audioPlayer.pause();
       }
     });
   }
+
   Future<void> checkCurrentUser() async {
     final User? user = _auth.currentUser;
     if (user != null) {
@@ -121,29 +120,38 @@ class _SleepSessionAudioPlayerScreenState
 
   void saveMediationCounter(MediationCounter mediationCounter) async {
     try {
-      CollectionReference collection = FirebaseFirestore.instance.collection('mediation_counter');
+      CollectionReference collection =
+          FirebaseFirestore.instance.collection('mediation_counter');
 
       await collection.add(mediationCounter.toMap());
 
-      print('Mediation Counter saved successfully!');
+      if (kDebugMode) {
+        print('Mediation Counter saved successfully!');
+      }
     } catch (e) {
-      print('Error saving Mediation Counter: $e');
+      if (kDebugMode) {
+        print('Error saving Mediation Counter: $e');
+      }
     }
   }
+
   List getMessage() {
     var now = DateTime.now();
-    var formatter = DateFormat('HH:mm');
-    var currentTime = formatter.format(now);
 
     var morningStartTime = DateFormat('HH:mm').parse('03:00');
     var morningEndTime = DateFormat('HH:mm').parse('12:00');
 
     if (now.isAfter(morningStartTime) && now.isBefore(morningEndTime)) {
-      return  ['Congratulations on completing this','exercise','Finish' ];
+      return ['Congratulations on completing this', 'exercise', 'Finish'];
     } else {
-      return  ['Continue your positive transformation!','Journal your mood to track your progress','Track Mood', ];
+      return [
+        'Continue your positive transformation!',
+        'Journal your mood to track your progress',
+        'Track Mood',
+      ];
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,46 +163,32 @@ class _SleepSessionAudioPlayerScreenState
             image: AssetImage('assets/images/sleep_background.png'),
           ),
         ),
-        child: Stack(
+        child: Column(
           children: [
-            // SizedBox.expand(
-            //   child: FittedBox(
-            //     fit: BoxFit.fill,
-            //     child: SizedBox(
-            //       width: _controller?.value.size.width ?? 0,
-            //       height: _controller?.value.size.height ?? 0,
-            //       child: VideoPlayer(_controller!),
-            //       //child: Image.network("$imgAndAudio/${sessionDetails.image}"),
-            //     ),
-            //   ),
-            // ),
-            Column(
-              children: [
-                const SizedBox(height: 20.0),
-                _buildAppBarView(),
+            const SizedBox(height: 20.0),
+            _buildAppBarView(),
 
-                // Text(
-                //   sessionDetails.audioTitle,
-                //   // style: kTitleStyle.copyWith(color: Colors.white),
-                // ),
-                // const SizedBox(height: 20.0),
-                // const Text(
-                //   'SOS Relief',
-                //   // style: TextStyle(color: Colors.white),
-                // ),
-                // const SizedBox(height: 20.0),
-                Expanded(
-                    child: PlayerWidgetNew('sleep_audio', sessionDetails.id,sessionDetails.duration,'sleep')),
-                // Container(
-                //   padding: const EdgeInsets.all(16.0),
-                //   decoration: BoxDecoration(
-                //     color: kPrimaryColor,
-                //     borderRadius: BorderRadius.circular(50.0),
-                //   ),
-                //   child: const Icon(Icons.pause, color: Colors.white),
-                // )
-              ],
-            ),
+            // Text(
+            //   sessionDetails.audioTitle,
+            //   // style: kTitleStyle.copyWith(color: Colors.white),
+            // ),
+            // const SizedBox(height: 20.0),
+            // const Text(
+            //   'SOS Relief',
+            //   // style: TextStyle(color: Colors.white),
+            // ),
+            // const SizedBox(height: 20.0),
+            Expanded(
+                child: PlayerWidgetNew('sleep_audio', sessionDetails.id,
+                    sessionDetails.duration, 'sleep')),
+            // Container(
+            //   padding: const EdgeInsets.all(16.0),
+            //   decoration: BoxDecoration(
+            //     color: kPrimaryColor,
+            //     borderRadius: BorderRadius.circular(50.0),
+            //   ),
+            //   child: const Icon(Icons.pause, color: Colors.white),
+            // )
           ],
         ),
       ),
@@ -203,7 +197,7 @@ class _SleepSessionAudioPlayerScreenState
 
   Widget _buildAppBarView() {
     return Padding(
-      padding: const EdgeInsets.only(right: 12.0),
+      padding: const EdgeInsets.only(right: 12.0, top: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -213,7 +207,7 @@ class _SleepSessionAudioPlayerScreenState
             },
             icon: const Icon(
               Icons.arrow_back_ios_rounded,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
           Container(

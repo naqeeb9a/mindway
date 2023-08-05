@@ -89,6 +89,7 @@ dependencies:
   purchases_flutter: ^5.5.0
   flutter_local_notifications: ^15.1.0+1
   timezone: ^0.9.2
+  http: ^0.13.6
 
 flutter_native_splash:
   color: "#ebe134"

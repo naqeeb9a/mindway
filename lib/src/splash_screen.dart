@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindway/utils/constants.dart';
 
 import 'auth/time/select_time_screen_new.dart';
+import 'entry_screen.dart';
+import 'main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = "/";
@@ -48,11 +51,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateToNextScreen() {
-    // FirebaseAuth.instance.currentUser == null
-    //     ? Get.offNamed(EntryScreen.routeName)
-    //     : Get.offNamed(MainScreen.routeName, arguments: {'checkFromSpalsh': 1});
+    FirebaseAuth.instance.currentUser == null
+        ? Get.offNamed(EntryScreen.routeName)
+        : Get.offNamed(MainScreen.routeName, arguments: {'checkFromSpalsh': 1});
     // Get.offNamed(PayWallIntro.routeName);
-    Get.offNamed(SelectTimeAndDayToNotifyNew.routeName);
+    // Get.offNamed(SelectTimeAndDayToNotifyNew.routeName);
   }
 
   @override

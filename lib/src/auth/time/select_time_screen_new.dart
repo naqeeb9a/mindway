@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mindway/my%20folder/notification_service.dart';
 import 'package:mindway/src/auth/time/select_time_screen_profile_new.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
+
+import '../../new/screens/good_news_screen.dart';
 
 class SelectTimeAndDayToNotifyNew extends StatefulWidget {
   static const String routeName = "/time-and-day";
@@ -260,10 +263,10 @@ class _SelectTimeAndDayToNotifyNewState
                                   "It's you time ⭐ Take some time to meditate & journal your emotions.",
                               scheduledNotificationDateTime:
                                   selectedDateTime ?? DateTime.now());
-                          // Get.toNamed(GoodNewsScreen1.routeName, arguments: {
-                          //   'time': selectedDateTime,
-                          //   'days': days,
-                          // });
+                          Get.toNamed(GoodNewsScreen1.routeName, arguments: {
+                            'time': selectedDateTime,
+                            'days': days,
+                          });
                           // Get.toNamed(OnboardingScreen1.routeName, arguments: {
                           //   'time': selectedDateTime,
                           //   'days': days,
