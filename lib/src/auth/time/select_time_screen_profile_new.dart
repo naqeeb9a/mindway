@@ -252,6 +252,7 @@ class _SelectTimeAndDayToNotifyProfileNewState
                         debugPrint("SelectedDateTime $selectedDateTime");
                         if (selectedDateTime != null && days.isNotEmpty) {
                           await NotificationService().scheduleNotification(
+                              id: UniqueKey().hashCode,
                               title: "Mindfulness Time",
                               body:
                                   "It's you time ⭐ Take some time to meditate & journal your emotions.",
@@ -261,7 +262,7 @@ class _SelectTimeAndDayToNotifyProfileNewState
                           Workmanager().registerPeriodicTask(
                               "reminderNotification", "Notification",
                               frequency: const Duration(
-                                days: 15,
+                                minutes: 15,
                               ),
                               initialDelay: selectedDateTime
                                       ?.difference(DateTime.now()) ??

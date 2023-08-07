@@ -5,7 +5,7 @@ import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:workmanager/workmanager.dart';
-
+import 'package:mindway/my%20folder/notification_service.dart';
 import '../../new/screens/good_news_screen.dart';
 
 class SelectTimeAndDayToNotifyNew extends StatefulWidget {
@@ -257,9 +257,22 @@ class _SelectTimeAndDayToNotifyNewState
                         //Navigator.push(context, MaterialPageRoute(builder: (context) => GoodNewsScreen1(),));
                         debugPrint("SelectedDateTime $selectedDateTime");
                         if (selectedDateTime != null && days.isNotEmpty) {
+                          await NotificationService().scheduleNotification(
+                              id: UniqueKey().hashCode,
+                              title: "Mindfulness Time",
+                              body:
+                                  "It's you time ⭐ Take some time to meditate & journal your emotions.",
+                              scheduledNotificationDateTime:
+                                  selectedDateTime ?? DateTime.now());
+
                           Workmanager().registerPeriodicTask(
                               "reminderNotification", "Notification",
-                              frequency: const Duration(days: 1));
+                              frequency: const Duration(
+                                minutes: 15,
+                              ),
+                              initialDelay: selectedDateTime
+                                      ?.difference(DateTime.now()) ??
+                                  const Duration(seconds: 0));
                           Get.toNamed(GoodNewsScreen1.routeName, arguments: {
                             'time': selectedDateTime,
                             'days': days,
