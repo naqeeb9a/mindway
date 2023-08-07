@@ -26,7 +26,6 @@ import 'package:mindway/utils/firebase_collections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-
 class AuthController extends NetworkManager {
   final AuthService _authService = AuthService();
 
@@ -45,7 +44,7 @@ class AuthController extends NetworkManager {
     update();
   }
 
-   String goalIdForLogin = '';
+  String goalIdForLogin = '';
 
   Future<void> checkGoalId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -65,7 +64,6 @@ class AuthController extends NetworkManager {
         log('${response.data}', name: 'Log In Response');
         if (response.data['code'] == 200) {
           print(response.data['data'][0]['bearer_token']);
-      var token =    response.data['data'][0]['bearer_token'];
           // await    checkGoalId();
           // if (goalIdForLogin.isNotEmpty) {
           //   int gId = int.parse(goalIdForLogin);
@@ -87,8 +85,6 @@ class AuthController extends NetworkManager {
       customSnackBar('Network error', 'Please try again later');
     }
   }
-
-
 
   Future<void> handleSignUp({
     required String name,
@@ -120,7 +116,7 @@ class AuthController extends NetworkManager {
           user = getSavedUser();
           //Get.offAllNamed(OnboardingScreen1.routeName);
           //Get.toNamed(UploadProfilePicScreen.routeName);
-          final goalIds =goal_id;
+          final goalIds = goal_id;
           int gId = int.parse(goalIds);
           List<Map<String, dynamic>> everydayRecordForTile2 = [
             {
@@ -320,15 +316,10 @@ class AuthController extends NetworkManager {
       user = getSavedUser();
       //Get.offAllNamed(OnboardingScreen1.routeName);
       //Get.toNamed(UploadProfilePicScreen.routeName);
-      final goalIds =goal_id;
+      final goalIds = goal_id;
       int gId = int.parse(goalIds);
       List<Map<String, dynamic>> everydayRecordForTile2 = [
-        {
-          'course': gId,
-          'date': DateTime.now(),
-          'day': 1,
-          'is_completed': 'no'
-        },
+        {'course': gId, 'date': DateTime.now(), 'day': 1, 'is_completed': 'no'},
       ];
 
       User? firebaseUser = FirebaseAuth.instance.currentUser;
@@ -482,15 +473,10 @@ class AuthController extends NetworkManager {
       user = getSavedUser();
       //Get.offAllNamed(OnboardingScreen1.routeName);
       // Get.toNamed(UploadProfilePicScreen.routeName);
-      final goalIds =goal_id;
+      final goalIds = goal_id;
       int gId = int.parse(goalIds);
       List<Map<String, dynamic>> everydayRecordForTile2 = [
-        {
-          'course': gId,
-          'date': DateTime.now(),
-          'day': 1,
-          'is_completed': 'no'
-        },
+        {'course': gId, 'date': DateTime.now(), 'day': 1, 'is_completed': 'no'},
       ];
 
       User? firebaseUser = FirebaseAuth.instance.currentUser;
@@ -631,19 +617,19 @@ class AuthController extends NetworkManager {
     Get.offAllNamed(EntryScreen.routeName);
   }
 }
+
 Future<void> tile2CountCourseDays(
     String email, List<Map<String, dynamic>> records) async {
   final CollectionReference collection =
-  FirebaseFirestore.instance.collection('tile2_count_course_days');
+      FirebaseFirestore.instance.collection('tile2_count_course_days');
 
   final DocumentSnapshot document = await collection.doc(email).get();
   if (document.exists) {
     final List<Map<String, dynamic>> existingRecords =
-    List<Map<String, dynamic>>.from(document['tile2']);
+        List<Map<String, dynamic>>.from(document['tile2']);
 
     // Check if a record with the same date already exists
-    final String currentDate =
-    DateFormat('yyyy-MM-dd').format(DateTime.now());
+    final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     final bool recordExistsForToday = existingRecords.any((record) {
       final String recordDate = record['date'] as String;
       return recordDate == currentDate;
@@ -651,7 +637,7 @@ Future<void> tile2CountCourseDays(
 
     if (!recordExistsForToday) {
       final int lastDay =
-      existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
+          existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
       final int newDay = lastDay + 1;
 
       for (var record in records) {
@@ -665,8 +651,8 @@ Future<void> tile2CountCourseDays(
       print('Record inserted for $currentDate');
     } else {
       // Update the course field for the existing record
-      final Map<String, dynamic> existingRecord = existingRecords
-          .firstWhere((record) => record['date'] == currentDate);
+      final Map<String, dynamic> existingRecord =
+          existingRecords.firstWhere((record) => record['date'] == currentDate);
 
       final int updatedCourse = records.first['course'] as int;
 
@@ -678,8 +664,7 @@ Future<void> tile2CountCourseDays(
       print('Record updated for $currentDate');
     }
   } else {
-    final String currentDate =
-    DateFormat('yyyy-MM-dd').format(DateTime.now());
+    final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     for (var record in records) {
       record['day'] = 1;
       record['date'] = currentDate; // Add the current date to the record
