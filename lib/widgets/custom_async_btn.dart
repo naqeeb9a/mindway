@@ -16,7 +16,7 @@ class CustomAsyncBtn extends StatelessWidget {
   }) : super(key: key);
 
   final String btnTxt;
-  final double width;
+  final double? width;
   final double height;
   final Color btnColor;
   final double borderRadius;
@@ -60,15 +60,14 @@ class CustomAsyncBtn extends StatelessWidget {
           ),
         );
       },
-      child: Text(
-        btnTxt,
-          style: kBodyStyle.copyWith(fontSize: 17.0,color: Colors.white,fontWeight: FontWeight.w400)
-        // style: TextStyle(
-        //   fontWeight: FontWeight.w600,
-        //   fontSize: textSize,
-        //   color: btnColor == Colors.white ? Colors.black87 : Colors.white,
-        ),
-
+      child: Text(btnTxt,
+          style: kBodyStyle.copyWith(
+              fontSize: 17.0, color: Colors.white, fontWeight: FontWeight.w400)
+          // style: TextStyle(
+          //   fontWeight: FontWeight.w600,
+          //   fontSize: textSize,
+          //   color: btnColor == Colors.white ? Colors.black87 : Colors.white,
+          ),
     );
   }
 }

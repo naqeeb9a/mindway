@@ -1105,7 +1105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     EmotionScreen(
-                                                      e: e,
+                                                      homeEmoji: e,
                                                       onCompleted: () {
                                                         debugPrint(
                                                             "OnCompleted executed");
@@ -1355,12 +1355,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      title: Text(_homeCtrl.homeAudioSleepList[0].title ),
+                      title: Text(_homeCtrl.homeAudioSleepList[0].title),
                       subtitle: Row(
                         children: [
                           const Icon(Icons.av_timer_rounded),
                           const SizedBox(width: 2.0),
-                          Text(_homeCtrl.homeAudioSleepList[0].duration ),
+                          Text(_homeCtrl.homeAudioSleepList[0].duration),
                           const SizedBox(width: 12.0),
                           const Icon(Icons.timeline),
                           const SizedBox(width: 2.0),

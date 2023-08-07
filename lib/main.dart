@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:mindway/firebase_options.dart';
 import 'package:mindway/my%20folder/notification_service.dart';
+import 'package:mindway/my%20folder/purchases_api.dart';
 import 'package:mindway/src/auth/auth_controller.dart';
 import 'package:mindway/src/initial_binding.dart';
 import 'package:mindway/src/splash_screen.dart';
@@ -27,23 +28,13 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 bool? firstRun;
 
 Future<void> main() async {
-  // if (Platform.isIOS || Platform.isMacOS) {
-  //   StoreConfig(
-  //     store: Store.appStore,
-  //     apiKey: appleApiKey,
-  //   );
-  // } else if (Platform.isAndroid) {
-  //   StoreConfig(
-  //     store: Store.playStore,
-  //     apiKey: googleApiKey,
-  //   );
-  // }
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
     androidNotificationChannelName: 'Audio playback',
     androidNotificationOngoing: true,
   );
   WidgetsFlutterBinding.ensureInitialized();
+  await PurchasesApi.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],

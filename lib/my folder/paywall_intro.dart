@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindway/my%20folder/paywall_screen.dart';
+import 'package:mindway/my%20folder/purchases_api.dart';
 import 'package:mindway/src/subscription/widgets/custom_button.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:video_player/video_player.dart';
 
 class PayWallIntro extends StatefulWidget {
@@ -15,10 +17,14 @@ class PayWallIntro extends StatefulWidget {
 class _PayWallIntroState extends State<PayWallIntro> {
   late VideoPlayerController? _controller;
   bool isFinished = false;
+  List<Offering> offerings = [];
+ 
+
   @override
   void initState() {
     super.initState();
     // Initialize the controller with the asset path
+    
     _controller =
         VideoPlayerController.asset("assets/videos/chart_animation2.mp4")
           ..initialize().then((_) {

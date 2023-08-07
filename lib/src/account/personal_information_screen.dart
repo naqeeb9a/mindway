@@ -327,7 +327,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
     //if(password.toString().)
 
     User user = FirebaseAuth.instance.currentUser!;
-    String userId = user.uid;
     UserCredential userCredential;
     try {
       userCredential = await user.reauthenticateWithCredential(
@@ -377,7 +376,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
     //if(password.toString().)
 
     User user = FirebaseAuth.instance.currentUser!;
-    String userId = user.uid;
     UserCredential userCredential;
     try {
       userCredential = await user.reauthenticateWithCredential(

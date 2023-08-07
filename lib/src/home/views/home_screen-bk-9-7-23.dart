@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +35,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   Future<void> _refreshData() async {
     // Simulate a delay
     await Future.delayed(const Duration(seconds: 4));
-
-
   }
 
   final AuthController _authCtrl = Get.find();
@@ -87,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _counter++; // Update the state to trigger a rebuild
     });
   }
+
   late SharedPreferences prefs;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
@@ -99,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
     User? user = _auth.currentUser;
     final users = user?.uid;
     print("uuid=");
- print(users);
+    print(users);
 
     fetchHighestDay();
     tile1StatusStream = checkTile1Status(users.toString());
@@ -224,21 +221,21 @@ class _HomeScreenState extends State<HomeScreen> {
       return 0;
     });
   }
+
   Future<void> updateCustomerGoalId(String email, int goalId) async {
-    final String apiUrl =  'https://mindwayadmin.com/api/goalupdate/$email/goal/$goalId';
+    final String apiUrl =
+        'https://mindwayadmin.com/api/goalupdate/$email/goal/$goalId';
     print(apiUrl);
 
     try {
       final response = await http.post(
         Uri.parse(apiUrl),
-
       );
 
       if (response.statusCode == 400) {
         print('Nothinggggggg');
       }
       if (response.statusCode == 200) {
-
         print('Customer goal_id updated successfully');
       } else if (response.statusCode == 404) {
         print('Customer not found');
@@ -260,6 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
       emotionTracked;
     });
   }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -304,14 +302,15 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
   Future<int> getHighestDayFromCourseDays(String email) async {
     final CollectionReference collection =
-    FirebaseFirestore.instance.collection('tile2_count_course_days');
+        FirebaseFirestore.instance.collection('tile2_count_course_days');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
       final List<Map<String, dynamic>> records =
-      List<Map<String, dynamic>>.from(document['tile2']);
+          List<Map<String, dynamic>>.from(document['tile2']);
       if (records.isNotEmpty) {
-        final String todayDate =  DateFormat('yyyy-MM-dd').format(DateTime.now()); // Get today's date in the format used in the 'date' field
+        final String todayDate = DateFormat('yyyy-MM-dd').format(DateTime
+            .now()); // Get today's date in the format used in the 'date' field
 
         int highestDay = 0; // Initialize the highest day variable
         for (final record in records) {
@@ -336,16 +335,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> tile2CountCourseDays(
       String email, List<Map<String, dynamic>> records) async {
     final CollectionReference collection =
-    FirebaseFirestore.instance.collection('tile2_count_course_days');
+        FirebaseFirestore.instance.collection('tile2_count_course_days');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
       final List<Map<String, dynamic>> existingRecords =
-      List<Map<String, dynamic>>.from(document['tile2']);
+          List<Map<String, dynamic>>.from(document['tile2']);
 
       // Check if a record with the same date already exists
       final String currentDate =
-      DateFormat('yyyy-MM-dd').format(DateTime.now());
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
       final bool recordExistsForToday = existingRecords.any((record) {
         final String recordDate = record['date'] as String;
         return recordDate == currentDate;
@@ -353,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       if (!recordExistsForToday) {
         final int lastDay =
-        existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
+            existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
         final int newDay = lastDay + 1;
 
         for (var record in records) {
@@ -381,7 +380,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     } else {
       final String currentDate =
-      DateFormat('yyyy-MM-dd').format(DateTime.now());
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
       for (var record in records) {
         record['day'] = 1;
         record['date'] = currentDate; // Add the current date to the record
@@ -391,7 +390,6 @@ class _HomeScreenState extends State<HomeScreen> {
       print('Record inserted for $currentDate');
     }
   }
-
 
   Future<void> initializeRandomText() async {
     prefs = await SharedPreferences.getInstance();
@@ -443,10 +441,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -468,15 +462,11 @@ class _HomeScreenState extends State<HomeScreen> {
           //     ),
           //   ],
           // ),
-          body:
-
-
-          Stack(
+          body: Stack(
         alignment: AlignmentDirectional.topCenter,
         fit: StackFit.loose,
         children: [
           ListView(
-
             children: [
               SizedBox(
                 // width: 250,
@@ -530,8 +520,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('Hi ${_authCtrl.user?.name.capitalizeFirst}',
                     style: kTitleStyle),
               ),
-                const SizedBox(height: 3.0),
-              (emotionTracked == 0) ?_buildEmojiView(context): Container(),
+              const SizedBox(height: 3.0),
+              (emotionTracked == 0) ? _buildEmojiView(context) : Container(),
               const SizedBox(height: 9.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22.0),
@@ -544,7 +534,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: _buildGridItemView(
                         context,
-                        Image.asset('assets/icons/Icon1.png',height: 27,width: 27,),
+                        Image.asset(
+                          'assets/icons/Icon1.png',
+                          height: 27,
+                          width: 27,
+                        ),
                         'Meditate',
                       ),
                     ),
@@ -554,7 +548,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: _buildGridItemView(
                         context,
-                        Image.asset('assets/icons/icon2.png',height: 27,width: 27),
+                        Image.asset('assets/icons/icon2.png',
+                            height: 27, width: 27),
                         'Sleep',
                       ),
                     ),
@@ -564,503 +559,529 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: _buildGridItemView(
                         context,
-                        Image.asset('assets/icons/icon3.png',height: 27,width: 27),
+                        Image.asset('assets/icons/icon3.png',
+                            height: 27, width: 27),
                         'Journal',
                       ),
                     ),
                   ],
                 ),
               ),
-
-Stack(
-
-  children: [
-    const SizedBox(height: 68.0),
-    Padding(
-      padding: const EdgeInsets.only(top: 60.0,left: 10,right: 10),
-      child: Container(
-        decoration: BoxDecoration(
-          //color: Colors.grey[260],
-          color: const Color(0xffFEFEFE),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(50),
-            topRight: Radius.circular(50),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 3,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 85.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: Text('Daily Meditation',
-                  style: kBodyStyle.copyWith(fontSize: 16.0)),
-            ),
-             const SizedBox(height: 10.0),
-            GetBuilder<HomeController>(
-              builder: (context) {
-                //  print('khado3');
-                return _homeCtrl.homeAudioList.isEmpty
-                    ? const LoadingWidget()
-                    : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // Text(_homeCtrl.homeQuoteList.isEmpty  ? 'Not Found' : _homeCtrl.homeQuoteList[0].name,style: TextStyle(color: Colors.black),),
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(left: 15.0),
-                      child: TimelineTile(
-                        alignment: TimelineAlign.start,
-                        isFirst: true,
-                        afterLineStyle: const LineStyle(
-                            color: Colors.transparent),
-                        // Set the color to transparent
-                        // beforeLineStyle: const LineStyle(color: Colors.transparent),
-                        indicatorStyle: (tile1Status == 1)
-                            ? IndicatorStyle(
-                          width: 30,
-                          color: Colors.green,
-                          iconStyle: IconStyle(
-                            iconData: Icons.check,
-                            color: Colors.white,
+              Stack(
+                children: [
+                  const SizedBox(height: 68.0),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 60.0, left: 10, right: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        //color: Colors.grey[260],
+                        color: const Color(0xffFEFEFE),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          topRight: Radius.circular(50),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 3,
+                            offset: const Offset(0, 2),
                           ),
-                        )
-                            : const IndicatorStyle(
-                            width: 30, color: Colors.white),
-                        endChild: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                          mainAxisAlignment:
-                          MainAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              onTap: () {
-                                Get.toNamed(
-                                  HomeAudioMediateScreen
-                                      .routeName,
-                                  arguments: _homeCtrl
-                                      .homeAudioList[0],
-                                );
-                              },
-                              leading: ClipRRect(
-                                borderRadius:
-                                BorderRadius.circular(
-                                    24),
-                                child: Container(
-                                  height: 55,
-                                  width: 55,
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius
-                                          .circular(
-                                          27)),
-                                  child: Image.asset(
-                                    'assets/images/powerful.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-
-                              title: Text(_homeCtrl
-                                  .homeAudioList[0].title),
-                              subtitle: Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                children: [
-                                  const Icon(Icons.av_timer_rounded),
-                                  const SizedBox(width: 2.0),
-                                  Text(_homeCtrl
-                                      .homeAudioList[0]
-                                      .duration),
-                                  const SizedBox(width: 12.0),
-                                  const Icon(Icons.timeline),
-                                  const SizedBox(width: 2.0),
-                                  Text(_homeCtrl
-                                      .homeAudioList[0]
-                                      .subtitle),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
-                    ),
-                  ],
-                );
-              },
-            ),
-
-            GetBuilder<HomeController>(
-              builder: (_) {
-                return _homeCtrl.homeCourseList.isEmpty
-                    ? _homeCtrl.homeRandomCourseList.isEmpty ?  const LoadingWidget(): Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 5.0),
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(left: 15.0),
-                      child: Text(
-                          'Recommended Course',
-                          style: kBodyStyle.copyWith(
-                              fontSize: 16.0)),
-                    ),
-                    const SizedBox(height: 5.0),
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(left: 15.0),
-                      child: TimelineTile(
-                        alignment: TimelineAlign.start,
-                        isFirst: true,
-                        afterLineStyle: const LineStyle(
-                            color: Colors.transparent),
-                        // Set the color to transparent
-                        // beforeLineStyle: const LineStyle(color: Colors.transparent),
-                        indicatorStyle:  const IndicatorStyle(
-                            width: 30, color: Colors.white),
-                        endChild: Column(
-                          children: [
-                            ListTile(
-                              onTap: () async{
-                                final email =     _authCtrl.user?.email;
-                                final goalId =_homeCtrl.homeRandomCourseList[0].session_id;
-                                int gId = int.parse(goalId);
-                                updateCustomerGoalId(email.toString(), gId); // Return true to indicate confirmation
-                                List<Map<String, dynamic>> everydayRecordForTile2 = [
-                                  {
-                                    'course': gId,
-                                    'date': DateTime.now(),
-                                    'day': 1,
-                                    'is_completed': 'yes'
-                                  },
-                                ];
-                                User? user = _auth.currentUser;
-                                final users = user?.uid;
-
-                                await tile2CountCourseDays(users.toString(), everydayRecordForTile2);
-                                displayToastMessageSuccess('${_homeCtrl.homeRandomCourseList[0]
-                                    .course_title} course selected',
-
-
-                                );
-setState(() async{
-  highestDay = 1;
-  _homeCtrl.order_id = 1;
- await _homeCtrl.getCourses(gId, 1);
-  print(highestDay);
-  print('recommended from');
-});
-
-
-                              },
-                              leading: ClipRRect(
-                                borderRadius:
-                                BorderRadius.circular(
-                                    24),
-                                child: Container(
-                                  height: 55,
-                                  width: 55,
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius
-                                          .circular(
-                                          27)),
-                                  child: Image.network(
-                                    '$sessionURL/${_homeCtrl.homeRandomCourseList[0].course_thumbnail}',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              // leading: Container(
-                              //   decoration: BoxDecoration(
-                              //     borderRadius:
-                              //     BorderRadius.circular(
-                              //         20.0),
-                              //   ),
-                              //   child: CircleAvatar(
-                              //     radius: 30,
-                              //     backgroundImage: NetworkImage(
-                              //       //'$sleepAudioURL/${_sleepCtrl.sleepRandomAudio?.image}'
-                              //         '$sessionURL/${_homeCtrl.homeRandomCourseList[0]?.course_thumbnail}'),
-                              //     backgroundColor:
-                              //     Colors.transparent,
-                              //   ),
-                              //   // Image.asset(
-                              //   //   'assets/icons/greet.png',
-                              //   //   width: 30.0,
-                              //   //   color: Colors.white,
-                              //   // ),
-                              // ),
-                              title: Text(
-                                  '${_homeCtrl.homeRandomCourseList[0]
-                                      .course_title} Course'),
-                              // subtitle: Row(
-                              //   children: [
-                              //     Icon(Icons.av_timer_rounded),
-                              //     const SizedBox(width: 2.0),
-                              //     Text(_homeCtrl
-                              //         .homeRandomCourseList[0]
-                              //         .duration
-                              //         .toString()),
-                              //     const SizedBox(width: 12.0),
-                              //     const Icon(Icons.timeline),
-                              //     const SizedBox(width: 2.0),
-                              //     Text(_homeCtrl
-                              //         .homeRandomCourseList[0]
-                              //         .course_title +
-                              //         ' Course'),
-                              //   ],
-                              // ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-                    : Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 5.0),
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(left: 15.0),
-                      child: Text(
-                          highestDay > 1
-                              ? 'Continue ${_homeCtrl.homeCourseList[0]
-                                  .course_title} course'
-                              : 'Start ${_homeCtrl.homeCourseList[0]
-                                  .course_title} course',
-                          style: kBodyStyle.copyWith(
-                              fontSize: 16.0)),
-                    ),
-                    const SizedBox(height: 8.0),
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(left: 15.0),
-                      child: TimelineTile(
-                        alignment: TimelineAlign.start,
-                        isFirst: true,
-                        afterLineStyle: const LineStyle(
-                            color: Colors.transparent),
-                        // Set the color to transparent
-                        // beforeLineStyle: const LineStyle(color: Colors.transparent),
-                        indicatorStyle: (tile2Status == 1)
-                            ? IndicatorStyle(
-                          width: 30,
-                          color: Colors.green,
-                          iconStyle: IconStyle(
-                            iconData: Icons.check,
-                            color: Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 85.0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Text('Daily Meditation',
+                                style: kBodyStyle.copyWith(fontSize: 16.0)),
                           ),
-                        )
-                            : const IndicatorStyle(
-                            width: 30, color: Colors.white),
-                        endChild: Column(
-                          children: [
-                            ListTile(
-                              onTap: () {
-                                Get.toNamed(
-                                  HomeCourseAudioPlayerScreen
-                                      .routeName,
-                                  arguments: _homeCtrl
-                                      .homeCourseList[0],
-                                );
-                              },
-                              leading: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                  BorderRadius.circular(
-                                      20.0),
-                                ),
-                                child: CircleAvatar(
-                                  radius: 30,
-                                  backgroundImage: NetworkImage(
-                                    //'$sleepAudioURL/${_sleepCtrl.sleepRandomAudio?.image}'
-                                      '$sessionURL/${_homeCtrl.homeCourseList[0].course_thumbnail}'),
-                                  backgroundColor:
-                                  Colors.transparent,
-                                ),
-                                // Image.asset(
-                                //   'assets/icons/greet.png',
-                                //   width: 30.0,
-                                //   color: Colors.white,
-                                // ),
-                              ),
-                              title: Text(highestDay > 0
-                                  ? 'Day $highestDay: ${_homeCtrl
-                                      .homeCourseList[0]
-                                      .audio_title}'
-                                  : 'Day 1: ${_homeCtrl
-                                      .homeCourseList[0]
-                                      .audio_title}'),
-                              subtitle: Row(
-                                children: [
-                                  const Icon(Icons.av_timer_rounded),
-                                  const SizedBox(width: 2.0),
-                                  Text(_homeCtrl
-                                      .homeCourseList[0]
-                                      .duration
-                                      .toString()),
-                                  const SizedBox(width: 12.0),
-                                  const Icon(Icons.timeline),
-                                  const SizedBox(width: 2.0),
-                                
-                                      Expanded(
-                                        child: Text('${_homeCtrl
-                                          .homeCourseList[0]
-                                          .course_title} Course', overflow: TextOverflow.clip,),
-                                      ),
-                                   
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                          const SizedBox(height: 10.0),
+                          GetBuilder<HomeController>(
+                            builder: (context) {
+                              //  print('khado3');
+                              return _homeCtrl.homeAudioList.isEmpty
+                                  ? const LoadingWidget()
+                                  : Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        // Text(_homeCtrl.homeQuoteList.isEmpty  ? 'Not Found' : _homeCtrl.homeQuoteList[0].name,style: TextStyle(color: Colors.black),),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15.0),
+                                          child: TimelineTile(
+                                            alignment: TimelineAlign.start,
+                                            isFirst: true,
+                                            afterLineStyle: const LineStyle(
+                                                color: Colors.transparent),
+                                            // Set the color to transparent
+                                            // beforeLineStyle: const LineStyle(color: Colors.transparent),
+                                            indicatorStyle: (tile1Status == 1)
+                                                ? IndicatorStyle(
+                                                    width: 30,
+                                                    color: Colors.green,
+                                                    iconStyle: IconStyle(
+                                                      iconData: Icons.check,
+                                                      color: Colors.white,
+                                                    ),
+                                                  )
+                                                : const IndicatorStyle(
+                                                    width: 30,
+                                                    color: Colors.white),
+                                            endChild: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                ListTile(
+                                                  onTap: () {
+                                                    Get.toNamed(
+                                                      HomeAudioMediateScreen
+                                                          .routeName,
+                                                      arguments: _homeCtrl
+                                                          .homeAudioList[0],
+                                                    );
+                                                  },
+                                                  leading: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            24),
+                                                    child: Container(
+                                                      height: 55,
+                                                      width: 55,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      27)),
+                                                      child: Image.asset(
+                                                        'assets/images/powerful.png',
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  title: Text(_homeCtrl
+                                                      .homeAudioList[0].title),
+                                                  subtitle: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      const Icon(Icons
+                                                          .av_timer_rounded),
+                                                      const SizedBox(
+                                                          width: 2.0),
+                                                      Text(_homeCtrl
+                                                          .homeAudioList[0]
+                                                          .duration),
+                                                      const SizedBox(
+                                                          width: 12.0),
+                                                      const Icon(
+                                                          Icons.timeline),
+                                                      const SizedBox(
+                                                          width: 2.0),
+                                                      Text(_homeCtrl
+                                                          .homeAudioList[0]
+                                                          .subtitle),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                            },
+                          ),
+                          GetBuilder<HomeController>(
+                            builder: (_) {
+                              return _homeCtrl.homeCourseList.isEmpty
+                                  ? _homeCtrl.homeRandomCourseList.isEmpty
+                                      ? const LoadingWidget()
+                                      : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(height: 5.0),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15.0),
+                                              child: Text('Recommended Course',
+                                                  style: kBodyStyle.copyWith(
+                                                      fontSize: 16.0)),
+                                            ),
+                                            const SizedBox(height: 5.0),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15.0),
+                                              child: TimelineTile(
+                                                alignment: TimelineAlign.start,
+                                                isFirst: true,
+                                                afterLineStyle: const LineStyle(
+                                                    color: Colors.transparent),
+                                                // Set the color to transparent
+                                                // beforeLineStyle: const LineStyle(color: Colors.transparent),
+                                                indicatorStyle:
+                                                    const IndicatorStyle(
+                                                        width: 30,
+                                                        color: Colors.white),
+                                                endChild: Column(
+                                                  children: [
+                                                    ListTile(
+                                                      onTap: () async {
+                                                        final email = _authCtrl
+                                                            .user?.email;
+                                                        final goalId = _homeCtrl
+                                                            .homeRandomCourseList[
+                                                                0]
+                                                            .session_id;
+                                                        int gId =
+                                                            int.parse(goalId);
+                                                        updateCustomerGoalId(
+                                                            email.toString(),
+                                                            gId); // Return true to indicate confirmation
+                                                        List<
+                                                                Map<String,
+                                                                    dynamic>>
+                                                            everydayRecordForTile2 =
+                                                            [
+                                                          {
+                                                            'course': gId,
+                                                            'date':
+                                                                DateTime.now(),
+                                                            'day': 1,
+                                                            'is_completed':
+                                                                'yes'
+                                                          },
+                                                        ];
+                                                        User? user =
+                                                            _auth.currentUser;
+                                                        final users = user?.uid;
+
+                                                        await tile2CountCourseDays(
+                                                            users.toString(),
+                                                            everydayRecordForTile2);
+                                                        displayToastMessageSuccess(
+                                                          '${_homeCtrl.homeRandomCourseList[0].course_title} course selected',
+                                                        );
+                                                        setState(() async {
+                                                          highestDay = 1;
+                                                          _homeCtrl.order_id =
+                                                              1;
+                                                          await _homeCtrl
+                                                              .getCourses(
+                                                                  gId, 1);
+                                                          print(highestDay);
+                                                          print(
+                                                              'recommended from');
+                                                        });
+                                                      },
+                                                      leading: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(24),
+                                                        child: Container(
+                                                          height: 55,
+                                                          width: 55,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          27)),
+                                                          child: Image.network(
+                                                            '$sessionURL/${_homeCtrl.homeRandomCourseList[0].course_thumbnail}',
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      // leading: Container(
+                                                      //   decoration: BoxDecoration(
+                                                      //     borderRadius:
+                                                      //     BorderRadius.circular(
+                                                      //         20.0),
+                                                      //   ),
+                                                      //   child: CircleAvatar(
+                                                      //     radius: 30,
+                                                      //     backgroundImage: NetworkImage(
+                                                      //       //'$sleepAudioURL/${_sleepCtrl.sleepRandomAudio?.image}'
+                                                      //         '$sessionURL/${_homeCtrl.homeRandomCourseList[0]?.course_thumbnail}'),
+                                                      //     backgroundColor:
+                                                      //     Colors.transparent,
+                                                      //   ),
+                                                      //   // Image.asset(
+                                                      //   //   'assets/icons/greet.png',
+                                                      //   //   width: 30.0,
+                                                      //   //   color: Colors.white,
+                                                      //   // ),
+                                                      // ),
+                                                      title: Text(
+                                                          '${_homeCtrl.homeRandomCourseList[0].course_title} Course'),
+                                                      // subtitle: Row(
+                                                      //   children: [
+                                                      //     Icon(Icons.av_timer_rounded),
+                                                      //     const SizedBox(width: 2.0),
+                                                      //     Text(_homeCtrl
+                                                      //         .homeRandomCourseList[0]
+                                                      //         .duration
+                                                      //         .toString()),
+                                                      //     const SizedBox(width: 12.0),
+                                                      //     const Icon(Icons.timeline),
+                                                      //     const SizedBox(width: 2.0),
+                                                      //     Text(_homeCtrl
+                                                      //         .homeRandomCourseList[0]
+                                                      //         .course_title +
+                                                      //         ' Course'),
+                                                      //   ],
+                                                      // ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(height: 5.0),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15.0),
+                                          child: Text(
+                                              highestDay > 1
+                                                  ? 'Continue ${_homeCtrl.homeCourseList[0].course_title} course'
+                                                  : 'Start ${_homeCtrl.homeCourseList[0].course_title} course',
+                                              style: kBodyStyle.copyWith(
+                                                  fontSize: 16.0)),
+                                        ),
+                                        const SizedBox(height: 8.0),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15.0),
+                                          child: TimelineTile(
+                                            alignment: TimelineAlign.start,
+                                            isFirst: true,
+                                            afterLineStyle: const LineStyle(
+                                                color: Colors.transparent),
+                                            // Set the color to transparent
+                                            // beforeLineStyle: const LineStyle(color: Colors.transparent),
+                                            indicatorStyle: (tile2Status == 1)
+                                                ? IndicatorStyle(
+                                                    width: 30,
+                                                    color: Colors.green,
+                                                    iconStyle: IconStyle(
+                                                      iconData: Icons.check,
+                                                      color: Colors.white,
+                                                    ),
+                                                  )
+                                                : const IndicatorStyle(
+                                                    width: 30,
+                                                    color: Colors.white),
+                                            endChild: Column(
+                                              children: [
+                                                ListTile(
+                                                  onTap: () {
+                                                    Get.toNamed(
+                                                      HomeCourseAudioPlayerScreen
+                                                          .routeName,
+                                                      arguments: _homeCtrl
+                                                          .homeCourseList[0],
+                                                    );
+                                                  },
+                                                  leading: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.0),
+                                                    ),
+                                                    child: CircleAvatar(
+                                                      radius: 30,
+                                                      backgroundImage: NetworkImage(
+                                                          //'$sleepAudioURL/${_sleepCtrl.sleepRandomAudio?.image}'
+                                                          '$sessionURL/${_homeCtrl.homeCourseList[0].course_thumbnail}'),
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                    ),
+                                                    // Image.asset(
+                                                    //   'assets/icons/greet.png',
+                                                    //   width: 30.0,
+                                                    //   color: Colors.white,
+                                                    // ),
+                                                  ),
+                                                  title: Text(highestDay > 0
+                                                      ? 'Day $highestDay: ${_homeCtrl.homeCourseList[0].audio_title}'
+                                                      : 'Day 1: ${_homeCtrl.homeCourseList[0].audio_title}'),
+                                                  subtitle: Row(
+                                                    children: [
+                                                      const Icon(Icons
+                                                          .av_timer_rounded),
+                                                      const SizedBox(
+                                                          width: 2.0),
+                                                      Text(_homeCtrl
+                                                          .homeCourseList[0]
+                                                          .duration
+                                                          .toString()),
+                                                      const SizedBox(
+                                                          width: 12.0),
+                                                      const Icon(
+                                                          Icons.timeline),
+                                                      const SizedBox(
+                                                          width: 2.0),
+                                                      Expanded(
+                                                        child: Text(
+                                                          '${_homeCtrl.homeCourseList[0].course_title} Course',
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                            },
+                          ),
+                          const SizedBox(height: 4.0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Text('Fall Asleep',
+                                style: kBodyStyle.copyWith(fontSize: 16.0)),
+                          ),
+                          const SizedBox(height: 5.0),
+                          _buildNightTimeline1View(),
+                        ],
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
-            const SizedBox(height: 4.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: Text('Fall Asleep',
-                  style: kBodyStyle.copyWith(fontSize: 16.0)),
-            ),
-            const SizedBox(height: 5.0),
-            _buildNightTimeline1View(),
-          ],
-        ),
-      ),
-    ),
-    GetBuilder<HomeController>(builder: (context) {
-      if (_homeCtrl.homeQuoteList.isNotEmpty) {
-        String originalString = _homeCtrl.homeQuoteList[0].name;
-
-        if (originalString.contains("[name]")) {
-          replacedString = originalString.replaceAll(
-              "[name]", _authCtrl.user?.name ?? '');
-          // print(replacedString);
-        } else {
-          replacedString = _homeCtrl.homeQuoteList[0].name;
-        }
-      }
-      return Padding(
-        padding:
-        const EdgeInsets.only(top: 30.0),
-        child: Center(
-          child:
-          Container(
-            // Add your desired properties for the additional Container
-            // Example color
-            width: 350.0,
-            // Example width
-
-            // Example height
-            // Add child widgets as needed for the additional Container
-            padding: const EdgeInsets.all(12),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  blurRadius: 60,
-                  offset: const Offset(1, 2),
-                ),
-              ],
-
-              //border: Border.all(color: Colors.red, width: 4.0),
-              borderRadius: const BorderRadius.all(Radius.circular(31.0)),
-            ),
-            child: Column(
-              children: [
-                Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 1.0),
-                      child: Text('Today’s Plan:',
-                          style: kBodyStyle.copyWith(
-                              fontSize: 18, color: Colors.black)),
-                    )),
-                Center(
-                  child: Text(
-                    _homeCtrl.homeQuoteList.isEmpty
-                        ? 'loading..'
-                        : replacedString,
-                    style: kBodyStyle.copyWith(
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-      //   Positioned(
-      //   top: 350,
-      //   child: Padding(
-      //     padding: const EdgeInsets.all(8.0),
-      //     child: Container(
-      //       // Add your desired properties for the additional Container
-      //       // Example color
-      //       width: 370.0,
-      //       // Example width
-      //       height: 80,
-      //       // Example height
-      //       // Add child widgets as needed for the additional Container
-      //       padding: EdgeInsets.all(12),
-      //       alignment: Alignment.center,
-      //       decoration: BoxDecoration(
-      //         color: Colors.white,
-      //         //border: Border.all(color: Colors.red, width: 4.0),
-      //         borderRadius: BorderRadius.all(Radius.circular(31.0)),
-      //       ),
-      //       child: Wrap(
-      //         children: [
-      //           Center(
-      //               child: Text('Today’s Plan:',
-      //                   style: kBodyStyle.copyWith(
-      //                       fontSize: 18, color: Colors.black))),
-      //           Text(
-      //             _homeCtrl.homeQuoteList.isEmpty
-      //                 ? 'loading..'
-      //                 : replacedString,
-      //             style: kBodyStyle.copyWith(
-      //                 fontSize: 15,
-      //                 color: Colors.black,
-      //                 fontWeight: FontWeight.w400),
-      //             textAlign: TextAlign.center,
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // );
-    }),
-  ],
-)
+                  GetBuilder<HomeController>(builder: (context) {
+                    if (_homeCtrl.homeQuoteList.isNotEmpty) {
+                      String originalString = _homeCtrl.homeQuoteList[0].name;
 
+                      if (originalString.contains("[name]")) {
+                        replacedString = originalString.replaceAll(
+                            "[name]", _authCtrl.user?.name ?? '');
+                        // print(replacedString);
+                      } else {
+                        replacedString = _homeCtrl.homeQuoteList[0].name;
+                      }
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: Center(
+                        child: Container(
+                          // Add your desired properties for the additional Container
+                          // Example color
+                          width: 350.0,
+                          // Example width
+
+                          // Example height
+                          // Add child widgets as needed for the additional Container
+                          padding: const EdgeInsets.all(12),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 60,
+                                offset: const Offset(1, 2),
+                              ),
+                            ],
+
+                            //border: Border.all(color: Colors.red, width: 4.0),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(31.0)),
+                          ),
+                          child: Column(
+                            children: [
+                              Center(
+                                  child: Padding(
+                                padding: const EdgeInsets.only(bottom: 1.0),
+                                child: Text('Today’s Plan:',
+                                    style: kBodyStyle.copyWith(
+                                        fontSize: 18, color: Colors.black)),
+                              )),
+                              Center(
+                                child: Text(
+                                  _homeCtrl.homeQuoteList.isEmpty
+                                      ? 'loading..'
+                                      : replacedString,
+                                  style: kBodyStyle.copyWith(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                    //   Positioned(
+                    //   top: 350,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: Container(
+                    //       // Add your desired properties for the additional Container
+                    //       // Example color
+                    //       width: 370.0,
+                    //       // Example width
+                    //       height: 80,
+                    //       // Example height
+                    //       // Add child widgets as needed for the additional Container
+                    //       padding: EdgeInsets.all(12),
+                    //       alignment: Alignment.center,
+                    //       decoration: BoxDecoration(
+                    //         color: Colors.white,
+                    //         //border: Border.all(color: Colors.red, width: 4.0),
+                    //         borderRadius: BorderRadius.all(Radius.circular(31.0)),
+                    //       ),
+                    //       child: Wrap(
+                    //         children: [
+                    //           Center(
+                    //               child: Text('Today’s Plan:',
+                    //                   style: kBodyStyle.copyWith(
+                    //                       fontSize: 18, color: Colors.black))),
+                    //           Text(
+                    //             _homeCtrl.homeQuoteList.isEmpty
+                    //                 ? 'loading..'
+                    //                 : replacedString,
+                    //             style: kBodyStyle.copyWith(
+                    //                 fontSize: 15,
+                    //                 color: Colors.black,
+                    //                 fontWeight: FontWeight.w400),
+                    //             textAlign: TextAlign.center,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // );
+                  }),
+                ],
+              )
             ],
           ),
-
         ],
       )),
     );
@@ -1075,7 +1096,7 @@ setState(() async{
         borderRadius: BorderRadius.circular(kBorderRadius),
         color: const Color(0xFFEAEDF4),
       ),
-      child:Column(
+      child: Column(
         children: [
           Text('How was your day?', style: kBodyStyle),
           const SizedBox(height: 8.0),
@@ -1083,48 +1104,48 @@ setState(() async{
             builder: (homeCtrl) {
               return homeCtrl.isLoading
                   ? const Center(
-                child: SizedBox(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-                  : SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ..._homeCtrl.emojiList
-                        .map(
-                          (e) => Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          EmotionScreen(
-                                            e: e,
-                                            onCompleted: () {
-                                              debugPrint(
-                                                  "OnCompleted executed");
-                                              _tabCtrl
-                                                  .onItemTapped(2);
-                                            },
-                                          )));
-                              //Get.toNamed(EmotionScreen.routeName);
-                            },
-                            child: CacheImgWidget(
-                              '$homeEmojiURL/${e.emoji}',
-                              width: 42.0,
-                              height: 42.0,
-                            ),
-                          ),
-                          const SizedBox(width: 16.0),
-                        ],
+                      child: SizedBox(
+                        child: CircularProgressIndicator(),
                       ),
                     )
-                        .toList()
-                  ],
-                ),
-              );
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          ..._homeCtrl.emojiList
+                              .map(
+                                (e) => Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EmotionScreen(
+                                                      homeEmoji: e,
+                                                      onCompleted: () {
+                                                        debugPrint(
+                                                            "OnCompleted executed");
+                                                        _tabCtrl
+                                                            .onItemTapped(2);
+                                                      },
+                                                    )));
+                                        //Get.toNamed(EmotionScreen.routeName);
+                                      },
+                                      child: CacheImgWidget(
+                                        '$homeEmojiURL/${e.emoji}',
+                                        width: 42.0,
+                                        height: 42.0,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16.0),
+                                  ],
+                                ),
+                              )
+                              .toList()
+                        ],
+                      ),
+                    );
             },
           ),
         ],
@@ -1202,15 +1223,14 @@ setState(() async{
               isFirst: true,
               indicatorStyle: (tile3Status == 1)
                   ? IndicatorStyle(
-                width: 30,
-                color: Colors.green,
-                iconStyle: IconStyle(
-                  iconData: Icons.check,
-                  color: Colors.white,
-                ),
-              )
-                  : const IndicatorStyle(
-                  width: 30, color: Colors.white),
+                      width: 30,
+                      color: Colors.green,
+                      iconStyle: IconStyle(
+                        iconData: Icons.check,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const IndicatorStyle(width: 30, color: Colors.white),
               endChild: Column(
                 children: [
                   ListTile(
@@ -1308,30 +1328,28 @@ setState(() async{
   Widget _buildNightTimeline1View() {
     return GetBuilder<HomeController>(
       builder: (_) => _homeCtrl.homeAudioSleepList.isEmpty
-          ?  const LoadingWidget()
+          ? const LoadingWidget()
           : Padding(
-              padding:  const EdgeInsets.only(left: 15.0),
-              child:
-              TimelineTile(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: TimelineTile(
                 alignment: TimelineAlign.start,
                 isFirst: true,
-                afterLineStyle:  const LineStyle(color: Colors.transparent),
+                afterLineStyle: const LineStyle(color: Colors.transparent),
                 // Set the color to transparent
                 // beforeLineStyle: const LineStyle(color: Colors.transparent),
                 indicatorStyle: (tile3Status == 1)
-                    ?
-                 IndicatorStyle (
-
-                  width: 30,
-                  color: Colors.green,
-                  iconStyle: IconStyle(
-                    iconData: Icons.check,
-                    color: Colors.white,
-                  ),
-                )
-                    : const IndicatorStyle (
-                    width: 30, color: Colors.white12,
-                ),
+                    ? IndicatorStyle(
+                        width: 30,
+                        color: Colors.green,
+                        iconStyle: IconStyle(
+                          iconData: Icons.check,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const IndicatorStyle(
+                        width: 30,
+                        color: Colors.white12,
+                      ),
                 endChild: Column(
                   children: [
                     ListTile(
@@ -1342,24 +1360,18 @@ setState(() async{
                         );
                       },
                       leading: ClipRRect(
-                        borderRadius:
-                        BorderRadius.circular(
-                            24),
+                        borderRadius: BorderRadius.circular(24),
                         child: Container(
                           height: 55,
                           width: 55,
                           decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(
-                                  27)),
+                              borderRadius: BorderRadius.circular(27)),
                           child: Image.network(
                             '$imgAndAudio/${_homeCtrl.homeAudioSleepList[0].image}',
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-
                       title: Text(_homeCtrl.homeAudioSleepList[0].title ?? ''),
                       subtitle: Row(
                         children: [
@@ -1380,4 +1392,3 @@ setState(() async{
     );
   }
 }
-
