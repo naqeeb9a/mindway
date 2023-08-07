@@ -6,6 +6,8 @@ import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/utils/firebase_collections.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 
+import '../../../my folder/notification_service.dart';
+
 class SelectTimeAndDayToNotifyProfileNew extends StatefulWidget {
   const SelectTimeAndDayToNotifyProfileNew({super.key});
 
@@ -246,9 +248,15 @@ class _SelectTimeAndDayToNotifyProfileNewState
                   ? CustomAsyncBtn(
                       borderRadius: 50,
                       btnTxt: 'Set Reminder',
-                      onPress: () {
+                      onPress: () async {
                         debugPrint("SelectedDateTime $selectedDateTime");
                         if (selectedDateTime != null && days.isNotEmpty) {
+                          await NotificationService().scheduleNotification(
+                              title: "Mindfulness Time",
+                              body:
+                                  "It's you time ⭐ Take some time to meditate & journal your emotions.",
+                              scheduledNotificationDateTime:
+                                  selectedDateTime ?? DateTime.now());
                           userCollection
                               .doc(FirebaseAuth.instance.currentUser!.uid)
                               .update({

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mindway/src/subscription/utils/size_utils.dart';
 import 'package:mindway/utils/constants.dart';
@@ -31,7 +30,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
   Color buttonColor = const Color(0xffD4E2FF);
   Color textColor = Colors.white;
 
-  Color btnColor = const Color(0xffD4E2FF); // Initially set the button color as red
+  Color btnColor =
+      const Color(0xffD4E2FF); // Initially set the button color as red
 
   void toggleSelection(int containerIndex) {
     setState(() {
@@ -142,13 +142,17 @@ class _ChooseScreenState extends State<ChooseScreen> {
                                   if (selectedContainerIndex == 0) {
                                     // Deselect the container if it's already selected
                                     selectedContainerIndex = -1;
-                                    textColor = Colors.black; // Set text color to default
-                                    btnColor = const Color(0xffDAE1F2); // Set button color to red
+                                    textColor = Colors
+                                        .black; // Set text color to default
+                                    btnColor = const Color(
+                                        0xffDAE1F2); // Set button color to red
                                   } else {
                                     // Select the clicked container and deselect others
                                     selectedContainerIndex = 0;
-                                    textColor = Colors.white; // Set text color to new color
-                                    btnColor = const Color(0xff688EDC); // Set button color to green
+                                    textColor = Colors
+                                        .white; // Set text color to new color
+                                    btnColor = const Color(
+                                        0xff688EDC); // Set button color to green
                                     goal_id = 6;
                                   }
                                 });
@@ -211,7 +215,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           'assets/images/e5.png',
@@ -253,7 +258,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           'assets/images/e8.png',
@@ -294,7 +300,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           'assets/images/e6.png',
@@ -336,7 +343,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           'assets/images/e2.png',
@@ -380,7 +388,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           'assets/images/e3.png',
@@ -424,7 +433,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           'assets/images/e4.png',
@@ -455,7 +465,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
                                   toggleSelection(7);
                                   setState(() {
                                     buttonColor = const Color(0xff688EDC);
-                                    goal_id = 8;
+                                    goal_id = 9;
                                   });
                                 },
                                 child: Container(
@@ -468,7 +478,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           'assets/images/e7.png',
@@ -498,29 +509,31 @@ class _ChooseScreenState extends State<ChooseScreen> {
                           height: 10,
                         ),
                         CustomAsyncBtn(
-                          btnColor: btnColor, // Use the updated button color variable
+                          btnColor:
+                              btnColor, // Use the updated button color variable
                           btnTxt: 'Continue',
                           onPress: () async {
                             if (selectedContainerIndex != -1) {
                               SharedPreferences sharedPreferences =
-                              await SharedPreferences.getInstance();
+                                  await SharedPreferences.getInstance();
                               sharedPreferences
                                   .setString("goal_id", goal_id.toString())
                                   .then((value) {
                                 setState(() {
-                                  buttonColor = const Color(0xff688EDC); // Update the button color
+                                  buttonColor = const Color(
+                                      0xff688EDC); // Update the button color
                                 });
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const AgreeStatements(),
+                                    builder: (context) =>
+                                        const AgreeStatements(),
                                   ),
                                 );
                               });
                             }
                           },
                         ),
-
                       ],
                     ),
                   ),

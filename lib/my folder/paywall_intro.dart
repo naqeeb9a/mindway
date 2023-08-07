@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindway/my%20folder/paywall_screen.dart';
-import 'package:mindway/my%20folder/purchases_api.dart';
 import 'package:mindway/src/subscription/widgets/custom_button.dart';
+import 'package:mindway/utils/constants.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:video_player/video_player.dart';
+
+import '../src/auth/views/signup_screen.dart';
 
 class PayWallIntro extends StatefulWidget {
   static const String routeName = '/PayWallIntro';
@@ -18,13 +20,75 @@ class _PayWallIntroState extends State<PayWallIntro> {
   late VideoPlayerController? _controller;
   bool isFinished = false;
   List<Offering> offerings = [];
- 
+  final List mainGoal = [
+    {
+      "name": "Happiness",
+      "goalId": 6,
+    },
+    {
+      "name": "Reduce Stress",
+      "goalId": 13,
+    },
+    {
+      "name": "Motivation & energy",
+      "goalId": 8,
+    },
+    {
+      "name": "Productivity",
+      "goalId": 10,
+    },
+    {
+      "name": "Self-love",
+      "goalId": 12,
+    },
+    {
+      "name": "Awareness",
+      "goalId": 11,
+    },
+    {
+      "name": "Sleep Better",
+      "goalId": 7,
+    },
+    {
+      "name": "Confidence",
+      "goalId": 9,
+    },
+  ];
+  String? getMainGoal() {
+    final String? id = sharedPreferences.getString("goal_id");
+    int goalId = int.parse(id ?? "");
+    if (goalId == 6) {
+      return "Grow Happiness";
+    }
+    if (goalId == 13) {
+      return "Reduce Daily Stress  ";
+    }
+    if (goalId == 8) {
+      return "Find Motivation";
+    }
+    if (goalId == 10) {
+      return "Be Positive";
+    }
+    if (goalId == 12) {
+      return "Strengthen Self-love";
+    }
+    if (goalId == 11) {
+      return "Grow Awareness";
+    }
+    if (goalId == 7) {
+      return "Sleep Better";
+    }
+    if (goalId == 9) {
+      return "Increase Your Confidence";
+    }
+    return null;
+  }
 
   @override
   void initState() {
     super.initState();
     // Initialize the controller with the asset path
-    
+
     _controller =
         VideoPlayerController.asset("assets/videos/chart_animation2.mp4")
           ..initialize().then((_) {
@@ -48,6 +112,9 @@ class _PayWallIntroState extends State<PayWallIntro> {
 
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments as Map<String, dynamic>;
+    DateTime time = args['time'] as DateTime;
+    List<String> days = args['days'];
     double deviceHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -61,9 +128,9 @@ class _PayWallIntroState extends State<PayWallIntro> {
                 ),
                 RichText(
                   textAlign: TextAlign.center,
-                  text: const TextSpan(
+                  text: TextSpan(
                     children: [
-                      TextSpan(
+                      const TextSpan(
                         text: "Ryder, ",
                         style: TextStyle(
                             color: Color(0xff688EDC),
@@ -71,13 +138,13 @@ class _PayWallIntroState extends State<PayWallIntro> {
                             fontWeight: FontWeight.bold),
                       ),
                       TextSpan(
-                        text: "Grow Happiness\nWith ",
-                        style: TextStyle(
+                        text: "${getMainGoal()}\nWith ",
+                        style: const TextStyle(
                             fontSize: 26,
                             color: Colors.black,
                             fontWeight: FontWeight.w500),
                       ),
-                      TextSpan(
+                      const TextSpan(
                           text: "Mindway +",
                           style: TextStyle(
                               fontStyle: FontStyle.italic,
@@ -600,6 +667,15 @@ class _PayWallIntroState extends State<PayWallIntro> {
                   ),
                 ),
                 CustomButton(
+                  onTap: () {
+                    Get.toNamed(
+                      SignUpScreen.routeName,
+                      arguments: {
+                        'time': time,
+                        'days': days,
+                      },
+                    );
+                  },
                   width: MediaQuery.of(context).size.width * 0.8,
                   text: "Start 7-day free trial",
                   fontStyle: ButtonFontStyle.AntebBold18,

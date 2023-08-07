@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,6 @@ import 'package:mindway/utils/firebase_collections.dart';
 import 'package:mindway/widgets/cache_img_widget.dart';
 import 'package:mindway/widgets/loading_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class UserAccountScreen extends StatefulWidget {
   static const String routeName = '/account';

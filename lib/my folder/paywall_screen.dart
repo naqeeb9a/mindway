@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mindway/my%20folder/purchases_api.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import '../src/auth/auth_controller.dart';
 import '../src/subscription/widgets/custom_button.dart';
+import '../utils/custom_dialog.dart';
 
 class PayWallScreen extends StatefulWidget {
   static const String routeName = '/PayWallScreen';
-  const PayWallScreen({super.key});
+  final bool enableLogoutButton;
+  const PayWallScreen({super.key, this.enableLogoutButton = false});
 
   @override
   State<PayWallScreen> createState() => _PayWallScreenState();
@@ -14,6 +18,7 @@ class PayWallScreen extends StatefulWidget {
 
 class _PayWallScreenState extends State<PayWallScreen> {
   List<Package> packages = [];
+  final AuthController _authCtrl = Get.find();
   bool fetchingOffers = true;
   @override
   void initState() {
@@ -47,6 +52,23 @@ class _PayWallScreenState extends State<PayWallScreen> {
                       Image.asset(
                         "assets/images/mountain_pic.png",
                       ),
+                      if (widget.enableLogoutButton)
+                        Positioned(
+                          top: 40,
+                          right: 10,
+                          child: IconButton(
+                              onPressed: () {
+                                showAlertDialog(
+                                  context,
+                                  'Logout',
+                                  'Are you sure, you want to logout?',
+                                  () {
+                                    _authCtrl.logOutUser(context);
+                                  },
+                                );
+                              },
+                              icon: const Icon(Icons.logout)),
+                        ),
                       const Positioned(
                         bottom: 10,
                         left: 0,
@@ -78,7 +100,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          PurchasesApi.purchasePackage(packages[0]);
+                          makePurchase(0);
                         },
                         child: Container(
                           height: 190,
@@ -129,7 +151,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          PurchasesApi.purchasePackage(packages[1]);
+                          makePurchase(1);
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.3,
@@ -214,7 +236,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          PurchasesApi.purchasePackage(packages[2]);
+                          makePurchase(2);
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.3,
@@ -557,6 +579,9 @@ class _PayWallScreenState extends State<PayWallScreen> {
                     ),
                   ),
                   CustomButton(
+                    onTap: () {
+                      makePurchase(0);
+                    },
                     width: MediaQuery.of(context).size.width * 0.8,
                     text: "Start 7-day free trial",
                     fontStyle: ButtonFontStyle.AntebBold18,
@@ -568,5 +593,9 @@ class _PayWallScreenState extends State<PayWallScreen> {
               ),
             ),
     );
+  }
+
+  void makePurchase(int index) {
+    PurchasesApi.purchasePackage(packages[index]);
   }
 }

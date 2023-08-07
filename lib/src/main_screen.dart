@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mindway/my%20folder/paywall_screen.dart';
+import 'package:mindway/my%20folder/revenue_cat_controller.dart';
 import 'package:mindway/src/account/user_account_screen.dart';
 import 'package:mindway/src/explore_screen.dart';
 import 'package:mindway/src/home/views/home_screen.dart';
@@ -65,73 +67,81 @@ class _MainScreenState extends State<MainScreen> {
       const UserAccountScreen(),
     ];
 
-    return _timer != null
-        ? Scaffold(
-            backgroundColor: const Color(0xff688EDC),
-            body: Stack(children: [
-              Center(
-                  child: SizedBox(
-                height: 100,
-                child: Image.asset('assets/images/splash-logo.png'),
-              )),
-              if (_isError)
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 600),
-                      const CircularProgressIndicator(
-                        color: Colors.white,
+    return GetBuilder<RevenueCatController>(
+      builder: (revenueCatController) =>
+          revenueCatController.entitlement == Entitlement.unpaid
+              ? const PayWallScreen(
+                  enableLogoutButton: true,
+                )
+              : _timer != null
+                  ? Scaffold(
+                      backgroundColor: const Color(0xff688EDC),
+                      body: Stack(children: [
+                        Center(
+                            child: SizedBox(
+                          height: 100,
+                          child: Image.asset('assets/images/splash-logo.png'),
+                        )),
+                        if (_isError)
+                          Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 600),
+                                const CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    'Ooops... It seems your internet connection is unstable.',
+                                    style: kBodyStyle.copyWith(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                      ]),
+                    )
+                  : DefaultTabController(
+                      length: 4,
+                      child: GetBuilder<TabScreenController>(
+                        init: TabScreenController(),
+                        builder: (tabController) => Scaffold(
+                          body: widgetOptions
+                              .elementAt(tabController.selectedIndex),
+                          bottomNavigationBar: BottomNavigationBar(
+                            type: BottomNavigationBarType.fixed,
+                            items: const <BottomNavigationBarItem>[
+                              BottomNavigationBarItem(
+                                icon: Icon(Icons.home),
+                                label: 'Home',
+                              ),
+                              BottomNavigationBarItem(
+                                icon: Icon(Icons.explore_outlined),
+                                label: 'Explore',
+                              ),
+                              BottomNavigationBarItem(
+                                icon: Icon(Icons.map_outlined),
+                                label: 'My Journey',
+                              ),
+                              BottomNavigationBarItem(
+                                icon: Icon(Icons.person_outline_rounded),
+                                label: 'Profile',
+                              ),
+                            ],
+                            currentIndex: tabController.selectedIndex,
+                            selectedItemColor: kPrimaryColor,
+                            unselectedItemColor: Colors.grey.shade700,
+                            backgroundColor: Colors.white,
+                            onTap: tabController.onItemTapped,
+                          ),
+                        ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                          'Ooops... It seems your internet connection is unstable.',
-                          style: kBodyStyle.copyWith(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white)),
-                    ],
-                  ),
-                ),
-            ]),
-          )
-        : DefaultTabController(
-            length: 4,
-            child: GetBuilder<TabScreenController>(
-              init: TabScreenController(),
-              builder: (tabController) => Scaffold(
-                body: widgetOptions.elementAt(tabController.selectedIndex),
-                bottomNavigationBar: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Home',
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.explore_outlined),
-                      label: 'Explore',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.map_outlined),
-                      label: 'My Journey',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.person_outline_rounded),
-                      label: 'Profile',
-                    ),
-                  ],
-                  currentIndex: tabController.selectedIndex,
-                  selectedItemColor: kPrimaryColor,
-                  unselectedItemColor: Colors.grey.shade700,
-                  backgroundColor: Colors.white,
-                  onTap: tabController.onItemTapped,
-                ),
-              ),
-            ),
-          );
+    );
   }
 }
 

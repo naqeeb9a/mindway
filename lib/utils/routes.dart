@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mindway/my%20folder/paywall_intro.dart';
 import 'package:mindway/my%20folder/paywall_screen.dart';
+import 'package:mindway/my%20folder/revenue_cat_controller.dart';
 import 'package:mindway/src/account/controller/account_controller.dart';
 import 'package:mindway/src/account/upload_profile_pic_screen.dart';
 import 'package:mindway/src/auth/choose_screen.dart';
@@ -101,6 +102,7 @@ final List<GetPage<dynamic>> routes = [
       Get.put(MeditateController(), permanent: true);
       Get.put(JourneyController());
       Get.put(AccountController());
+      Get.put(RevenueCatController());
     }),
   ),
   GetPage(
@@ -156,7 +158,7 @@ final List<GetPage<dynamic>> routes = [
   ),
   GetPage(
     name: EmotionScreen.routeName,
-    page: () => EmotionScreen(),
+    page: () => const EmotionScreen(),
     binding: BindingsBuilder(() {
       Get.put(JournalController());
     }),

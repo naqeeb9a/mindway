@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mindway/src/new/screens/chart_screen.dart';
+import 'package:mindway/my%20folder/paywall_intro.dart';
 import 'package:mindway/src/new/util.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -93,7 +93,8 @@ class _GoodNewsScreen1State extends State<GoodNewsScreen1> {
                     ),
                   )),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: Text(
                   "You are in the right place, \n$userName",
                   textAlign: TextAlign.center,
@@ -133,19 +134,19 @@ class _GoodNewsScreen1State extends State<GoodNewsScreen1> {
                 child: CustomAsyncBtn(
                     btnTxt: isFinished ? "Continue" : "Preparing...",
                     onPress: () {
-                     // Navigator.push(context, MaterialPageRoute(builder: (context) => ChartScreen(),));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => ChartScreen(),));
                       isFinished
                           ? Get.toNamed(
-                        ChartScreen.routeName,
-                        arguments: {
-                          'time': time,
-                          'days': days,
-                        },
-                      )
-                      // Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (context) => ChartScreen()),
+                              PayWallIntro.routeName,
+                              arguments: {
+                                'time': time,
+                                'days': days,
+                              },
+                            )
+                          // Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //             builder: (context) => ChartScreen()),
 
                           : null;
                     }),
