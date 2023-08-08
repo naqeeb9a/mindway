@@ -1,4 +1,6 @@
 // 2. compress file and get file.
+// ignore_for_file: unused_local_variable, non_constant_identifier_names
+
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -93,7 +95,6 @@ Future updatePlayCount({
   };
 
   try {
-    print("APIHELPER " "executed");
     response = await http.post(url,
         headers: {
           "Accept": "application/json",
@@ -101,13 +102,11 @@ Future updatePlayCount({
         },
         body: body);
   } catch (e) {
-    print("APIHELPER $e");
     return;
   }
 
   if (response.statusCode == 200) {
     final decodedResponse = await json.decode(response.body);
-    print(decodedResponse);
     var status = decodedResponse['success'];
     var message = decodedResponse['message'];
     if (status != "OK") {}

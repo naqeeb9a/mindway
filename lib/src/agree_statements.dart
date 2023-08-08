@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:mindway/src/auth/time/select_time_screen_new.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';

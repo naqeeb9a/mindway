@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mindway/src/new/models/note_model.dart';
@@ -8,10 +7,10 @@ import 'package:mindway/utils/firebase_collections.dart';
 import '../../utils/helper.dart';
 
 class AddNoteScreen extends StatelessWidget {
-  String dbDate;
-  String notes;
+  final String dbDate;
+  final String notes;
 
-  AddNoteScreen({super.key, required this.dbDate, required this.notes});
+  const AddNoteScreen({super.key, required this.dbDate, required this.notes});
 
   @override
   Widget build(BuildContext context) {

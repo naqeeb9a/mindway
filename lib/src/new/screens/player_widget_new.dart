@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, unused_local_variable, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:just_audio/just_audio.dart';
@@ -67,8 +69,6 @@ class _PlayerWidgetNewState extends State<PlayerWidgetNew>
               querySnapshot.docs.first.data() as Map<String, dynamic>?;
           // print(_latestRecord);
           _counterTime = _latestRecord?['time_count_in_minutes'];
-          print(_counterTime);
-          print('wali zzz');
         });
       }
     }
@@ -121,7 +121,6 @@ class _PlayerWidgetNewState extends State<PlayerWidgetNew>
     User? user = _auth.currentUser;
     final userss = user?.uid;
     emotionTracked = await checkEmotionTracked(userss.toString());
-    print('Yes today emotion tracked: $emotionTracked');
     setState(() {
       emotionTracked;
     });
@@ -453,7 +452,8 @@ class _PlayerWidgetNewState extends State<PlayerWidgetNew>
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EmotionScreen()),
+                                      builder: (context) =>
+                                          const EmotionScreen()),
                                 );
                               }
                             },
@@ -569,7 +569,8 @@ class _PlayerWidgetNewState extends State<PlayerWidgetNew>
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EmotionScreen()),
+                                      builder: (context) =>
+                                          const EmotionScreen()),
                                 );
                               }
                             },

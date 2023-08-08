@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison, non_constant_identifier_names
+
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,15 +36,13 @@ class HomeController extends NetworkManager {
   int id = 0;
   int goal_id2 = 0;
   bool isLoading = false;
-  int highestDay =1;
-int order_id=0;
+  int highestDay = 1;
+  int order_id = 0;
   Future<void> checkGoalId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey("goal_id")) {
-      print("The 'goal_id' key is set.");
       // Perform actions when the key is set
     } else {
-      print("The 'goal_id' key is not set.");
       // Perform actions when the key is not set
     }
   }
@@ -57,7 +57,7 @@ int order_id=0;
 
     super.onInit();
     await getUser();
-    await  getRandomCourses();
+    await getRandomCourses();
   }
 
   Future<void> getHomeEmojis() async {
@@ -104,7 +104,7 @@ int order_id=0;
       update();
       int id = _authCtrl.user?.id as int;
       dio.Response response = await _homeService.getQuote(id);
-     // log('${response.data}', name: 'API Home Quote');
+      // log('${response.data}', name: 'API Home Quote');
       //
       homeQuoteList = (response.data['data'] as List)
           .map((e) => HomeQuoteModel.fromJson(e))
@@ -126,28 +126,19 @@ int order_id=0;
     try {
       isLoading = true;
       update();
-      dio.Response response = await _homeService.getCourse(id,orderId);
+      dio.Response response = await _homeService.getCourse(id, orderId);
       log('${response.data}', name: 'API Home Course');
 
-      print('saliii');
-      print(response.data['data']);
       homeCourseList = (response.data['data'] as List)
           .map((e) => HomeCourseSessionModel.fromJson(e))
           .toList();
 
       isLoading = false;
       update();
-    } on dio.DioError catch (e) {
-      print('chari');
-      print('${e.response}');
     } catch (e) {
-      print('$e');
-      print('Course not working');
-      displayToastMessage('Failed to load');
+      return displayToastMessage('Failed to load');
     }
   }
-
-
 
   Future<void> getUser() async {
     try {
@@ -161,40 +152,26 @@ int order_id=0;
           .toList();
 
       if (homeUserList.isNotEmpty) {
-
-
         if (homeUserList[0].goal_id != null) {
           int goalId = int.parse(homeUserList[0].goal_id);
 
-            User? user = _auth.currentUser;
-            final userss = user?.uid;
+          User? user = _auth.currentUser;
+          final userss = user?.uid;
           highestDay = await getHighestDayFromCourseDays(userss.toString());
-          final oId = (order_id >0) ? order_id : highestDay;
+          final oId = (order_id > 0) ? order_id : highestDay;
           //  print(order_id);
-          print('Goal id mele thi');
-          print(goalId);
-          print('Order id mele thi');
-          print(oId);
 
           await getCourses(goalId, oId);
-          print('getCourses called');
-        } else {
-          print('Goal ID is null');
-        }
-      } else {
-        print('homeUserList is empty');
-      }
+        } else {}
+      } else {}
 
       isLoading = false;
       update();
-    } on dio.DioError catch (e) {
-      print('${e.response}');
     } catch (e) {
-      print('$e');
-      print('User not working');
       displayToastMessage('Failed to load');
     }
   }
+
   Future<void> getHomeAudioSleep() async {
     try {
       isLoading = true;
@@ -202,7 +179,7 @@ int order_id=0;
       id = _authCtrl.user?.id as int;
 
       dio.Response response = await _homeService.getAudioSleep(id);
-     // log('${response.data}', name: 'API Home Audio Sleep');
+      // log('${response.data}', name: 'API Home Audio Sleep');
       homeAudioSleepList = (response.data['data'] as List)
           .map((e) => HomeAudioSleepModel.fromJson(e))
           .toList();
@@ -215,12 +192,13 @@ int order_id=0;
       displayToastMessage('Failed to load');
     }
   }
+
   Future<void> getRandomCourses() async {
     try {
       isLoading = true;
       update();
       dio.Response response = await _homeService.geRandomCourse();
-       log('${response.data}', name: 'API Home Random Course');
+      log('${response.data}', name: 'API Home Random Course');
       homeRandomCourseList = (response.data['data'] as List)
           .map((e) => HomeCourseSessionModel.fromJson(e))
           .toList();
@@ -248,20 +226,20 @@ int order_id=0;
   // }
   Future<int> getHighestDayFromCourseDays(String email) async {
     final CollectionReference collection =
-    FirebaseFirestore.instance.collection('tile2_count_course_days');
+        FirebaseFirestore.instance.collection('tile2_count_course_days');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
       final List<Map<String, dynamic>> records =
-      List<Map<String, dynamic>>.from(document['tile2']);
+          List<Map<String, dynamic>>.from(document['tile2']);
       if (records.isNotEmpty) {
-        final String todayDate =  DateFormat('yyyy-MM-dd').format(DateTime.now()); // Get today's date in the format used in the 'date' field
+        final String todayDate = DateFormat('yyyy-MM-dd').format(DateTime
+            .now()); // Get today's date in the format used in the 'date' field
 
         int highestDays = 0; // Initialize the highest day variable
         for (final record in records) {
           if (record['is_completed'] == 'yes') {
             if (record['date'] == todayDate) {
-              print('okkkkkkkkk');
               highestDays = record['day'] as int;
               break; // Found a record matching the conditions, no need to continue the loop
             } else {
@@ -269,11 +247,8 @@ int order_id=0;
             }
           }
           if (record['is_completed'] == 'no') {
-
-              print('okkkkkkkkk');
-              highestDays = record['day'] as int;
-              break; // Found a record matching the conditions, no need to continue the loop
-
+            highestDays = record['day'] as int;
+            break; // Found a record matching the conditions, no need to continue the loop
           }
         }
 
@@ -283,5 +258,4 @@ int order_id=0;
 
     return 0; // Default value when collection or records don't exist
   }
-
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +7,8 @@ import 'package:get/get.dart';
 import 'package:mindway/src/entry_screen.dart';
 import 'package:mindway/src/main_screen.dart';
 
-
 class SplashScreenImage extends StatefulWidget {
-   static const String routeName = "/splash";
+  static const String routeName = "/splash";
 
   const SplashScreenImage({super.key});
 
@@ -21,22 +22,23 @@ class _SplashScreenImageState extends State<SplashScreenImage> {
     super.initState();
     Timer(
         const Duration(seconds: 3),
-        () => FirebaseAuth.instance.currentUser == null ?Get.offNamed(EntryScreen.routeName) : Get.offNamed(MainScreen.routeName));
+        () => FirebaseAuth.instance.currentUser == null
+            ? Get.offNamed(EntryScreen.routeName)
+            : Get.offNamed(MainScreen.routeName));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: <Widget>[
-          Image.asset(
-            'assets/images/splash.png',
-            fit: BoxFit.cover,
-            height: double.infinity,
-            width: double.infinity,
-            alignment: Alignment.center,
-          ),
-        ],
-      ),
-    );}
+    return Stack(
+      children: <Widget>[
+        Image.asset(
+          'assets/images/splash.png',
+          fit: BoxFit.cover,
+          height: double.infinity,
+          width: double.infinity,
+          alignment: Alignment.center,
+        ),
+      ],
+    );
+  }
 }

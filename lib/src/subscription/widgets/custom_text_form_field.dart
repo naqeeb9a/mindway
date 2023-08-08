@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:mindway/src/subscription/utils/color_constant.dart';
 import 'package:mindway/src/subscription/utils/size_utils.dart';

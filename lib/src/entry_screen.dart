@@ -15,9 +15,11 @@ class EntryScreen extends StatefulWidget {
 }
 
 class _EntryScreenState extends State<EntryScreen> {
-  // // TODO 4: Create a VideoPlayerController object.
+  // ignore: todo
+  // TODO 4: Create a VideoPlayerController object.
   // VideoPlayerController? _controller;
   //
+  // ignore: todo
   // // TODO 5: Override the initState() method and setup your VideoPlayerController
   // @override
   // void initState() {

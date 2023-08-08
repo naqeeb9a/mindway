@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, unused_field, unused_local_variable, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -17,6 +19,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:mindway/src/journey/check_emotion_tracker.dart';
+
 class FavoriteAudioPlayerScreen extends StatefulWidget {
   FavoriteModel favoriteModel;
 
@@ -62,8 +65,8 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
 
       int sum = 0;
       if (querySnapshot.exists) {
-        final List<Map<String, dynamic>> records = List<
-            Map<String, dynamic>>.from(querySnapshot.data()!['records']);
+        final List<Map<String, dynamic>> records =
+            List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
         final filteredRecords = records.where((record) {
           final recordDate = (record['date'] as Timestamp).toDate();
           return recordDate.isAfter(startOfToday) &&
@@ -80,6 +83,7 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
       });
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -87,7 +91,6 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
     checkCurrentUser();
     calculateTotalMinutes();
     setPlayer();
-    print('ssssss');
     checkEmotionTrackedToday();
     _audioPlayer.playerStateStream.listen((playerState) {
       if (playerState.processingState == ProcessingState.completed) {
@@ -98,17 +101,16 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
       }
     });
   }
+
   Future<void> checkEmotionTrackedToday() async {
     User? user = _auth.currentUser;
     final userss = user?.uid;
     emotionTracked = await checkEmotionTracked(userss.toString());
-    print('Yes today emotion tracked: $emotionTracked');
     setState(() {
       emotionTracked;
-      print(emotionTracked);
-      print('play emotionTracked');
     });
   }
+
   Future<void> checkCurrentUser() async {
     final User? user = _auth.currentUser;
     if (user != null) {
@@ -121,39 +123,45 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
   Future<void> updateMediationCounter(
       String email, Map<String, dynamic> records) async {
     final CollectionReference collection =
-    FirebaseFirestore.instance.collection('mediation_counter');
+        FirebaseFirestore.instance.collection('mediation_counter');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
-      final List<dynamic> existingRecords = document['records'] as List<dynamic>;
+      final List<dynamic> existingRecords =
+          document['records'] as List<dynamic>;
       existingRecords.add(records);
 
       await collection.doc(email).update({'records': existingRecords});
     } else {
-      await collection.doc(email).set({'records': [records]});
+      await collection.doc(email).set({
+        'records': [records]
+      });
     }
   }
+
   List getMessage() {
-
-
     if (emotionTracked == 1) {
-      return  ['Congratulations on completing this','exercise','Finish' ];
+      return ['Congratulations on completing this', 'exercise', 'Finish'];
     } else {
-      return  ['Continue your positive transformation!','Journal your mood to track your progress','Track Mood', ];
+      return [
+        'Continue your positive transformation!',
+        'Journal your mood to track your progress',
+        'Track Mood',
+      ];
     }
   }
+
   void setPlayer() {
     favoriteModel = FavoriteModel(
-        id: widget.favoriteModel.id,
-        type: widget.favoriteModel.type,
-        course: widget.favoriteModel.title,
-        session: widget.favoriteModel.session,
-        title: widget.favoriteModel.title,
-        audio: widget.favoriteModel.audio,
-        image: widget.favoriteModel.image,
-        color: widget.favoriteModel.color,
+      id: widget.favoriteModel.id,
+      type: widget.favoriteModel.type,
+      course: widget.favoriteModel.title,
+      session: widget.favoriteModel.session,
+      title: widget.favoriteModel.title,
+      audio: widget.favoriteModel.audio,
+      image: widget.favoriteModel.image,
+      color: widget.favoriteModel.color,
       duration: widget.favoriteModel.duration,
-
     );
     favControllerNew.addToRecent(favoriteModel: favoriteModel!);
 
@@ -193,7 +201,6 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
           children: [
             const SizedBox(height: 42.0),
             Row(
-
               children: [
                 const SizedBox(
                   width: 20,
@@ -265,12 +272,14 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
             ),
 
             const SizedBox(height: 20.0),
-            _buildAudioPlayerControlView(widget.favoriteModel.duration ?? '5 min')
+            _buildAudioPlayerControlView(
+                widget.favoriteModel.duration ?? '5 min')
           ],
         ),
       ),
     );
   }
+
   bool alertShown = false;
   Widget _buildAudioPlayerControlView(duration) {
     String result = duration.replaceAll(RegExp(r'\s+min'), '');
@@ -280,7 +289,7 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
       final seconds = position.inSeconds;
       final remainingSeconds = number - seconds;
 
-      if (  !alertShown && _isPlaying == true) {
+      if (!alertShown && _isPlaying == true) {
         alertShown = true;
         _isPlaying == false;
         // List<Map<String, dynamic>> everydayRecords = [
@@ -289,8 +298,7 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
         //     'date': DateTime.now(),
         //     'time_count_in_minutes': time_count_in_minutes
         //   },]
-        Map<String, dynamic> everydayRecords =
-        {
+        Map<String, dynamic> everydayRecords = {
           'mediationType': 'mediate',
           'date': DateTime.now(),
           'time_count_in_minutes': timeCountInMinutes
@@ -301,9 +309,7 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
         final users = user?.uid;
         await updateMediationCounter(users.toString(), everydayRecords);
 
-
-
-        int msg = (totalMinutes == 0 )
+        int msg = (totalMinutes == 0)
             ? timeCountInMinutes
             : totalMinutes + timeCountInMinutes;
 
@@ -330,11 +336,13 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
                               children: [
                                 Text(
                                   'Minutes Meditated',
-                                  style: kBodyStyle.copyWith(fontSize: 18,
+                                  style: kBodyStyle.copyWith(
+                                      fontSize: 18,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400),
                                 ),
-                                Text(msg.toString(),
+                                Text(
+                                  msg.toString(),
                                   style: kBodyStyle.copyWith(
                                       fontSize: 28, color: Colors.white),
                                 ),
@@ -356,27 +364,44 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
                         ],
                       ),
                       Image.asset(
-                        'assets/images/light-stars.png', width: 100,),
-                      const SizedBox(height: 10,),
+                        'assets/images/light-stars.png',
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         'Session Completed',
-                        style: kBodyStyle.copyWith(fontSize: 28, color: const Color(
-                            0xff688EDC), fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 28,
+                          color: const Color(0xff688EDC),
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         getMessage()[0],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                       Text(
                         getMessage()[1],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 20,),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       SizedBox(
                         width: 300,
                         child: CustomAsyncBtn(
@@ -393,21 +418,18 @@ class _FavoriteAudioPlayerScreenState extends State<FavoriteAudioPlayerScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => EmotionScreen()),
+                                    builder: (context) =>
+                                        const EmotionScreen()),
                               );
                             }
                           },
                         ),
                       ),
-
                     ],
                   ),
-                )
-            );
+                ));
           },
         );
-
-
       }
     });
     return Column(

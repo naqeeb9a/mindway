@@ -24,8 +24,6 @@ class HomeService {
   //   return await dio.get('$apiURL/get-course/$id');
   // }
   Future<Response> getCourse(int id, int orderId) async {
-    print(orderId);
-    print('just checking order id');
 
     return await dio.get('$apiURL/get-course/$id/$orderId');
   }

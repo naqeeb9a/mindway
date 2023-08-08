@@ -1,4 +1,6 @@
 
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 import '../widgets/custom_async_btn.dart';

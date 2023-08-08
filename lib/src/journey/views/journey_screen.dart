@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, prefer_typing_uninitialized_variables
+
 import 'dart:collection';
 //import 'dart:ffi';
 
@@ -600,7 +602,6 @@ class _JourneyScreenState extends State<JourneyScreen> {
     for (int i in emotionsFlex) {
       totalEmotionFlexValue += i;
     }
-    print("MonthlyEmojiList totalEmotionFlexValue $totalEmotionFlexValue");
     if (totalEmotionFlexValue == 0) {
       return;
     }
@@ -910,7 +911,6 @@ class _JourneyScreenState extends State<JourneyScreen> {
   }
 
   getTodayNotes(sdate) async {
-    print("Notes TodayDate $sdate");
     await FirebaseService().getNoteByDate(sdate).then((value) {
       setState(() {
         noteModel = value;

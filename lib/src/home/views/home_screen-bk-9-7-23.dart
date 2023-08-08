@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, file_names, unused_element, empty_catches
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
     userEmail = _authCtrl.user?.email;
     User? user = _auth.currentUser;
     final users = user?.uid;
-    print("uuid=");
-    print(users);
 
     fetchHighestDay();
     tile1StatusStream = checkTile1Status(users.toString());
@@ -225,7 +225,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> updateCustomerGoalId(String email, int goalId) async {
     final String apiUrl =
         'https://mindwayadmin.com/api/goalupdate/$email/goal/$goalId';
-    print(apiUrl);
 
     try {
       final response = await http.post(
@@ -233,18 +232,12 @@ class _HomeScreenState extends State<HomeScreen> {
       );
 
       if (response.statusCode == 400) {
-        print('Nothinggggggg');
       }
       if (response.statusCode == 200) {
-        print('Customer goal_id updated successfully');
       } else if (response.statusCode == 404) {
-        print('Customer not found');
       } else {
-        print(
-            'Failed to update customer goal_id. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error occurred while updating customer goal_id: $e');
     }
   }
 
@@ -252,13 +245,11 @@ class _HomeScreenState extends State<HomeScreen> {
     User? user = _auth.currentUser;
     final userss = user?.uid;
     emotionTracked = await checkEmotionTracked(userss.toString());
-    print('Yes today emotion tracked: $emotionTracked');
     setState(() {
       emotionTracked;
     });
   }
 
-  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       // Run your method here, as all widgets have been loaded and the app has resumed
@@ -270,7 +261,6 @@ class _HomeScreenState extends State<HomeScreen> {
     User? user = _auth.currentUser;
     final userss = user?.uid;
     highestDay = await getHighestDayFromCourseDays(userss.toString());
-    print('The highest day is: $highestDay');
     setState(() {
       highestDay;
       _homeCtrl.order_id = highestDay;
@@ -316,7 +306,6 @@ class _HomeScreenState extends State<HomeScreen> {
         for (final record in records) {
           if (record['is_completed'] == 'yes') {
             if (record['date'] == todayDate) {
-              print('okkkkkkkkk');
               highestDay = record['day'] as int;
               break; // Found a record matching the conditions, no need to continue the loop
             } else {
@@ -363,7 +352,6 @@ class _HomeScreenState extends State<HomeScreen> {
         existingRecords.addAll(records);
 
         await collection.doc(email).update({'tile2': existingRecords});
-        print('Record inserted for $currentDate');
       } else {
         // Update the course field for the existing record
         final Map<String, dynamic> existingRecord = existingRecords
@@ -376,7 +364,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
         await collection.doc(email).update({'tile2': existingRecords});
 
-        print('Record updated for $currentDate');
       }
     } else {
       final String currentDate =
@@ -387,7 +374,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
 
       await collection.doc(email).set({'tile2': records});
-      print('Record inserted for $currentDate');
     }
   }
 
@@ -413,8 +399,6 @@ class _HomeScreenState extends State<HomeScreen> {
           replacedString = _homeCtrl.homeQuoteList[0].name;
         }
       }
-      print(replacedString);
-      print('andar2');
       setState(() {
         randomText = replacedString;
       });
@@ -436,7 +420,6 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _isStuck = startY <= 120;
         });
-        print("Check position:  - $startY - $_isStuck");
       },
     );
   }
@@ -783,9 +766,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           await _homeCtrl
                                                               .getCourses(
                                                                   gId, 1);
-                                                          print(highestDay);
-                                                          print(
-                                                              'recommended from');
                                                         });
                                                       },
                                                       leading: ClipRRect(
@@ -1372,12 +1352,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      title: Text(_homeCtrl.homeAudioSleepList[0].title ?? ''),
+                      title: Text(_homeCtrl.homeAudioSleepList[0].title),
                       subtitle: Row(
                         children: [
                           const Icon(Icons.av_timer_rounded),
                           const SizedBox(width: 2.0),
-                          Text(_homeCtrl.homeAudioSleepList[0].duration ?? ''),
+                          Text(_homeCtrl.homeAudioSleepList[0].duration),
                           const SizedBox(width: 12.0),
                           const Icon(Icons.timeline),
                           const SizedBox(width: 2.0),

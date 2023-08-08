@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, empty_catches
+
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -41,16 +43,9 @@ class _CourseOutlineScreenState extends State<CourseOutlineScreen> {
   void initState() {
     completedMeditationSession =
         getSesssionAudioIds(courseDetails.sessions!.first.courseId);
-    print('first1');
-    print(courseDetails.sessions!.first.courseId);
-    print('second');
-    print( _authCtrl.user?.goal_id);
-    print('------');
 if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
   ChangeNewCourse();
-  print('ids dont match then save record');
 }else{
-  print('ids match! dont save');
 }
 
 
@@ -64,8 +59,6 @@ if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
     final goalId =courseDetails.sessions!.first.courseId;
     int gId = int.parse(goalId);
     updateCustomerGoalId(email.toString(), gId);
-    print(courseDetails.sessions!.first.courseId);
-    print('courseId hale thi');
 
     List<Map<String, dynamic>> everydayRecordForTile2 = [
       {
@@ -128,7 +121,6 @@ if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
         existingRecords.addAll(records);
 
         await collection.doc(email).update({'tile2': existingRecords});
-        print('Record inserted for $currentDate');
       } else {
         // Update the course field for the existing record
         final Map<String, dynamic> existingRecord = existingRecords
@@ -140,7 +132,6 @@ if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
         existingRecord['day'] = 1;
         await collection.doc(email).update({'tile2': existingRecords});
 
-        print('Record updated for $currentDate');
       }
     } else {
       final String currentDate =
@@ -151,7 +142,6 @@ if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
       }
 
       await collection.doc(email).set({'tile2': records});
-      print('Record inserted for $currentDate');
     }
   }
 
@@ -186,7 +176,6 @@ if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
         existingRecords.addAll(records);
 
         await collection.doc(email).update({'tile2': existingRecords});
-        print('Record inserted for $currentDate');
       } else {
         final Map<String, dynamic> existingRecord = existingRecords
             .firstWhere((record) => record['date'] == currentDate);
@@ -198,7 +187,6 @@ if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
         existingRecord['is_completed'] = "no";
         await collection.doc(email).update({'tile2': existingRecords});
 
-        print('Record updated for $currentDate');
       }
     } else {
       final String currentDate =
@@ -209,7 +197,6 @@ if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
       }
 
       await collection.doc(email).set({'tile2': records});
-      print('Record inserted for $currentDate');
     }
   }
 
@@ -262,7 +249,6 @@ if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
   // }
   Future<void> updateCustomerGoalId(String email, int goalId) async {
     final String apiUrl =  'https://mindwayadmin.com/api/goalupdate/$email/goal/$goalId';
-    print(apiUrl);
 
     try {
       final response = await http.post(
@@ -271,19 +257,13 @@ if(courseDetails.sessions!.first.courseId != _authCtrl.user?.goal_id){
       );
 
       if (response.statusCode == 400) {
-        print('Nothinggggggg');
       }
       if (response.statusCode == 200) {
 
-        print('Customer goal_id updated successfully');
       } else if (response.statusCode == 404) {
-        print('Customer not found');
       } else {
-        print(
-            'Failed to update customer goal_id. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error occurred while updating customer goal_id: $e');
     }
   }
   @override

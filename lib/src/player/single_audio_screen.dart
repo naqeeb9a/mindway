@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, unused_local_variable, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -72,7 +74,7 @@ class _SingleAudioPlayerScreenState extends State<SingleAudioPlayerScreen> {
       int sum = 0;
       if (querySnapshot.exists) {
         final List<Map<String, dynamic>> records =
-        List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
+            List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
 
         for (var record in records) {
           sum += record['time_count_in_minutes'] as int;
@@ -117,6 +119,7 @@ class _SingleAudioPlayerScreenState extends State<SingleAudioPlayerScreen> {
     _audioPlayer.setLoopMode(LoopMode.off);
     playAudio();
   }
+
   Future<void> checkCurrentUser() async {
     final User? user = _auth.currentUser;
     if (user != null) {
@@ -125,41 +128,47 @@ class _SingleAudioPlayerScreenState extends State<SingleAudioPlayerScreen> {
       });
     }
   }
+
   Future<void> checkEmotionTrackedToday() async {
     User? user = _auth.currentUser;
     final userss = user?.uid;
     emotionTracked = await checkEmotionTracked(userss.toString());
-    print('Yes today emotion tracked: $emotionTracked');
     setState(() {
       emotionTracked;
     });
   }
+
   Future<void> updateMediationCounter(
       String email, Map<String, dynamic> records) async {
     final CollectionReference collection =
-    FirebaseFirestore.instance.collection('mediation_counter');
+        FirebaseFirestore.instance.collection('mediation_counter');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
-      final List<dynamic> existingRecords = document['records'] as List<dynamic>;
+      final List<dynamic> existingRecords =
+          document['records'] as List<dynamic>;
       existingRecords.add(records);
 
       await collection.doc(email).update({'records': existingRecords});
     } else {
-      await collection.doc(email).set({'records': [records]});
+      await collection.doc(email).set({
+        'records': [records]
+      });
     }
   }
-
 
   List getMessage() {
-
-
     if (emotionTracked == 1) {
-      return  ['Congratulations on completing this','exercise','Finish' ];
+      return ['Congratulations on completing this', 'exercise', 'Finish'];
     } else {
-      return  ['Continue your positive transformation!','Journal your mood to track your progress','Track Mood', ];
+      return [
+        'Continue your positive transformation!',
+        'Journal your mood to track your progress',
+        'Track Mood',
+      ];
     }
   }
+
   Stream<PositionData> get _positionDataStream =>
       rx.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
           _audioPlayer.positionStream,
@@ -257,22 +266,22 @@ class _SingleAudioPlayerScreenState extends State<SingleAudioPlayerScreen> {
       ),
     );
   }
+
   bool alertShown = false;
   Widget _buildAudioPlayerControlView(duration) {
     String result = duration.replaceAll(RegExp(r'\s+min'), '');
     int number = int.parse(result);
     int timeCountInMinutes = int.parse(result);
-    if(number > 0){
+    if (number > 0) {
       number = number * 60;
     }
     const remainingTime = 5;
 
-
-    _audioPlayer.positionStream.listen((position) async{
+    _audioPlayer.positionStream.listen((position) async {
       final seconds = position.inSeconds;
       final remainingSeconds = number - seconds;
 
-      if (remainingSeconds == remainingTime  && !alertShown) {
+      if (remainingSeconds == remainingTime && !alertShown) {
         alertShown = true;
         // MediationCounter mediationCounter = MediationCounter(
         //     date: DateTime.now(),
@@ -289,18 +298,16 @@ class _SingleAudioPlayerScreenState extends State<SingleAudioPlayerScreen> {
         //     'time_count_in_minutes': time_count_in_minutes
         //   },
         // ]; // Example everyday records
-        Map<String, dynamic> everydayRecords =
-        {
+        Map<String, dynamic> everydayRecords = {
           'mediationType': 'mediate-single',
           'date': DateTime.now(),
           'time_count_in_minutes': timeCountInMinutes
-        }
-        ;
+        };
         String userEmail = _user!.email!; // Example user email
         User? user = _auth.currentUser;
         final users = user?.uid;
         await updateMediationCounter(users.toString(), everydayRecords);
-        int msg = (totalMinutes == 0 )
+        int msg = (totalMinutes == 0)
             ? timeCountInMinutes
             : totalMinutes + timeCountInMinutes;
 
@@ -327,11 +334,13 @@ class _SingleAudioPlayerScreenState extends State<SingleAudioPlayerScreen> {
                               children: [
                                 Text(
                                   'Minutes Meditated',
-                                  style: kBodyStyle.copyWith(fontSize: 18,
+                                  style: kBodyStyle.copyWith(
+                                      fontSize: 18,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400),
                                 ),
-                                Text(msg.toString(),
+                                Text(
+                                  msg.toString(),
                                   style: kBodyStyle.copyWith(
                                       fontSize: 28, color: Colors.white),
                                 ),
@@ -353,27 +362,44 @@ class _SingleAudioPlayerScreenState extends State<SingleAudioPlayerScreen> {
                         ],
                       ),
                       Image.asset(
-                        'assets/images/light-stars.png', width: 100,),
-                      const SizedBox(height: 10,),
+                        'assets/images/light-stars.png',
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         'Session Completed',
-                        style: kBodyStyle.copyWith(fontSize: 28, color: const Color(
-                            0xff688EDC), fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 28,
+                          color: const Color(0xff688EDC),
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         getMessage()[0],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                       Text(
                         getMessage()[1],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 20,),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       SizedBox(
                         width: 300,
                         child: CustomAsyncBtn(
@@ -390,21 +416,18 @@ class _SingleAudioPlayerScreenState extends State<SingleAudioPlayerScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>  EmotionScreen()),
+                                    builder: (context) =>
+                                        const EmotionScreen()),
                               );
                             }
                           },
                         ),
                       ),
-
                     ],
                   ),
-                )
-            );
+                ));
           },
         );
-
-
       }
     });
 

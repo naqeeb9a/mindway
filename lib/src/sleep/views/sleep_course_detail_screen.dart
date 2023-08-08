@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindway/src/new/util.dart';
@@ -333,7 +335,7 @@ class SleepCourseDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 4.0),
           Text(
-            session.audio ?? '',
+            session.audio,
             style: kBodyStyle,
           ),
           Flexible(
@@ -342,7 +344,7 @@ class SleepCourseDetailScreen extends StatelessWidget {
               strutStyle: const StrutStyle(fontSize: 12.0),
               maxLines: 2,
               text: TextSpan(
-                text: session.courseId ?? '',
+                text: session.courseId,
                 style: const TextStyle(color: Colors.grey),
               ),
             ),

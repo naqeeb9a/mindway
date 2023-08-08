@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, file_names
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:just_audio/just_audio.dart';

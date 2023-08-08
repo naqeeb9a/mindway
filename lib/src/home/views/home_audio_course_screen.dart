@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, unused_local_variable, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +25,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:mindway/src/journey/check_emotion_tracker.dart';
-
 
 class HomeCourseAudioPlayerScreen extends StatefulWidget {
   static const String routeName = '/home-course-audio';
@@ -74,7 +75,7 @@ class _HomeCourseAudioPlayerScreenState
       int sum = 0;
       if (querySnapshot.exists) {
         final List<Map<String, dynamic>> records =
-        List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
+            List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
 
         for (var record in records) {
           sum += record['time_count_in_minutes'] as int;
@@ -86,7 +87,6 @@ class _HomeCourseAudioPlayerScreenState
       });
     }
   }
-
 
   @override
   void initState() {
@@ -103,7 +103,7 @@ class _HomeCourseAudioPlayerScreenState
         course: "Home Audio",
         session: audioDetails?.duration,
         title: audioDetails?.audio_title,
-        duration:   audioDetails?.duration,
+        duration: audioDetails?.duration,
         audio: "$imgAndAudio/${audioDetails?.audio}",
         image: '$sessionURL/${audioDetails?.course_thumbnail}',
         color: "#CCDBFC");
@@ -139,28 +139,32 @@ class _HomeCourseAudioPlayerScreenState
       });
     }
   }
+
   Future<void> checkEmotionTrackedToday() async {
     User? user = _auth.currentUser;
     final userss = user?.uid;
     emotionTracked = await checkEmotionTracked(userss.toString());
-    print('Yes today emotion tracked: $emotionTracked');
     setState(() {
       emotionTracked;
     });
   }
+
   Future<void> updateMediationCounter(
       String email, Map<String, dynamic> records) async {
     final CollectionReference collection =
-    FirebaseFirestore.instance.collection('mediation_counter');
+        FirebaseFirestore.instance.collection('mediation_counter');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
-      final List<dynamic> existingRecords = document['records'] as List<dynamic>;
+      final List<dynamic> existingRecords =
+          document['records'] as List<dynamic>;
       existingRecords.add(records);
 
       await collection.doc(email).update({'records': existingRecords});
     } else {
-      await collection.doc(email).set({'records': [records]});
+      await collection.doc(email).set({
+        'records': [records]
+      });
     }
   }
 
@@ -252,11 +256,11 @@ class _HomeCourseAudioPlayerScreenState
         final int lastDay =
             existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
         final int newDay;
-        if(existingRecords.isNotEmpty && existingRecords.last['is_completed'] == 'no'){
+        if (existingRecords.isNotEmpty &&
+            existingRecords.last['is_completed'] == 'no') {
           newDay = lastDay;
-          print('Old record with no');
-        }else{
-          newDay    = lastDay + 1;
+        } else {
+          newDay = lastDay + 1;
         }
 
         for (var record in records) {
@@ -267,16 +271,12 @@ class _HomeCourseAudioPlayerScreenState
         existingRecords.addAll(records);
 
         await collection.doc(email).update({'tile2': existingRecords});
-        print('Record inserted for $currentDate');
       } else {
         final Map<String, dynamic> existingRecord = existingRecords
             .firstWhere((record) => record['date'] == currentDate);
 
-
         existingRecord['is_completed'] = "yes";
         await collection.doc(email).update({'tile2': existingRecords});
-
-        print('Record updated for $currentDate');
       }
     } else {
       final String currentDate =
@@ -287,28 +287,23 @@ class _HomeCourseAudioPlayerScreenState
       }
 
       await collection.doc(email).set({'tile2': records});
-      print('Record inserted for $currentDate');
     }
   }
-
-
 
   Future<void> tile2CountCourseDays(
       String email, List<Map<String, dynamic>> records) async {
     final CollectionReference collection =
-    FirebaseFirestore.instance.collection('tile2_count_course_days');
+        FirebaseFirestore.instance.collection('tile2_count_course_days');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
       final List<Map<String, dynamic>> existingRecords =
-      List<Map<String, dynamic>>.from(document['tile2']);
+          List<Map<String, dynamic>>.from(document['tile2']);
 
       // Check if a record with the same date already exists
 
-
-
       final String currentDate =
-      DateFormat('yyyy-MM-dd').format(DateTime.now());
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
       final bool recordExistsForToday = existingRecords.any((record) {
         final String recordDate = record['date'] as String;
         return recordDate == currentDate;
@@ -316,15 +311,17 @@ class _HomeCourseAudioPlayerScreenState
 
       if (!recordExistsForToday) {
         final int lastDay =
-        existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
+            existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
 
-        if(existingRecords.isNotEmpty && existingRecords.last['is_completed'] == 'no'){
+        if (existingRecords.isNotEmpty &&
+            existingRecords.last['is_completed'] == 'no') {
           {
             existingRecords.last['is_completed'] = 'yes';
-            existingRecords.last['date'] = currentDate; // Add the current date to the record
+            existingRecords.last['date'] =
+                currentDate; // Add the current date to the record
           }
           await collection.doc(email).update({'tile2': existingRecords});
-        }else{
+        } else {
           final int newDay = lastDay + 1;
 
           for (var record in records) {
@@ -336,46 +333,41 @@ class _HomeCourseAudioPlayerScreenState
 
           await collection.doc(email).update({'tile2': existingRecords});
         }
-
-        print('Record inserted for $currentDate');
       } else {
-        print('Record already exists for today');
         final String currentDate =
-        DateFormat('yyyy-MM-dd').format(DateTime.now());
+            DateFormat('yyyy-MM-dd').format(DateTime.now());
         for (var record in records) {
-
           record['date'] = currentDate;
 
-          record['is_completed'] ='yes';
+          record['is_completed'] = 'yes';
           // Add the current date to the record
         }
         await collection.doc(email).update({'tile2': records});
       }
-
     } else {
       final String currentDate =
-      DateFormat('yyyy-MM-dd').format(DateTime.now());
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
       for (var record in records) {
         record['day'] = 1;
         record['date'] = currentDate; // Add the current date to the record
       }
 
       await collection.doc(email).set({'tile2': records});
-      print('Record inserted for $currentDate');
     }
   }
 
   List getMessage() {
-
-
     if (emotionTracked == 1) {
-      return  ['Congratulations on completing this','exercise','Finish' ];
+      return ['Congratulations on completing this', 'exercise', 'Finish'];
     } else {
-      return  ['Continue your positive transformation!','Journal your mood to track your progress','Track Mood', ];
+      return [
+        'Continue your positive transformation!',
+        'Journal your mood to track your progress',
+        'Track Mood',
+      ];
     }
   }
 
-  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
       _audioPlayer.stop();
@@ -483,7 +475,6 @@ class _HomeCourseAudioPlayerScreenState
   bool alertShown = false;
   bool alertShown2 = false;
 
-
   Widget _buildAudioPlayerControlView(duration) {
     String result = duration.replaceAll(RegExp(r'\s+min'), '');
     int number = int.parse(result);
@@ -505,7 +496,6 @@ class _HomeCourseAudioPlayerScreenState
           'mediationType': 'mediate-home',
           'date': DateTime.now(),
           'time_count_in_minutes': timeCountInMinutes
-
         };
 
         List<Map<String, dynamic>> everydayRecordForTile2 = [
@@ -520,7 +510,6 @@ class _HomeCourseAudioPlayerScreenState
         final users = user?.uid;
 
         await tile2CountCourseDays(users.toString(), everydayRecordForTile2);
-
 
         await updateMediationCounter(users.toString(), everydayRecords);
 
@@ -540,7 +529,6 @@ class _HomeCourseAudioPlayerScreenState
                   child: Column(
                     children: [
                       Stack(
-
                         children: [
                           Image.asset('assets/images/light.png'),
                           Positioned(
@@ -633,6 +621,7 @@ class _HomeCourseAudioPlayerScreenState
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
+                                    // ignore: prefer_const_constructors
                                     builder: (context) => EmotionScreen()),
                               );
                             }
@@ -646,8 +635,7 @@ class _HomeCourseAudioPlayerScreenState
         );
       }
     });
-    return
-      Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -701,7 +689,8 @@ class _HomeCourseAudioPlayerScreenState
                   User? user = _auth.currentUser;
                   final users = user?.uid;
 
-                  await courseDayAudioCounter(users.toString(), everydayRecord1);
+                  await courseDayAudioCounter(
+                      users.toString(), everydayRecord1);
                 }
               });
               return InkWell(

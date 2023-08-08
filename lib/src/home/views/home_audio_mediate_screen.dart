@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, unused_local_variable, non_constant_identifier_names, prefer_const_constructors, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -24,6 +26,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:mindway/src/journey/check_emotion_tracker.dart';
+
 class HomeAudioMediateScreen extends StatefulWidget {
   static const String routeName = '/home-audio-mediate';
 
@@ -110,7 +113,7 @@ class _HomeAudioMediateScreenState extends State<HomeAudioMediateScreen> {
       int sum = 0;
       if (querySnapshot.exists) {
         final List<Map<String, dynamic>> records =
-        List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
+            List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
 
         for (var record in records) {
           sum += record['time_count_in_minutes'] as int;
@@ -126,18 +129,22 @@ class _HomeAudioMediateScreenState extends State<HomeAudioMediateScreen> {
   Future<void> updateMediationCounter(
       String email, Map<String, dynamic> records) async {
     final CollectionReference collection =
-    FirebaseFirestore.instance.collection('mediation_counter');
+        FirebaseFirestore.instance.collection('mediation_counter');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
-      final List<dynamic> existingRecords = document['records'] as List<dynamic>;
+      final List<dynamic> existingRecords =
+          document['records'] as List<dynamic>;
       existingRecords.add(records);
 
       await collection.doc(email).update({'records': existingRecords});
     } else {
-      await collection.doc(email).set({'records': [records]});
+      await collection.doc(email).set({
+        'records': [records]
+      });
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -153,7 +160,7 @@ class _HomeAudioMediateScreenState extends State<HomeAudioMediateScreen> {
         course: "Home Audio",
         session: audioDetails.duration,
         title: audioDetails.title,
-        duration:   audioDetails.duration,
+        duration: audioDetails.duration,
         audio: "$imgAndAudio/${audioDetails.homeAudio}",
         image: "$imgAndAudio/homescreen/${audioDetails.image}",
         color: "#CCDBFC");
@@ -180,6 +187,7 @@ class _HomeAudioMediateScreenState extends State<HomeAudioMediateScreen> {
       }
     });
   }
+
   Future<void> checkCurrentUser() async {
     final User? user = _auth.currentUser;
     if (user != null) {
@@ -188,31 +196,37 @@ class _HomeAudioMediateScreenState extends State<HomeAudioMediateScreen> {
       });
     }
   }
+
   Future<void> checkEmotionTrackedToday() async {
     User? user = _auth.currentUser;
     final userss = user?.uid;
     emotionTracked = await checkEmotionTracked(userss.toString());
-    print('Yes today emotion tracked: $emotionTracked');
     setState(() {
       emotionTracked;
     });
   }
-  Future<void> courseDayCounter(String email, List<Map<String, dynamic>> records) async {
-    final CollectionReference collection = FirebaseFirestore.instance.collection('home_mediate_count_check');
+
+  Future<void> courseDayCounter(
+      String email, List<Map<String, dynamic>> records) async {
+    final CollectionReference collection =
+        FirebaseFirestore.instance.collection('home_mediate_count_check');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
-      final List<Map<String, dynamic>> existingRecords = List<Map<String, dynamic>>.from(document['tile1']);
+      final List<Map<String, dynamic>> existingRecords =
+          List<Map<String, dynamic>>.from(document['tile1']);
 
       // Check if a record with the same date already exists
-      final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      final String currentDate =
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
       final bool recordExistsForToday = existingRecords.any((record) {
         final String recordDate = record['date'] as String;
         return recordDate == currentDate;
       });
 
       if (!recordExistsForToday) {
-        final int lastDay = existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
+        final int lastDay =
+            existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
         final int newDay = lastDay + 1;
 
         for (var record in records) {
@@ -223,33 +237,31 @@ class _HomeAudioMediateScreenState extends State<HomeAudioMediateScreen> {
         existingRecords.addAll(records);
 
         await collection.doc(email).update({'tile1': existingRecords});
-        print('Record inserted for $currentDate');
-      } else {
-        print('Record already exists for today');
-      }
+      } else {}
     } else {
-      final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      final String currentDate =
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
       for (var record in records) {
         record['day'] = 1;
         record['date'] = currentDate; // Add the current date to the record
       }
 
       await collection.doc(email).set({'tile1': records});
-      print('Record inserted for $currentDate');
     }
   }
-
 
   List getMessage() {
-
-
     if (emotionTracked == 1) {
-      return  ['Congratulations on completing this','exercise','Finish' ];
+      return ['Congratulations on completing this', 'exercise', 'Finish'];
     } else {
-      return  ['Continue your positive transformation!','Journal your mood to track your progress','Track Mood', ];
+      return [
+        'Continue your positive transformation!',
+        'Journal your mood to track your progress',
+        'Track Mood',
+      ];
     }
   }
-  @override
+
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
       // Release the player's resources when not in use. We use "stop" so that
@@ -258,12 +270,13 @@ class _HomeAudioMediateScreenState extends State<HomeAudioMediateScreen> {
       _audioPlayer.stop();
     }
   }
+
   Stream<PositionData> get _positionDataStream =>
       rx.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
           _audioPlayer.positionStream,
           _audioPlayer.bufferedPositionStream,
           _audioPlayer.durationStream,
-              (position, bufferedPosition, duration) => PositionData(
+          (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
 
   @override
@@ -355,26 +368,22 @@ class _HomeAudioMediateScreenState extends State<HomeAudioMediateScreen> {
       ),
     );
   }
+
   bool alertShown = false;
   int time_count_in_minutes = 0;
   bool alertShown2 = false;
   Widget _buildAudioPlayerControlView(duration) {
-
     String result = duration.replaceAll(RegExp(r'\s+min'), '');
     int number = int.parse(result);
-     time_count_in_minutes = int.parse(result);
+    time_count_in_minutes = int.parse(result);
 
-
-
-    _audioPlayer.positionStream.listen((position) async{
+    _audioPlayer.positionStream.listen((position) async {
       final seconds = position.inSeconds;
-
 
       if (!alertShown && _isPlaying == true) {
         alertShown = true;
         _isPlaying == false;
-        Map<String, dynamic> everydayRecords =
-        {
+        Map<String, dynamic> everydayRecords = {
           'mediationType': 'mediate-home',
           'date': DateTime.now(),
           'time_count_in_minutes': time_count_in_minutes
@@ -383,8 +392,6 @@ class _HomeAudioMediateScreenState extends State<HomeAudioMediateScreen> {
         User? user = _auth.currentUser;
         final users = user?.uid;
         await updateMediationCounter(users.toString(), everydayRecords);
-print(totalMinutes);
-print('total minutes');
         int msg = (totalMinutes == 0)
             ? time_count_in_minutes
             : totalMinutes + time_count_in_minutes;
@@ -392,7 +399,6 @@ print('total minutes');
         showDialog(
           context: context,
           builder: (BuildContext context) {
-
             return Dialog(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -412,11 +418,13 @@ print('total minutes');
                               children: [
                                 Text(
                                   'Minutes Meditated',
-                                  style: kBodyStyle.copyWith(fontSize: 18,
+                                  style: kBodyStyle.copyWith(
+                                      fontSize: 18,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400),
                                 ),
-                                Text(msg.toString(),
+                                Text(
+                                  msg.toString(),
                                   style: kBodyStyle.copyWith(
                                       fontSize: 28, color: Colors.white),
                                 ),
@@ -438,27 +446,44 @@ print('total minutes');
                         ],
                       ),
                       Image.asset(
-                        'assets/images/light-stars.png', width: 100,),
-                      const SizedBox(height: 10,),
+                        'assets/images/light-stars.png',
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         'Session Completed',
-                        style: kBodyStyle.copyWith(fontSize: 28, color: const Color(
-                            0xff688EDC), fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 28,
+                          color: const Color(0xff688EDC),
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         getMessage()[0],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                       Text(
                         getMessage()[1],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 20,),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       SizedBox(
                         width: 300,
                         child: CustomAsyncBtn(
@@ -481,253 +506,260 @@ print('total minutes');
                           },
                         ),
                       ),
-
                     ],
                   ),
-                )
-            );
+                ));
           },
         );
-
       }
     });
-    return
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          StreamBuilder<PlayerState>(
-            stream: _audioPlayer.playerStateStream,
-            builder: (context, snapshot) {
-              final playerState = snapshot.data;
-              final processingState = playerState?.processingState;
-              final playing = playerState?.playing;
-              if (processingState == ProcessingState.loading ||
-                  processingState == ProcessingState.buffering) {
-                return Container(
-                  margin: const EdgeInsets.all(8.0),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        StreamBuilder<PlayerState>(
+          stream: _audioPlayer.playerStateStream,
+          builder: (context, snapshot) {
+            final playerState = snapshot.data;
+            final processingState = playerState?.processingState;
+            final playing = playerState?.playing;
+            if (processingState == ProcessingState.loading ||
+                processingState == ProcessingState.buffering) {
+              return Container(
+                margin: const EdgeInsets.all(8.0),
+                width: 50.0,
+                height: 50.0,
+                child: const CircularProgressIndicator(),
+              );
+            } else if (playing != true) {
+              return InkWell(
+                onTap: () async {
+                  playAudio();
+                },
+                child: Container(
                   width: 50.0,
                   height: 50.0,
-                  child: const CircularProgressIndicator(),
-                );
-              } else if (playing != true) {
-                return InkWell(
-                  onTap: () async {
-                    playAudio();
-                  },
-                  child: Container(
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow,
-                      size: 36.0,
-                      color: Colors.white,
-                    ),
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
-                );
-              }
-              else if (processingState != ProcessingState.completed) {
-                _audioPlayer.positionStream.listen((position) async {
-                  if (!alertShown2) {
-                    alertShown2 = true;
-                    String userEmail = _user!.email!; // Example user email
-
-                    List<Map<String, dynamic>> everydayRecord1 = [
-                      {
-
-                        'date': DateTime.now(),
-                        'day': 1,
-                        'is_completed': 'yes',
-
-                      },
-                    ];
-
-
-                    User? user = _auth.currentUser;
-                    final users = user?.uid;
-
-                    await courseDayCounter(users.toString(), everydayRecord1);
-                  }
-                });
-
-
-                return InkWell(
-                  onTap: () async {
-                    _audioPlayer.pause();
-                  },
-                  child: Container(
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.pause,
-                      size: 36.0,
-                      color: Colors.white,
-                    ),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    size: 36.0,
+                    color: Colors.white,
                   ),
-                );
-              }
-              else if(processingState == ProcessingState.completed){
-print('completed procissing');
-                int msg = (totalMinutes == 0 )
-                    ? time_count_in_minutes
-                    : totalMinutes + time_count_in_minutes;
+                ),
+              );
+            } else if (processingState != ProcessingState.completed) {
+              _audioPlayer.positionStream.listen((position) async {
+                if (!alertShown2) {
+                  alertShown2 = true;
+                  String userEmail = _user!.email!; // Example user email
 
-
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      alertShown = true;
-                      return Dialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: SizedBox(
-                            height: 350,
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    Image.asset('assets/images/light.png'),
-                                    Positioned(
-                                      top: 16.0,
-                                      // Adjust the values to position the text properly
-                                      left: 85,
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            'Minutes Meditated',
-                                            style: kBodyStyle.copyWith(fontSize: 18,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          Text(msg.toString(),
-                                            style: kBodyStyle.copyWith(
-                                                fontSize: 28, color: Colors.white),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 8.0,
-                                      // Adjust the values to position the close icon properly
-                                      right: 8.0,
-                                      child: IconButton(
-                                        icon: const Icon(Icons.close),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Image.asset(
-                                  'assets/images/light-stars.png', width: 100,),
-                                const SizedBox(height: 10,),
-                                Text(
-                                  'Session Completed',
-                                  style: kBodyStyle.copyWith(fontSize: 28, color: const Color(
-                                      0xff688EDC), fontWeight: FontWeight.w400,),
-                                ),
-                                const SizedBox(height: 10,),
-                                Text(
-                                  getMessage()[0],
-                                  //'Continue your positive transformation! \nJournal your mood to track your progress',
-                                  style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                                      .black, fontWeight: FontWeight.w400,),
-                                ),
-                                Text(
-                                  getMessage()[1],
-                                  //'Continue your positive transformation! \nJournal your mood to track your progress',
-                                  style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                                      .black, fontWeight: FontWeight.w400,),
-                                ),
-                                const SizedBox(height: 20,),
-                                SizedBox(
-                                  width: 300,
-                                  child: CustomAsyncBtn(
-                                    btnColor: const Color(0xff688EDC),
-                                    btnTxt: getMessage()[2],
-                                    onPress: () {
-                                      if (getMessage()[2] == 'Finish') {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => const HomeScreen()),
-                                        );
-                                      } else {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => const JourneyScreen()),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                          )
-                      );
+                  List<Map<String, dynamic>> everydayRecord1 = [
+                    {
+                      'date': DateTime.now(),
+                      'day': 1,
+                      'is_completed': 'yes',
                     },
-                  );
-                });
+                  ];
 
-                return InkWell(
-                    onTap: () async {
-                  _audioPlayer.play();
-                },);
-              }
-              else {
-                return InkWell(
-                  onTap: () async {
-                    _audioPlayer.play();
-                  },
-                  child: Container(
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow,
-                      size: 36.0,
-                      color: Colors.white,
-                    ),
+                  User? user = _auth.currentUser;
+                  final users = user?.uid;
+
+                  await courseDayCounter(users.toString(), everydayRecord1);
+                }
+              });
+
+              return InkWell(
+                onTap: () async {
+                  _audioPlayer.pause();
+                },
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
+                  child: const Icon(
+                    Icons.pause,
+                    size: 36.0,
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            } else if (processingState == ProcessingState.completed) {
+              int msg = (totalMinutes == 0)
+                  ? time_count_in_minutes
+                  : totalMinutes + time_count_in_minutes;
+
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    alertShown = true;
+                    return Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: SizedBox(
+                          height: 350,
+                          child: Column(
+                            children: [
+                              Stack(
+                                children: [
+                                  Image.asset('assets/images/light.png'),
+                                  Positioned(
+                                    top: 16.0,
+                                    // Adjust the values to position the text properly
+                                    left: 85,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Minutes Meditated',
+                                          style: kBodyStyle.copyWith(
+                                              fontSize: 18,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Text(
+                                          msg.toString(),
+                                          style: kBodyStyle.copyWith(
+                                              fontSize: 28,
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 8.0,
+                                    // Adjust the values to position the close icon properly
+                                    right: 8.0,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.close),
+                                      color: Colors.white,
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Image.asset(
+                                'assets/images/light-stars.png',
+                                width: 100,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'Session Completed',
+                                style: kBodyStyle.copyWith(
+                                  fontSize: 28,
+                                  color: const Color(0xff688EDC),
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                getMessage()[0],
+                                //'Continue your positive transformation! \nJournal your mood to track your progress',
+                                style: kBodyStyle.copyWith(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Text(
+                                getMessage()[1],
+                                //'Continue your positive transformation! \nJournal your mood to track your progress',
+                                style: kBodyStyle.copyWith(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                width: 300,
+                                child: CustomAsyncBtn(
+                                  btnColor: const Color(0xff688EDC),
+                                  btnTxt: getMessage()[2],
+                                  onPress: () {
+                                    if (getMessage()[2] == 'Finish') {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomeScreen()),
+                                      );
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const JourneyScreen()),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ));
+                  },
                 );
-              }
-            },
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height / 6),
-          StreamBuilder<PositionData>(
-            stream: _positionDataStream,
-            builder: (context, snapshot) {
-              final positionData = snapshot.data;
-              return SeekBar(
-                duration: positionData?.duration ?? Duration.zero,
-                position: positionData?.position ?? Duration.zero,
-                bufferedPosition: positionData?.bufferedPosition ?? Duration.zero,
-                onChangeEnd: (newPosition) {
-                  _audioPlayer.seek(newPosition);
+              });
+
+              return InkWell(
+                onTap: () async {
+                  _audioPlayer.play();
                 },
               );
-            },
-          )
-        ],
-      );
-
+            } else {
+              return InkWell(
+                onTap: () async {
+                  _audioPlayer.play();
+                },
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    size: 36.0,
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            }
+          },
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height / 6),
+        StreamBuilder<PositionData>(
+          stream: _positionDataStream,
+          builder: (context, snapshot) {
+            final positionData = snapshot.data;
+            return SeekBar(
+              duration: positionData?.duration ?? Duration.zero,
+              position: positionData?.position ?? Duration.zero,
+              bufferedPosition: positionData?.bufferedPosition ?? Duration.zero,
+              onChangeEnd: (newPosition) {
+                _audioPlayer.seek(newPosition);
+              },
+            );
+          },
+        )
+      ],
+    );
   }
 
   // Future<void> setAudio() async {

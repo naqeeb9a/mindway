@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_catch_error, non_constant_identifier_names
+
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
@@ -53,7 +55,6 @@ class AuthController extends NetworkManager {
     if (isGoalIdSet) {
       goalIdForLogin = prefs.getString("goal_id").toString();
     } else {
-      print("goal_id is not set");
     }
   }
 
@@ -63,7 +64,6 @@ class AuthController extends NetworkManager {
         dio.Response response = await _authService.logInUser(email, password);
         log('${response.data}', name: 'Log In Response');
         if (response.data['code'] == 200) {
-          print(response.data['data'][0]['bearer_token']);
           // await    checkGoalId();
           // if (goalIdForLogin.isNotEmpty) {
           //   int gId = int.parse(goalIdForLogin);
@@ -648,7 +648,6 @@ Future<void> tile2CountCourseDays(
       existingRecords.addAll(records);
 
       await collection.doc(email).update({'tile2': existingRecords});
-      print('Record inserted for $currentDate');
     } else {
       // Update the course field for the existing record
       final Map<String, dynamic> existingRecord =
@@ -661,7 +660,6 @@ Future<void> tile2CountCourseDays(
 
       await collection.doc(email).update({'tile2': existingRecords});
 
-      print('Record updated for $currentDate');
     }
   } else {
     final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -671,6 +669,5 @@ Future<void> tile2CountCourseDays(
     }
 
     await collection.doc(email).set({'tile2': records});
-    print('Record inserted for $currentDate');
   }
 }

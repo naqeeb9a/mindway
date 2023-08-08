@@ -1,3 +1,4 @@
+// ignore_for_file: unused_field, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,9 +17,8 @@ import 'package:mindway/utils/helper.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:wakelock/wakelock.dart';
 
- 
 import 'package:rxdart/rxdart.dart' as rx;
- 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
@@ -32,12 +32,10 @@ class HomeAudioSleepScreen extends StatefulWidget {
   const HomeAudioSleepScreen({super.key});
 
   @override
-  State<HomeAudioSleepScreen> createState() =>
-      _HomeAudioSleepScreenState();
+  State<HomeAudioSleepScreen> createState() => _HomeAudioSleepScreenState();
 }
 
-class _HomeAudioSleepScreenState
-    extends State<HomeAudioSleepScreen> {
+class _HomeAudioSleepScreenState extends State<HomeAudioSleepScreen> {
   final details = Get.arguments as HomeAudioSleepModel;
   final HomeController _homeCtrl = Get.find();
   final _audioPlayer = AudioPlayer();
@@ -73,7 +71,7 @@ class _HomeAudioSleepScreenState
       int sum = 0;
       if (querySnapshot.exists) {
         final List<Map<String, dynamic>> records =
-        List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
+            List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
 
         for (var record in records) {
           sum += record['time_count_in_minutes'] as int;
@@ -86,19 +84,15 @@ class _HomeAudioSleepScreenState
     }
   }
 
-
   @override
   void initState() {
-
     super.initState();
-
 
     Wakelock.enable();
     checkCurrentUser();
     calculateTotalMinutes();
     checkEmotionTrackedToday();
-    debugPrint(
-        "HomeAudioImage " "$imgAndAudio/SleepScreen/${details.image})");
+    debugPrint("HomeAudioImage " "$imgAndAudio/SleepScreen/${details.image})");
 
     favoriteModel = FavoriteModel(
         id: "SleepAUDIO{$details.id}",
@@ -106,7 +100,7 @@ class _HomeAudioSleepScreenState
         course: "Sleep Audio",
         session: details.duration,
         title: details.title,
-        duration:   details.duration,
+        duration: details.duration,
         audio: "$imgAndAudio/${details.audio}",
         image: "$imgAndAudio/SleepScreen/${details.image}",
         color: "#2A4576");
@@ -134,7 +128,6 @@ class _HomeAudioSleepScreenState
       }
     });
     playAudio();
-
   }
 
   Future<void> checkCurrentUser() async {
@@ -145,12 +138,16 @@ class _HomeAudioSleepScreenState
       });
     }
   }
-  Future<void> updateMediationCounter(String email,Map<String, dynamic> records) async {
-    final CollectionReference collection = FirebaseFirestore.instance.collection('mediation_counter');
+
+  Future<void> updateMediationCounter(
+      String email, Map<String, dynamic> records) async {
+    final CollectionReference collection =
+        FirebaseFirestore.instance.collection('mediation_counter');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
-      final List<Map<String, dynamic>> existingRecords = List<Map<String, dynamic>>.from(document['records']);
+      final List<Map<String, dynamic>> existingRecords =
+          List<Map<String, dynamic>>.from(document['records']);
       existingRecords.add(records);
 
       await collection.doc(email).update({'records': existingRecords});
@@ -163,27 +160,32 @@ class _HomeAudioSleepScreenState
     User? user = _auth.currentUser;
     final userss = user?.uid;
     emotionTracked = await checkEmotionTracked(userss.toString());
-    print('Yes today emotion tracked: $emotionTracked');
     setState(() {
       emotionTracked;
     });
   }
-  Future<void> courseDayCounter(String email, List<Map<String, dynamic>> records) async {
-    final CollectionReference collection = FirebaseFirestore.instance.collection('sleep_count_check');
+
+  Future<void> courseDayCounter(
+      String email, List<Map<String, dynamic>> records) async {
+    final CollectionReference collection =
+        FirebaseFirestore.instance.collection('sleep_count_check');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
-      final List<Map<String, dynamic>> existingRecords = List<Map<String, dynamic>>.from(document['tile3']);
+      final List<Map<String, dynamic>> existingRecords =
+          List<Map<String, dynamic>>.from(document['tile3']);
 
       // Check if a record with the same date already exists
-      final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      final String currentDate =
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
       final bool recordExistsForToday = existingRecords.any((record) {
         final String recordDate = record['date'] as String;
         return recordDate == currentDate;
       });
 
       if (!recordExistsForToday) {
-        final int lastDay = existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
+        final int lastDay =
+            existingRecords.isNotEmpty ? existingRecords.last['day'] as int : 0;
         final int newDay = lastDay + 1;
 
         for (var record in records) {
@@ -194,29 +196,28 @@ class _HomeAudioSleepScreenState
         existingRecords.addAll(records);
 
         await collection.doc(email).update({'tile3': existingRecords});
-        print('Record inserted for $currentDate');
-      } else {
-        print('Record already exists for today');
-      }
+      } else {}
     } else {
-      final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      final String currentDate =
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
       for (var record in records) {
         record['day'] = 1;
         record['date'] = currentDate; // Add the current date to the record
       }
 
       await collection.doc(email).set({'tile3': records});
-      print('Record inserted for $currentDate');
     }
   }
 
   List getMessage() {
-
-
     if (emotionTracked == 1) {
-      return  ['Congratulations on completing this','exercise','Finish' ];
+      return ['Congratulations on completing this', 'exercise', 'Finish'];
     } else {
-      return  ['Continue your positive transformation!','Journal your mood to track your progress','Track Mood', ];
+      return [
+        'Continue your positive transformation!',
+        'Journal your mood to track your progress',
+        'Track Mood',
+      ];
     }
   }
 
@@ -225,16 +226,11 @@ class _HomeAudioSleepScreenState
           _audioPlayer.positionStream,
           _audioPlayer.bufferedPositionStream,
           _audioPlayer.durationStream,
-              (position, bufferedPosition, duration) => PositionData(
+          (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -246,11 +242,8 @@ class _HomeAudioSleepScreenState
         child: SafeArea(
           child: Column(
             children: [
-
               Row(
-
                 children: [
-
                   const SizedBox(
                     width: 20,
                   ),
@@ -275,7 +268,7 @@ class _HomeAudioSleepScreenState
                   ),
                   const SizedBox(
                     width: 40,
-                 ),
+                  ),
                 ],
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 6),
@@ -326,6 +319,7 @@ class _HomeAudioSleepScreenState
       ),
     );
   }
+
   bool alertShown = false;
   bool alertShown2 = false;
 
@@ -333,36 +327,34 @@ class _HomeAudioSleepScreenState
     String result = duration.replaceAll(RegExp(r'\s+min'), '');
     int number = int.parse(result);
     int timeCountInMinutes = int.parse(result);
-    if(number > 0){
+    if (number > 0) {
       number = number * 60;
     }
     const remainingTime = 5;
 
-
-    _audioPlayer.positionStream.listen((position) async{
+    _audioPlayer.positionStream.listen((position) async {
       final seconds = position.inSeconds;
       final remainingSeconds = number - seconds;
 
       if (!alertShown && _isPlaying == true) {
         alertShown = true;
         _isPlaying == false;
-        Map<String, dynamic> everydayRecords =
-        {
+        Map<String, dynamic> everydayRecords = {
           'mediationType': 'mediate-sleep',
           'date': DateTime.now(),
           'time_count_in_minutes': timeCountInMinutes
-        }
-        ;
+        };
         // Example everyday records
         String userEmail = _user!.email!; // Example user email
         User? user = _auth.currentUser;
         final users = user?.uid;
         await updateMediationCounter(users.toString(), everydayRecords);
 
-        int msg = (totalMinutes == 0 )
+        int msg = (totalMinutes == 0)
             ? timeCountInMinutes
             : totalMinutes + timeCountInMinutes;
 
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -375,7 +367,6 @@ class _HomeAudioSleepScreenState
                   height: 350,
                   child: Column(
                     children: [
-
                       Stack(
                         children: [
                           Image.asset('assets/images/dark.png'),
@@ -387,11 +378,13 @@ class _HomeAudioSleepScreenState
                               children: [
                                 Text(
                                   'Minutes Meditated',
-                                  style: kBodyStyle.copyWith(fontSize: 18,
+                                  style: kBodyStyle.copyWith(
+                                      fontSize: 18,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400),
                                 ),
-                                Text(msg.toString(),
+                                Text(
+                                  msg.toString(),
                                   style: kBodyStyle.copyWith(
                                       fontSize: 28, color: Colors.white),
                                 ),
@@ -413,28 +406,45 @@ class _HomeAudioSleepScreenState
                         ],
                       ),
                       Image.asset(
-                        'assets/images/dark-stars.png', width: 100,),
-                      const SizedBox(height: 10,),
+                        'assets/images/dark-stars.png',
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         'Session Completed',
-                        style: kBodyStyle.copyWith(fontSize: 28, color: const Color(
-                            0xff284576), fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 28,
+                          color: const Color(0xff284576),
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         getMessage()[0],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                       Text(
                         getMessage()[1],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 20,),
-                   SizedBox(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
                         width: 300,
                         child: CustomAsyncBtn(
                           btnColor: const Color(0xff284576),
@@ -444,13 +454,13 @@ class _HomeAudioSleepScreenState
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const MainScreen()) ,
+                                    builder: (context) => const MainScreen()),
                               );
                             } else {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => EmotionScreen(
+                                    builder: (context) => const EmotionScreen(
 // e:_homeCtrl.emojiList[0],
 //                                       onCompleted: () {
 //                                         debugPrint(
@@ -459,142 +469,128 @@ class _HomeAudioSleepScreenState
 //                                             .onItemTapped(2);
 //                                       },
 
-                                )
-                              ),
+                                        )),
                               );
                             }
                           },
                         ),
                       )
-
-
                     ],
                   ),
-                )
-            );
+                ));
           },
         );
-
-
       }
     });
-    return
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          StreamBuilder<PlayerState>(
-            stream: _audioPlayer.playerStateStream,
-            builder: (context, snapshot) {
-              final playerState = snapshot.data;
-              final processingState = playerState?.processingState;
-              final playing = playerState?.playing;
-              if (processingState == ProcessingState.loading ||
-                  processingState == ProcessingState.buffering) {
-                return Container(
-                  margin: const EdgeInsets.all(8.0),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        StreamBuilder<PlayerState>(
+          stream: _audioPlayer.playerStateStream,
+          builder: (context, snapshot) {
+            final playerState = snapshot.data;
+            final processingState = playerState?.processingState;
+            final playing = playerState?.playing;
+            if (processingState == ProcessingState.loading ||
+                processingState == ProcessingState.buffering) {
+              return Container(
+                margin: const EdgeInsets.all(8.0),
+                width: 50.0,
+                height: 50.0,
+                child: const CircularProgressIndicator(),
+              );
+            } else if (playing != true) {
+              return InkWell(
+                onTap: () async {
+                  playAudio();
+                },
+                child: Container(
                   width: 50.0,
                   height: 50.0,
-                  child: const CircularProgressIndicator(),
-                );
-              } else if (playing != true) {
-                return InkWell(
-                  onTap: () async {
-                    playAudio();
-                  },
-                  child: Container(
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow,
-                      size: 36.0,
-                      color: Colors.white,
-                    ),
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
-                );
-              } else if (processingState != ProcessingState.completed) {
-
-
-                _audioPlayer.positionStream.listen((position) async {
-                  if (!alertShown2) {
-                    alertShown2 = true;
-                    String userEmail = _user!.email!; // Example user email
-
-                    List<Map<String, dynamic>> everydayRecord1 = [
-                      {
-
-                        'date': DateTime.now(),
-                        'day': 1,
-                        'is_completed': 'yes'
-                      },
-                    ];
-                    User? user = _auth.currentUser;
-                    final users = user?.uid;
-
-                    await courseDayCounter(users.toString(), everydayRecord1);
-                  }
-                });
-                return InkWell(
-                  onTap: () async {
-                    _audioPlayer.pause();
-                  },
-                  child: Container(
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.pause,
-                      size: 36.0,
-                      color: Colors.white,
-                    ),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    size: 36.0,
+                    color: Colors.white,
                   ),
-                );
-              } else {
-                return InkWell(
-                  onTap: () async {
-                    _audioPlayer.play();
-                  },
-                  child: Container(
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow,
-                      size: 36.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                );
-              }
-            },
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height / 6),
-          StreamBuilder<PositionData>(
-            stream: _positionDataStream,
-            builder: (context, snapshot) {
-              final positionData = snapshot.data;
-              return SeekBar(
-                duration: positionData?.duration ?? Duration.zero,
-                position: positionData?.position ?? Duration.zero,
-                bufferedPosition: positionData?.bufferedPosition ?? Duration.zero,
-                onChangeEnd: (newPosition) {
-                  _audioPlayer.seek(newPosition);
-                },
+                ),
               );
-            },
-          ),
-        ],
-      );
+            } else if (processingState != ProcessingState.completed) {
+              _audioPlayer.positionStream.listen((position) async {
+                if (!alertShown2) {
+                  alertShown2 = true;
+                  String userEmail = _user!.email!; // Example user email
+
+                  List<Map<String, dynamic>> everydayRecord1 = [
+                    {'date': DateTime.now(), 'day': 1, 'is_completed': 'yes'},
+                  ];
+                  User? user = _auth.currentUser;
+                  final users = user?.uid;
+
+                  await courseDayCounter(users.toString(), everydayRecord1);
+                }
+              });
+              return InkWell(
+                onTap: () async {
+                  _audioPlayer.pause();
+                },
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: const Icon(
+                    Icons.pause,
+                    size: 36.0,
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            } else {
+              return InkWell(
+                onTap: () async {
+                  _audioPlayer.play();
+                },
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    size: 36.0,
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            }
+          },
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height / 6),
+        StreamBuilder<PositionData>(
+          stream: _positionDataStream,
+          builder: (context, snapshot) {
+            final positionData = snapshot.data;
+            return SeekBar(
+              duration: positionData?.duration ?? Duration.zero,
+              position: positionData?.position ?? Duration.zero,
+              bufferedPosition: positionData?.bufferedPosition ?? Duration.zero,
+              onChangeEnd: (newPosition) {
+                _audioPlayer.seek(newPosition);
+              },
+            );
+          },
+        ),
+      ],
+    );
     //   Column(
     //   mainAxisAlignment: MainAxisAlignment.center,
     //   crossAxisAlignment: CrossAxisAlignment.center,

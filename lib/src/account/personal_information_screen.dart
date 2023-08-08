@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, prefer_typing_uninitialized_variables
+
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -200,7 +202,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 } else if (type == "delete") {
                   deleteAccount(_textFieldController.text);
                 }
-                print(_textFieldController.text);
               },
             ),
           ],

@@ -71,26 +71,24 @@ class _SplashScreenState extends State<SplashScreen> {
           //     )
           // ),
           if (_isError)
-            Container(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 600),
-                    const CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                        'Ooops... It seems your internet connection is unstable.',
-                        style: kBodyStyle.copyWith(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white)),
-                  ],
-                ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 600),
+                  const CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                      'Ooops... It seems your internet connection is unstable.',
+                      style: kBodyStyle.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white)),
+                ],
               ),
             ),
         ],

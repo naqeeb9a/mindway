@@ -34,11 +34,11 @@ class HomeAudioSleepModel {
     "id": id,
 
 
-    "title": title ?? '-',
-    "audio": audio ?? '-',
-    "duration": duration ?? '0 min',
+    "title": title,
+    "audio": audio,
+    "duration": duration,
 
-    "image": image ?? '',
+    "image": image,
 
   };
 

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -21,6 +23,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:mindway/src/journey/check_emotion_tracker.dart';
+
 class HomeAudioPlayerScreen extends StatefulWidget {
   static const String routeName = '/home-audio';
 
@@ -68,7 +71,7 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
       int sum = 0;
       if (querySnapshot.exists) {
         final List<Map<String, dynamic>> records =
-        List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
+            List<Map<String, dynamic>>.from(querySnapshot.data()!['records']);
 
         for (var record in records) {
           sum += record['time_count_in_minutes'] as int;
@@ -81,13 +84,15 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
     }
   }
 
-
-  Future<void> updateMediationCounter(String email,Map<String, dynamic> records) async {
-    final CollectionReference collection = FirebaseFirestore.instance.collection('mediation_counter');
+  Future<void> updateMediationCounter(
+      String email, Map<String, dynamic> records) async {
+    final CollectionReference collection =
+        FirebaseFirestore.instance.collection('mediation_counter');
 
     final DocumentSnapshot document = await collection.doc(email).get();
     if (document.exists) {
-      final List<Map<String, dynamic>> existingRecords = List<Map<String, dynamic>>.from(document['records']);
+      final List<Map<String, dynamic>> existingRecords =
+          List<Map<String, dynamic>>.from(document['records']);
       existingRecords.add(records);
 
       await collection.doc(email).update({'records': existingRecords});
@@ -95,6 +100,7 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
       await collection.doc(email).set({'records': records});
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -110,7 +116,7 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
         type: "Normal",
         course: "Home Audio",
         session: audioDetails.duration,
-        duration:   audioDetails.duration,
+        duration: audioDetails.duration,
         title: audioDetails.title,
         audio: "$imgAndAudio/${audioDetails.homeAudio}",
         image: "$imgAndAudio/homescreen/${audioDetails.image}",
@@ -137,6 +143,7 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
       }
     });
   }
+
   Future<void> checkCurrentUser() async {
     final User? user = _auth.currentUser;
     if (user != null) {
@@ -145,27 +152,28 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
       });
     }
   }
+
   Future<void> checkEmotionTrackedToday() async {
     User? user = _auth.currentUser;
     final userss = user?.uid;
     emotionTracked = await checkEmotionTracked(userss.toString());
-    print('Yes today emotion tracked: $emotionTracked');
     setState(() {
       emotionTracked;
     });
   }
 
-
   List getMessage() {
-
-
     if (emotionTracked == 1) {
-      return  ['Congratulations on completing this','exercise','Finish' ];
+      return ['Congratulations on completing this', 'exercise', 'Finish'];
     } else {
-      return  ['Continue your positive transformation!','Journal your mood to track your progress','Track Mood', ];
+      return [
+        'Continue your positive transformation!',
+        'Journal your mood to track your progress',
+        'Track Mood',
+      ];
     }
   }
-  @override
+
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
       // Release the player's resources when not in use. We use "stop" so that
@@ -174,12 +182,13 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
       _audioPlayer.stop();
     }
   }
+
   Stream<PositionData> get _positionDataStream =>
       rx.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
           _audioPlayer.positionStream,
           _audioPlayer.bufferedPositionStream,
           _audioPlayer.durationStream,
-              (position, bufferedPosition, duration) => PositionData(
+          (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
 
   @override
@@ -271,39 +280,37 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
       ),
     );
   }
+
   bool alertShown = false;
   Widget _buildAudioPlayerControlView(duration) {
-
     String result = duration.replaceAll(RegExp(r'\s+min'), '');
     int number = int.parse(result);
     int timeCountInMinutes = int.parse(result);
-    if(number > 0){
+    if (number > 0) {
       number = number * 60;
     }
     const remainingTime = 5;
 
-
-    _audioPlayer.positionStream.listen((position) async{
+    _audioPlayer.positionStream.listen((position) async {
       final seconds = position.inSeconds;
       final remainingSeconds = number - seconds;
 
-      if (remainingSeconds == remainingTime  && !alertShown) {
+      if (remainingSeconds == remainingTime && !alertShown) {
         alertShown = true;
-        Map<String, dynamic> everydayRecords =
-        {
+        Map<String, dynamic> everydayRecords = {
           'mediationType': 'mediate-home',
           'date': DateTime.now(),
           'time_count_in_minutes': timeCountInMinutes
-        }
-        ;// Example everyday records
+        }; // Example everyday records
         String userEmail = _user!.email!; // Example user email
 
         await updateMediationCounter(userEmail, everydayRecords);
 
-        int msg = (totalMinutes == 0 )
+        int msg = (totalMinutes == 0)
             ? timeCountInMinutes
             : totalMinutes + timeCountInMinutes;
 
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -327,11 +334,13 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
                               children: [
                                 Text(
                                   'Minutes Meditated',
-                                  style: kBodyStyle.copyWith(fontSize: 18,
+                                  style: kBodyStyle.copyWith(
+                                      fontSize: 18,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400),
                                 ),
-                                Text(msg.toString(),
+                                Text(
+                                  msg.toString(),
                                   style: kBodyStyle.copyWith(
                                       fontSize: 28, color: Colors.white),
                                 ),
@@ -353,27 +362,44 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
                         ],
                       ),
                       Image.asset(
-                        'assets/images/light-stars.png', width: 100,),
-                      const SizedBox(height: 10,),
+                        'assets/images/light-stars.png',
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         'Session Completed',
-                        style: kBodyStyle.copyWith(fontSize: 28, color: const Color(
-                            0xff688EDC), fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 28,
+                          color: const Color(0xff688EDC),
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         getMessage()[0],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                       Text(
                         getMessage()[1],
                         //'Continue your positive transformation! \nJournal your mood to track your progress',
-                        style: kBodyStyle.copyWith(fontSize: 15, color: Colors
-                            .black, fontWeight: FontWeight.w400,),
+                        style: kBodyStyle.copyWith(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      const SizedBox(height: 20,),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       SizedBox(
                         width: 300,
                         child: CustomAsyncBtn(
@@ -390,119 +416,115 @@ class _HomeAudioPlayerScreenState extends State<HomeAudioPlayerScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => EmotionScreen()),
+                                    builder: (context) =>
+                                        const EmotionScreen()),
                               );
                             }
                           },
                         ),
                       ),
-
                     ],
                   ),
-                )
-            );
+                ));
           },
         );
-
-
       }
     });
-    return
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          StreamBuilder<PlayerState>(
-            stream: _audioPlayer.playerStateStream,
-            builder: (context, snapshot) {
-              final playerState = snapshot.data;
-              final processingState = playerState?.processingState;
-              final playing = playerState?.playing;
-              if (processingState == ProcessingState.loading ||
-                  processingState == ProcessingState.buffering) {
-                return Container(
-                  margin: const EdgeInsets.all(8.0),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        StreamBuilder<PlayerState>(
+          stream: _audioPlayer.playerStateStream,
+          builder: (context, snapshot) {
+            final playerState = snapshot.data;
+            final processingState = playerState?.processingState;
+            final playing = playerState?.playing;
+            if (processingState == ProcessingState.loading ||
+                processingState == ProcessingState.buffering) {
+              return Container(
+                margin: const EdgeInsets.all(8.0),
+                width: 50.0,
+                height: 50.0,
+                child: const CircularProgressIndicator(),
+              );
+            } else if (playing != true) {
+              return InkWell(
+                onTap: () async {
+                  playAudio();
+                },
+                child: Container(
                   width: 50.0,
                   height: 50.0,
-                  child: const CircularProgressIndicator(),
-                );
-              } else if (playing != true) {
-                return InkWell(
-                  onTap: () async {
-                    playAudio();
-                  },
-                  child: Container(
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow,
-                      size: 36.0,
-                      color: Colors.white,
-                    ),
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
-                );
-              } else if (processingState != ProcessingState.completed) {
-                return InkWell(
-                  onTap: () async {
-                    _audioPlayer.pause();
-                  },
-                  child: Container(
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.pause,
-                      size: 36.0,
-                      color: Colors.white,
-                    ),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    size: 36.0,
+                    color: Colors.white,
                   ),
-                );
-              } else {
-                return InkWell(
-                  onTap: () async {
-                    _audioPlayer.play();
-                  },
-                  child: Container(
-                    width: 50.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow,
-                      size: 36.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                );
-              }
-            },
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height / 6),
-          StreamBuilder<PositionData>(
-            stream: _positionDataStream,
-            builder: (context, snapshot) {
-              final positionData = snapshot.data;
-              return SeekBar(
-                duration: positionData?.duration ?? Duration.zero,
-                position: positionData?.position ?? Duration.zero,
-                bufferedPosition: positionData?.bufferedPosition ?? Duration.zero,
-                onChangeEnd: (newPosition) {
-                  _audioPlayer.seek(newPosition);
-                },
+                ),
               );
-            },
-          )
-        ],
-      );
+            } else if (processingState != ProcessingState.completed) {
+              return InkWell(
+                onTap: () async {
+                  _audioPlayer.pause();
+                },
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: const Icon(
+                    Icons.pause,
+                    size: 36.0,
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            } else {
+              return InkWell(
+                onTap: () async {
+                  _audioPlayer.play();
+                },
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    size: 36.0,
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            }
+          },
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height / 6),
+        StreamBuilder<PositionData>(
+          stream: _positionDataStream,
+          builder: (context, snapshot) {
+            final positionData = snapshot.data;
+            return SeekBar(
+              duration: positionData?.duration ?? Duration.zero,
+              position: positionData?.position ?? Duration.zero,
+              bufferedPosition: positionData?.bufferedPosition ?? Duration.zero,
+              onChangeEnd: (newPosition) {
+                _audioPlayer.seek(newPosition);
+              },
+            );
+          },
+        )
+      ],
+    );
     //   Column(
     //   mainAxisAlignment: MainAxisAlignment.center,
     //   crossAxisAlignment: CrossAxisAlignment.center,
