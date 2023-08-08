@@ -103,7 +103,9 @@ class HomeController extends NetworkManager {
       isLoading = true;
       update();
       int id = _authCtrl.user?.id as int;
-      dio.Response response = await _homeService.getQuote(id);
+      DateTime now = DateTime.now();
+      String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+      dio.Response response = await _homeService.getQuote(id, formattedDate);
       // log('${response.data}', name: 'API Home Quote');
       //
       homeQuoteList = (response.data['data'] as List)
@@ -177,8 +179,10 @@ class HomeController extends NetworkManager {
       isLoading = true;
       update();
       id = _authCtrl.user?.id as int;
-
-      dio.Response response = await _homeService.getAudioSleep(id);
+      DateTime now = DateTime.now();
+      String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+      dio.Response response =
+          await _homeService.getAudioSleep(id, formattedDate);
       // log('${response.data}', name: 'API Home Audio Sleep');
       homeAudioSleepList = (response.data['data'] as List)
           .map((e) => HomeAudioSleepModel.fromJson(e))
