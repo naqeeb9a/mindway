@@ -19,24 +19,13 @@ import 'package:mindway/utils/firebase_collections.dart';
 import 'package:mindway/utils/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:workmanager/workmanager.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   log("Handling a background message: ${message.messageId}");
 }
 
-void callbackDispatcher() {
-  Workmanager().executeTask((taskName, inputData) async {
-    NotificationService().showNotification(
-      id: UniqueKey().hashCode,
-      title: "Mindfulness Time",
-      body:
-          "It's you time ⭐ Take some time to meditate & journal your emotions.",
-    );
-    return Future.value(true);
-  });
-}
+
 
 bool? firstRun;
 
@@ -47,7 +36,6 @@ Future<void> main() async {
     androidNotificationOngoing: true,
   );
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   await PurchasesApi.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SystemChrome.setPreferredOrientations(

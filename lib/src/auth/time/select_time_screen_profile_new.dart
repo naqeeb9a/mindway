@@ -6,8 +6,6 @@ import 'package:mindway/utils/constants.dart';
 import 'package:mindway/utils/display_toast_message.dart';
 import 'package:mindway/utils/firebase_collections.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
-import 'package:workmanager/workmanager.dart';
-
 class SelectTimeAndDayToNotifyProfileNew extends StatefulWidget {
   const SelectTimeAndDayToNotifyProfileNew({super.key});
 
@@ -252,21 +250,12 @@ class _SelectTimeAndDayToNotifyProfileNewState
                         debugPrint("SelectedDateTime $selectedDateTime");
                         if (selectedDateTime != null && days.isNotEmpty) {
                           await NotificationService().scheduleNotification(
-                              id: UniqueKey().hashCode,
                               title: "Mindfulness Time",
                               body:
                                   "It's you time ⭐ Take some time to meditate & journal your emotions.",
                               scheduledNotificationDateTime:
                                   selectedDateTime ?? DateTime.now());
 
-                          Workmanager().registerPeriodicTask(
-                              "reminderNotification", "Notification",
-                              frequency: const Duration(
-                                minutes: 15,
-                              ),
-                              initialDelay: selectedDateTime
-                                      ?.difference(DateTime.now()) ??
-                                  const Duration(seconds: 0));
                           userCollection
                               .doc(FirebaseAuth.instance.currentUser!.uid)
                               .update({

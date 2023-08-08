@@ -4,6 +4,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 
 class PurchasesApi {
   static const _apiKey = "goog_epgNAfgKyOKQjqfEtuIvTctEJWr";
+  static const _apiKeyIos = "appl_elelJMFVTkScITkUSAQSBNEMIHh";
   static Future init() async {
     await Purchases.setLogLevel(LogLevel.debug);
 
@@ -11,7 +12,7 @@ class PurchasesApi {
     if (Platform.isAndroid) {
       configuration = PurchasesConfiguration(_apiKey);
     } else if (Platform.isIOS) {
-      // configuration = PurchasesConfiguration(<public_ios_sdk_key>);
+      configuration = PurchasesConfiguration(_apiKeyIos);
     }
     await Purchases.configure(configuration);
   }
