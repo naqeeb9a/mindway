@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mindway/my%20folder/paywall_intro.dart';
 import 'package:mindway/src/new/util.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
+
+import '../../auth/views/signup_screen.dart';
 
 class GoodNewsScreen1 extends StatefulWidget {
   static const String routeName = "/good-new-screen";
@@ -137,7 +138,7 @@ class _GoodNewsScreen1State extends State<GoodNewsScreen1> {
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => ChartScreen(),));
                       isFinished
                           ? Get.toNamed(
-                              PayWallIntro.routeName,
+                              SignUpScreen.routeName,
                               arguments: {
                                 'time': time,
                                 'days': days,

@@ -12,6 +12,7 @@ class CustomAsyncBtn extends StatelessWidget {
     this.textSize = 16,
     this.borderRadius = 6.0,
     this.isLoading = false,
+    this.fontweight = FontWeight.w400,
     required this.onPress,
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class CustomAsyncBtn extends StatelessWidget {
   final double borderRadius;
   final double textSize;
   final bool isLoading;
+  final FontWeight fontweight;
   final Function()? onPress;
 
   @override
@@ -62,7 +64,7 @@ class CustomAsyncBtn extends StatelessWidget {
       },
       child: Text(btnTxt,
           style: kBodyStyle.copyWith(
-              fontSize: 17.0, color: Colors.white, fontWeight: FontWeight.w400)
+              fontSize: 17.0, color: Colors.white, fontWeight: fontweight)
           // style: TextStyle(
           //   fontWeight: FontWeight.w600,
           //   fontSize: textSize,

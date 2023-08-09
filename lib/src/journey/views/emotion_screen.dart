@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:expandable/expandable.dart';
 import '../../../utils/helper.dart';
 import '../../home/models/home_emoji.dart';
+import '../add_note_screen.dart';
 import '../models/factor_data.dart';
 
 class EmotionScreen extends StatefulWidget {
@@ -199,35 +200,49 @@ class _EmotionScreenState extends State<EmotionScreen> {
           children: [
             Text('Today\'s Note', style: kBodyStyle),
             const SizedBox(height: 8.0),
-            TextFormField(
-              onChanged: (value) => todayNote = value,
-              maxLines: 5,
-              keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                fillColor: Colors.grey.shade100,
-                filled: true,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey.shade300)),
-                errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: Colors.red)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey.shade300)),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey.shade300)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: Colors.red)),
-                disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey.shade200)),
-                hintText:
-                    "John had a busy day at work, he had an important meeting in the morning and worked on a project the rest of the day. In the evening, he went for a run to clear his mind and then cooked dinner for himself. ",
+            InkWell(
+              onTap: () async {
+                notes = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          AddNoteScreen(dbDate: date, notes: todayNote)),
+                );
+                if (notes != null) {
+                  setState(() {
+                    todayNote = notes.toString();
+                  });
+                }
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 110,
+                      padding: const EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
+                      child: SingleChildScrollView(
+                        child: Text(
+                          todayNote.isEmpty
+                              ? "John had a busy day at work, he had an important meeting in the morning and worked on a project the rest of the day. In the evening, he went for a run to clear his mind and then cooked dinner for himself. "
+                              : todayNote,
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: todayNote.isEmpty
+                                  ? Colors.grey
+                                  : Colors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
+
             // InkWell(
             //     onTap: () async {
             //       notes = await Navigator.push(

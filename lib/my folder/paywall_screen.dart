@@ -4,8 +4,8 @@ import 'package:mindway/my%20folder/purchases_api.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../src/auth/auth_controller.dart';
-import '../src/subscription/widgets/custom_button.dart';
 import '../utils/custom_dialog.dart';
+import '../widgets/custom_async_btn.dart';
 
 class PayWallScreen extends StatefulWidget {
   static const String routeName = '/PayWallScreen';
@@ -20,6 +20,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
   List<Package> packages = [];
   final AuthController _authCtrl = Get.find();
   bool fetchingOffers = true;
+  int index = 1;
   @override
   void initState() {
     super.initState();
@@ -39,12 +40,31 @@ class _PayWallScreenState extends State<PayWallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: fetchingOffers
-          ? const Center(
+    return fetchingOffers
+        ? const Scaffold(
+            body: Center(
               child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
+            ),
+          )
+        : Scaffold(
+            bottomNavigationBar: Padding(
+              padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.1,
+                  right: MediaQuery.of(context).size.width * 0.1,
+                  bottom: 20,
+                  top: 10),
+              child: CustomAsyncBtn(
+                  btnTxt: "Start 7-day free trial",
+                  fontweight: FontWeight.bold,
+                  onPress: () {
+                    makePurchase(1).then((value) {
+                      if (value == true && !widget.enableLogoutButton) {
+                        Navigator.pop(context);
+                      }
+                    });
+                  }),
+            ),
+            body: SingleChildScrollView(
               child: Column(
                 children: [
                   Stack(
@@ -68,6 +88,16 @@ class _PayWallScreenState extends State<PayWallScreen> {
                                 );
                               },
                               icon: const Icon(Icons.logout)),
+                        ),
+                      if (!widget.enableLogoutButton)
+                        Positioned(
+                          top: 40,
+                          left: 10,
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(Icons.arrow_back_ios)),
                         ),
                       const Positioned(
                         bottom: 10,
@@ -100,58 +130,76 @@ class _PayWallScreenState extends State<PayWallScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          makePurchase(0);
+                          setState(() {
+                            index = 0;
+                          });
                         },
                         child: Container(
-                          height: 190,
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Column(
-                            children: [
-                              Text(
-                                "1 month",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                r"$14.99",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "billed\nmonthly",
-                                style: TextStyle(fontSize: 12),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                r"$14.99",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "per month",
-                                style: TextStyle(fontSize: 12),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
+                              borderRadius: BorderRadius.circular(10),
+                              color: const Color(0xff688EDC)),
+                          child: Container(
+                            margin: index == 0 ? const EdgeInsets.all(3) : null,
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Column(
+                              children: [
+                                Text(
+                                  "1 month",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  r"$14.99",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "billed\nmonthly",
+                                  style: TextStyle(fontSize: 12),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  r"$14.99",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "per month",
+                                  style: TextStyle(fontSize: 12),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  r"$5.83",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.transparent),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                       InkWell(
                         onTap: () {
-                          makePurchase(1);
+                          setState(() {
+                            index = 1;
+                          });
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.3,
@@ -172,9 +220,9 @@ class _PayWallScreenState extends State<PayWallScreen> {
                                 height: 3,
                               ),
                               Container(
-                                margin: const EdgeInsets.all(3),
+                                margin:
+                                    index == 1 ? const EdgeInsets.all(3) : null,
                                 width: double.infinity,
-                                height: 190,
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: Colors.grey.shade200,
@@ -236,7 +284,9 @@ class _PayWallScreenState extends State<PayWallScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          makePurchase(2);
+                          setState(() {
+                            index = 2;
+                          });
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.3,
@@ -260,6 +310,8 @@ class _PayWallScreenState extends State<PayWallScreen> {
                               Container(
                                 height: 190,
                                 width: double.infinity,
+                                margin:
+                                    index == 2 ? const EdgeInsets.all(3) : null,
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: Colors.grey.shade200,
@@ -578,24 +630,16 @@ class _PayWallScreenState extends State<PayWallScreen> {
                       ],
                     ),
                   ),
-                  CustomButton(
-                    onTap: () {
-                      makePurchase(0);
-                    },
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    text: "Start 7-day free trial",
-                    fontStyle: ButtonFontStyle.AntebBold18,
-                  ),
                   const SizedBox(
                     height: 20,
                   ),
                 ],
               ),
             ),
-    );
+          );
   }
 
-  void makePurchase(int index) {
-    PurchasesApi.purchasePackage(packages[index]);
+  Future<bool> makePurchase(int index) async {
+    return await PurchasesApi.purchasePackage(packages[index]);
   }
 }

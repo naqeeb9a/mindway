@@ -8,15 +8,15 @@ import '../../utils/helper.dart';
 
 class AddNoteScreen extends StatelessWidget {
   final String dbDate;
-  final String notes;
+  final String? notes;
 
   const AddNoteScreen({super.key, required this.dbDate, required this.notes});
 
   @override
   Widget build(BuildContext context) {
-    String text = notes;
+    String? text = notes;
     TextEditingController notesController = TextEditingController();
-    notesController.text = notes;
+    notesController.text = notes ?? "";
     return Scaffold(
         body: Container(
       color: const Color(0xffEFEFEF),
