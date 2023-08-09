@@ -1,5 +1,4 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
@@ -42,18 +41,9 @@ class NotificationService {
       String? body,
       String? payLoad,
       required DateTime scheduledNotificationDateTime}) async {
-    return notificationsPlugin.zonedSchedule(
-        id,
-        title,
-        body,
-        tz.TZDateTime.from(
-          scheduledNotificationDateTime,
-          tz.local,
-        ),
-        await notificationDetails(),
-        androidScheduleMode: AndroidScheduleMode.alarmClock,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime);
+    notificationsPlugin.periodicallyShow(
+        id, title, body, RepeatInterval.daily, await notificationDetails(),
+        initialTime: scheduledNotificationDateTime.millisecondsSinceEpoch,
+        androidScheduleMode: AndroidScheduleMode.alarmClock);
   }
- 
 }
