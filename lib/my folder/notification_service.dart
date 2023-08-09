@@ -43,7 +43,9 @@ class NotificationService {
       required DateTime scheduledNotificationDateTime}) async {
     notificationsPlugin.periodicallyShow(
         id, title, body, RepeatInterval.daily, await notificationDetails(),
-        initialTime: scheduledNotificationDateTime.millisecondsSinceEpoch,
+        initialTime: scheduledNotificationDateTime
+            .subtract(const Duration(days: 1))
+            .millisecondsSinceEpoch,
         androidScheduleMode: AndroidScheduleMode.alarmClock);
   }
 }
