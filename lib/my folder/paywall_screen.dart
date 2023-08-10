@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mindway/my%20folder/purchases_api.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -57,9 +58,24 @@ class _PayWallScreenState extends State<PayWallScreen> {
                   btnTxt: "Start 7-day free trial",
                   fontweight: FontWeight.bold,
                   onPress: () {
-                    makePurchase(1).then((value) {
+                    setState(() {
+                      fetchingOffers = true;
+                    });
+                    makePurchase(index).then((value) {
                       if (value == true && !widget.enableLogoutButton) {
                         Navigator.pop(context);
+                      }
+                      if (value) {
+                        setState(() {
+                          fetchingOffers = false;
+                        });
+                        Fluttertoast.showToast(
+                            msg: "Creating plan please wait ....");
+                      } else {
+                        setState(() {
+                          fetchingOffers = false;
+                        });
+                        Fluttertoast.showToast(msg: "Error creating plan");
                       }
                     });
                   }),
@@ -385,21 +401,21 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 26,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.w700),
                         ),
                         TextSpan(
                           text: "Mindway plus +\n",
                           style: TextStyle(
                               fontSize: 26,
                               color: Color(0xff688EDC),
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w700),
                         ),
                         TextSpan(
                             text: "members love us",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 26,
-                                fontWeight: FontWeight.bold))
+                                fontWeight: FontWeight.w700))
                       ],
                     ),
                   ),
@@ -411,26 +427,36 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.47,
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              child: const Center(child: Text("Others")),
+                              width: MediaQuery.of(context).size.width * 0.18,
+                              child: const Center(
+                                child: Text(
+                                  "Others",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                              ),
                             ),
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(8),
                               decoration: const BoxDecoration(
                                 color: Color(0xff688EDC),
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
                                 ),
                               ),
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: const Center(
                                   child: Text(
                                 "Mindway",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                    fontStyle: FontStyle.italic),
                               )),
                             ),
                           ],
@@ -439,12 +465,15 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.47,
                               child: const Text(
-                                  "Wide range of meditations & topics"),
+                                "Wide range of meditations & topics",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 12),
+                              ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/black_tick.png",
                                 height: 20,
@@ -454,7 +483,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -471,12 +500,15 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.47,
                               child: const Text(
-                                  "SOS meditations for panic attacks"),
+                                "SOS meditations for panic attacks",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 12),
+                              ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -486,7 +518,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -503,12 +535,15 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.47,
                               child: const Text(
-                                  "Simple to use daily emotion tracker"),
+                                "Simple to use daily emotion tracker",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 12),
+                              ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -518,7 +553,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -535,12 +570,15 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.47,
                               child: const Text(
-                                  "Advanced emotion & mood analytics"),
+                                "Advanced emotion & mood analytics",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 12),
+                              ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -550,7 +588,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -567,12 +605,15 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child:
-                                  const Text("Fully personalised daily plan"),
+                              width: MediaQuery.of(context).size.width * 0.47,
+                              child: const Text(
+                                "Fully personalised daily plan",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 12),
+                              ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -582,7 +623,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -599,11 +640,15 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: const Text("Daily quotes & motivation"),
+                              width: MediaQuery.of(context).size.width * 0.47,
+                              child: const Text(
+                                "Daily quotes & motivation",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 12),
+                              ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -615,10 +660,10 @@ class _PayWallScreenState extends State<PayWallScreen> {
                               decoration: const BoxDecoration(
                                 color: Color(0xff688EDC),
                                 borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10)),
+                                    bottomLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20)),
                               ),
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.18,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,

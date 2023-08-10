@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mindway/my%20folder/paywall_screen.dart';
 import 'package:mindway/utils/constants.dart';
 import 'package:mindway/widgets/custom_async_btn.dart';
@@ -77,7 +79,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
       return "Grow Happiness";
     }
     if (goalId == 13) {
-      return "Reduce Daily Stress  ";
+      return "Reduce Daily Stress";
     }
     if (goalId == 8) {
       return "Find Motivation";
@@ -159,7 +161,14 @@ class _PayWallIntroState extends State<PayWallIntro> {
                   btnTxt: "Start 7-day free trial",
                   fontweight: FontWeight.bold,
                   onPress: () {
-                    makePurchase(1);
+                    makePurchase(1).then((value) {
+                      if (value) {
+                        Fluttertoast.showToast(
+                            msg: "Creating plan please wait ....");
+                      } else {
+                        Fluttertoast.showToast(msg: "Error creating plan");
+                      }
+                    });
                   }),
             ),
             body: SafeArea(
@@ -184,19 +193,21 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                     fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
-                                text: "${getMainGoal()}With ",
+                                text: "${getMainGoal()} with ",
                                 style: const TextStyle(
                                     fontSize: 26,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w800),
                               ),
                               const TextSpan(
-                                  text: "Mindway +",
-                                  style: TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                      color: Colors.black,
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.w900))
+                                text: "Mindway +",
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.black,
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -224,7 +235,8 @@ class _PayWallIntroState extends State<PayWallIntro> {
                         height: 10,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(30),
+                        padding: const EdgeInsets.only(
+                            left: 40, right: 30, bottom: 30, top: 30),
                         child: Row(
                           children: [
                             Stack(
@@ -246,7 +258,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   },
                                   blendMode: BlendMode.dstIn,
                                   child: Container(
-                                    height: 260,
+                                    height: 300,
                                     width: 10,
                                     decoration: const BoxDecoration(
                                         color: Color(0xff9AB9ED)),
@@ -266,7 +278,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 52,
+                                      height: 70,
                                     ),
                                     Container(
                                       padding: const EdgeInsets.all(5),
@@ -280,7 +292,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 52,
+                                      height: 70,
                                     ),
                                     Container(
                                       padding: const EdgeInsets.all(5),
@@ -301,14 +313,14 @@ class _PayWallIntroState extends State<PayWallIntro> {
                               width: 20,
                             ),
                             SizedBox(
-                              height: 260,
+                              height: 300,
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
                                       alignment: Alignment.centerLeft,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.65,
                                       height: 30,
                                       child: const Text(
                                         "Today",
@@ -318,16 +330,20 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                         ),
                                       )),
                                   SizedBox(
-                                    height: 52,
-                                    width:
-                                        MediaQuery.of(context).size.width / 2,
+                                    height: 70,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.65,
                                     child: const Text(
-                                        "Start your free trial and see how it can change your life."),
+                                      "Start your free trial and see how it can change your life.",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                   Container(
                                       alignment: Alignment.centerLeft,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.65,
                                       height: 30,
                                       child: const Text(
                                         "Day 5",
@@ -337,16 +353,20 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                         ),
                                       )),
                                   SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2,
-                                    height: 52,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.65,
+                                    height: 70,
                                     child: const Text(
-                                        "Start your free trial and see how it can change your life."),
+                                      "You’ll get an notification with a reminder about when your free trial ends.",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                   Container(
                                       alignment: Alignment.centerLeft,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.65,
                                       height: 30,
                                       child: const Text(
                                         "Day 7",
@@ -356,11 +376,15 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                         ),
                                       )),
                                   SizedBox(
-                                    height: 52,
-                                    width:
-                                        MediaQuery.of(context).size.width / 2,
-                                    child: const Text(
-                                        "Start your free trial and see how it can change your life."),
+                                    height: 70,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.65,
+                                    child: Text(
+                                      "You’ll be charged on ${DateFormat.MMMEd().format(DateTime.now().add(const Duration(days: 7)))}, cancel anytime before. ",
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -484,21 +508,21 @@ class _PayWallIntroState extends State<PayWallIntro> {
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 26,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.w700),
                             ),
                             TextSpan(
                               text: "Mindway plus +\n",
                               style: TextStyle(
                                   fontSize: 26,
                                   color: Color(0xff688EDC),
-                                  fontWeight: FontWeight.w500),
+                                  fontWeight: FontWeight.w700),
                             ),
                             TextSpan(
                                 text: "members love us",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 26,
-                                    fontWeight: FontWeight.bold))
+                                    fontWeight: FontWeight.w700))
                           ],
                         ),
                       ),
@@ -511,28 +535,38 @@ class _PayWallIntroState extends State<PayWallIntro> {
                               children: [
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                      MediaQuery.of(context).size.width * 0.47,
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
-                                  child: const Center(child: Text("Others")),
+                                      MediaQuery.of(context).size.width * 0.18,
+                                  child: const Center(
+                                    child: Text(
+                                      "Others",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                  ),
                                 ),
                                 Container(
-                                  padding: const EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(8),
                                   decoration: const BoxDecoration(
                                     color: Color(0xff688EDC),
                                     borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
                                     ),
                                   ),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: const Center(
                                       child: Text(
                                     "Mindway",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900,
+                                        fontStyle: FontStyle.italic),
                                   )),
                                 ),
                               ],
@@ -542,13 +576,17 @@ class _PayWallIntroState extends State<PayWallIntro> {
                               children: [
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                      MediaQuery.of(context).size.width * 0.47,
                                   child: const Text(
-                                      "Wide range of meditations & topics"),
+                                    "Wide range of meditations & topics",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 12),
+                                  ),
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/black_tick.png",
                                     height: 20,
@@ -559,7 +597,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -577,13 +615,17 @@ class _PayWallIntroState extends State<PayWallIntro> {
                               children: [
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                      MediaQuery.of(context).size.width * 0.47,
                                   child: const Text(
-                                      "SOS meditations for panic attacks"),
+                                    "SOS meditations for panic attacks",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 12),
+                                  ),
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -594,7 +636,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -612,13 +654,17 @@ class _PayWallIntroState extends State<PayWallIntro> {
                               children: [
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                      MediaQuery.of(context).size.width * 0.47,
                                   child: const Text(
-                                      "Simple to use daily emotion tracker"),
+                                    "Simple to use daily emotion tracker",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 12),
+                                  ),
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -629,7 +675,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -647,13 +693,17 @@ class _PayWallIntroState extends State<PayWallIntro> {
                               children: [
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                      MediaQuery.of(context).size.width * 0.47,
                                   child: const Text(
-                                      "Advanced emotion & mood analytics"),
+                                    "Advanced emotion & mood analytics",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 12),
+                                  ),
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -664,7 +714,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -682,13 +732,17 @@ class _PayWallIntroState extends State<PayWallIntro> {
                               children: [
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                      MediaQuery.of(context).size.width * 0.47,
                                   child: const Text(
-                                      "Fully personalised daily plan"),
+                                    "Fully personalised daily plan",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 12),
+                                  ),
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -699,7 +753,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -717,13 +771,17 @@ class _PayWallIntroState extends State<PayWallIntro> {
                               children: [
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  child:
-                                      const Text("Daily quotes & motivation"),
+                                      MediaQuery.of(context).size.width * 0.47,
+                                  child: const Text(
+                                    "Daily quotes & motivation",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 12),
+                                  ),
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -735,11 +793,11 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   decoration: const BoxDecoration(
                                     color: Color(0xff688EDC),
                                     borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),
-                                        bottomRight: Radius.circular(10)),
+                                        bottomLeft: Radius.circular(20),
+                                        bottomRight: Radius.circular(20)),
                                   ),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,

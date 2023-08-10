@@ -38,6 +38,7 @@ class EmotionScreen extends StatefulWidget {
 }
 
 class _EmotionScreenState extends State<EmotionScreen> {
+  final _formKey = GlobalKey<FormState>();
   final JourneyController _journeyCtrl = Get.find();
   ExpandableController? controller = ExpandableController();
   dynamic notes;
@@ -228,7 +229,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
                       child: SingleChildScrollView(
                         child: Text(
                           todayNote.isEmpty
-                              ? "John had a busy day at work, he had an important meeting in the morning and worked on a project the rest of the day. In the evening, he went for a run to clear his mind and then cooked dinner for himself. "
+                              ? "Write about your day."
                               : todayNote,
                           style: TextStyle(
                               fontSize: 15,
@@ -520,49 +521,63 @@ class _EmotionScreenState extends State<EmotionScreen> {
                               right: 10,
                               bottom: MediaQuery.of(context).viewInsets.bottom +
                                   20),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "Add new factor",
-                                style: kBodyStyle,
-                              ),
-                              TextFormField(
-                                textAlign: TextAlign.center,
-                                initialValue: newFactor,
-                                onChanged: (value) => newFactor = value,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  focusedErrorBorder: InputBorder.none,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Add new factor",
+                                  style: kBodyStyle,
                                 ),
-                              ),
-                              CustomAsyncBtn(
-                                width: null,
-                                height: 30,
-                                btnTxt: "Add",
-                                onPress: () {
-                                  _journeyCtrl.factorList.add(
-                                    FactorDataModel(
-                                        id: _journeyCtrl.factorList.length + 1,
-                                        name: newFactor,
-                                        isSelected: false),
-                                  );
-                                  List<String> encodedJson = [];
-                                  for (var element in _journeyCtrl.factorList) {
-                                    encodedJson.add(json.encode(element));
-                                  }
-                                  sharedPreferences?.setStringList(
-                                      'factor', encodedJson);
-                                  _journeyCtrl.update();
-                                  newFactor = "";
-                                  Navigator.pop(context);
-                                },
-                              )
-                            ],
+                                TextFormField(
+                                  textAlign: TextAlign.center,
+                                  initialValue: newFactor,
+                                  validator: (value) {
+                                    if (value == null || value == "") {
+                                      return "Field cannot be empty";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) => newFactor = value,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    focusedErrorBorder: InputBorder.none,
+                                  ),
+                                ),
+                                CustomAsyncBtn(
+                                  width: null,
+                                  height: 30,
+                                  btnTxt: "Add",
+                                  onPress: () {
+                                    if (newFactor != "" &&
+                                        _formKey.currentState!.validate()) {
+                                      _journeyCtrl.factorList.add(
+                                        FactorDataModel(
+                                            id: _journeyCtrl.factorList.length +
+                                                1,
+                                            name: newFactor,
+                                            isSelected: false),
+                                      );
+                                      List<String> encodedJson = [];
+                                      for (var element
+                                          in _journeyCtrl.factorList) {
+                                        encodedJson.add(json.encode(element));
+                                      }
+                                      sharedPreferences?.setStringList(
+                                          'factor', encodedJson);
+                                      _journeyCtrl.update();
+                                      newFactor = "";
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );
