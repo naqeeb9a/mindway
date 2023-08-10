@@ -21,6 +21,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
   List<Package> packages = [];
   final AuthController _authCtrl = Get.find();
   bool fetchingOffers = true;
+  bool makingPurchase = false;
   int index = 1;
   @override
   void initState() {
@@ -54,31 +55,38 @@ class _PayWallScreenState extends State<PayWallScreen> {
                   right: MediaQuery.of(context).size.width * 0.1,
                   bottom: 20,
                   top: 10),
-              child: CustomAsyncBtn(
-                  btnTxt: "Start 7-day free trial",
-                  fontweight: FontWeight.bold,
-                  onPress: () {
-                    setState(() {
-                      fetchingOffers = true;
-                    });
-                    makePurchase(index).then((value) {
-                      if (value == true && !widget.enableLogoutButton) {
-                        Navigator.pop(context);
-                      }
-                      if (value) {
+              child: makingPurchase
+                  ? const SizedBox(
+                      height: 56,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : CustomAsyncBtn(
+                      btnTxt: "Start 7-day free trial",
+                      fontweight: FontWeight.bold,
+                      onPress: () {
                         setState(() {
-                          fetchingOffers = false;
+                          makingPurchase = true;
                         });
-                        Fluttertoast.showToast(
-                            msg: "Creating plan please wait ....");
-                      } else {
-                        setState(() {
-                          fetchingOffers = false;
+                        makePurchase(index).then((value) {
+                          if (value) {
+                            setState(
+                              () {
+                                makingPurchase = false;
+                              },
+                            );
+                          } else {
+                            setState(() {
+                              makingPurchase = false;
+                            });
+                            Fluttertoast.showToast(msg: "Error creating plan");
+                          }
+                          if (value == true && !widget.enableLogoutButton) {
+                            Navigator.pop(context);
+                          }
                         });
-                        Fluttertoast.showToast(msg: "Error creating plan");
-                      }
-                    });
-                  }),
+                      }),
             ),
             body: SingleChildScrollView(
               child: Column(

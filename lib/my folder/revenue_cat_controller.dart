@@ -7,7 +7,7 @@ class RevenueCatController extends GetxController {
   Entitlement _entitlement = Entitlement.unpaid;
   Entitlement get entitlement => _entitlement;
   RevenueCatController() {
-    // init();
+    init();
   }
   Future init() async {
     Purchases.addCustomerInfoUpdateListener((customerInfo) async {

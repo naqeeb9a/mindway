@@ -505,83 +505,7 @@ class _EmotionScreenState extends State<EmotionScreen> {
               itemBuilder: (BuildContext context, int index) {
                 if (index == _journeyCtrl.factorList.length) {
                   return InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(100),
-                              topRight: Radius.circular(100)),
-                        ),
-                        context: context,
-                        builder: (context) => Container(
-                          padding: EdgeInsets.only(
-                              top: 20,
-                              left: 20,
-                              right: 10,
-                              bottom: MediaQuery.of(context).viewInsets.bottom +
-                                  20),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "Add new factor",
-                                  style: kBodyStyle,
-                                ),
-                                TextFormField(
-                                  textAlign: TextAlign.center,
-                                  initialValue: newFactor,
-                                  validator: (value) {
-                                    if (value == null || value == "") {
-                                      return "Field cannot be empty";
-                                    }
-                                    return null;
-                                  },
-                                  onChanged: (value) => newFactor = value,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    focusedErrorBorder: InputBorder.none,
-                                  ),
-                                ),
-                                CustomAsyncBtn(
-                                  width: null,
-                                  height: 30,
-                                  btnTxt: "Add",
-                                  onPress: () {
-                                    if (newFactor != "" &&
-                                        _formKey.currentState!.validate()) {
-                                      _journeyCtrl.factorList.add(
-                                        FactorDataModel(
-                                            id: _journeyCtrl.factorList.length +
-                                                1,
-                                            name: newFactor,
-                                            isSelected: false),
-                                      );
-                                      List<String> encodedJson = [];
-                                      for (var element
-                                          in _journeyCtrl.factorList) {
-                                        encodedJson.add(json.encode(element));
-                                      }
-                                      sharedPreferences?.setStringList(
-                                          'factor', encodedJson);
-                                      _journeyCtrl.update();
-                                      newFactor = "";
-                                      Navigator.pop(context);
-                                    }
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
+                    onTap: addNewFactor,
                     child: SizedBox(
                       width: 100,
                       child: Column(
@@ -616,7 +540,11 @@ class _EmotionScreenState extends State<EmotionScreen> {
                           height: 10,
                         ),
                         Image.asset(
-                            "assets/icons/${factorDataModel.isSelected ? "selected" : "unselected"}.png")
+                          "assets/icons/${factorDataModel.isSelected ? "selected" : "unselected"}.png",
+                          width: 30,
+                          fit: BoxFit.contain,
+                          height: 30,
+                        )
                       ],
                     ),
                   ),
@@ -637,5 +565,78 @@ class _EmotionScreenState extends State<EmotionScreen> {
         ],
       ),
     );
+  }
+
+  void Function()? addNewFactor() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(100), topRight: Radius.circular(100)),
+      ),
+      context: context,
+      builder: (context) => Container(
+        padding: EdgeInsets.only(
+            top: 20,
+            left: 20,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Add new factor",
+                style: kBodyStyle,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                initialValue: newFactor,
+                validator: (value) {
+                  if (value == null || value == "") {
+                    return "Field cannot be empty";
+                  }
+                  return null;
+                },
+                onChanged: (value) => newFactor = value,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  focusedErrorBorder: InputBorder.none,
+                ),
+              ),
+              CustomAsyncBtn(
+                width: null,
+                height: 30,
+                btnTxt: "Add",
+                onPress: () {
+                  if (newFactor != "" && _formKey.currentState!.validate()) {
+                    _journeyCtrl.factorList.add(
+                      FactorDataModel(
+                          id: _journeyCtrl.factorList.length + 1,
+                          name: newFactor,
+                          isSelected: false),
+                    );
+                    List<String> encodedJson = [];
+                    for (var element in _journeyCtrl.factorList) {
+                      encodedJson.add(json.encode(element));
+                    }
+                    sharedPreferences?.setStringList('factor', encodedJson);
+                    _journeyCtrl.update();
+                    newFactor = "";
+                    Navigator.pop(context);
+                  }
+                },
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+    return null;
   }
 }

@@ -22,6 +22,7 @@ class PayWallIntro extends StatefulWidget {
 class _PayWallIntroState extends State<PayWallIntro> {
   List<Package> packages = [];
   bool fetchingOffers = true;
+  bool makingPurchase = false;
   String userName = "";
 
   fetchOffers() async {
@@ -156,20 +157,34 @@ class _PayWallIntroState extends State<PayWallIntro> {
                   right: MediaQuery.of(context).size.width * 0.1,
                   bottom: 20,
                   top: 10),
-              child: CustomAsyncBtn(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  btnTxt: "Start 7-day free trial",
-                  fontweight: FontWeight.bold,
-                  onPress: () {
-                    makePurchase(1).then((value) {
-                      if (value) {
-                        Fluttertoast.showToast(
-                            msg: "Creating plan please wait ....");
-                      } else {
-                        Fluttertoast.showToast(msg: "Error creating plan");
-                      }
-                    });
-                  }),
+              child: makingPurchase
+                  ? const SizedBox(
+                      height: 56,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : CustomAsyncBtn(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      btnTxt: "Start 7-day free trial",
+                      fontweight: FontWeight.bold,
+                      onPress: () {
+                        setState(() {
+                          makingPurchase = true;
+                        });
+                        makePurchase(1).then((value) {
+                          if (value) {
+                            setState(() {
+                              makingPurchase = true;
+                            });
+                          } else {
+                            setState(() {
+                              makingPurchase = true;
+                            });
+                            Fluttertoast.showToast(msg: "Error creating plan");
+                          }
+                        });
+                      }),
             ),
             body: SafeArea(
               child: Center(
