@@ -210,7 +210,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                                 Text(
                                   r"$5.83",
                                   style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 19,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.transparent),
                                 ),
@@ -290,7 +290,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                                     Text(
                                       r"$5.83",
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 19,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xff688EDC)),
                                     ),
@@ -379,7 +379,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                                     Text(
                                       r"$10",
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 19,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xff688EDC)),
                                     ),
@@ -435,10 +435,10 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.47,
+                              width: MediaQuery.of(context).size.width * 0.46,
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: const Center(
                                 child: Text(
                                   "Others",
@@ -457,7 +457,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                                   topRight: Radius.circular(20),
                                 ),
                               ),
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: const Center(
                                   child: Text(
                                 "Mindway",
@@ -473,7 +473,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.47,
+                              width: MediaQuery.of(context).size.width * 0.46,
                               child: const Text(
                                 "Wide range of meditations & topics",
                                 style: TextStyle(
@@ -481,7 +481,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/black_tick.png",
                                 height: 20,
@@ -491,7 +491,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -508,7 +508,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.47,
+                              width: MediaQuery.of(context).size.width * 0.46,
                               child: const Text(
                                 "SOS meditations for panic attacks",
                                 style: TextStyle(
@@ -516,7 +516,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -526,7 +526,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -543,7 +543,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.47,
+                              width: MediaQuery.of(context).size.width * 0.46,
                               child: const Text(
                                 "Simple to use daily emotion tracker",
                                 style: TextStyle(
@@ -551,7 +551,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -561,7 +561,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -578,7 +578,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.47,
+                              width: MediaQuery.of(context).size.width * 0.46,
                               child: const Text(
                                 "Advanced emotion & mood analytics",
                                 style: TextStyle(
@@ -586,7 +586,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -596,7 +596,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -613,7 +613,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.47,
+                              width: MediaQuery.of(context).size.width * 0.46,
                               child: const Text(
                                 "Fully personalised daily plan",
                                 style: TextStyle(
@@ -621,7 +621,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -631,7 +631,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               color: const Color(0xff688EDC),
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -648,7 +648,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.47,
+                              width: MediaQuery.of(context).size.width * 0.46,
                               child: const Text(
                                 "Daily quotes & motivation",
                                 style: TextStyle(
@@ -656,7 +656,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,
@@ -671,7 +671,7 @@ class _PayWallScreenState extends State<PayWallScreen> {
                                     bottomLeft: Radius.circular(20),
                                     bottomRight: Radius.circular(20)),
                               ),
-                              width: MediaQuery.of(context).size.width * 0.18,
+                              width: MediaQuery.of(context).size.width * 0.19,
                               child: Image.asset(
                                 "assets/icons/white_tick.png",
                                 height: 20,

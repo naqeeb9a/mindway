@@ -341,7 +341,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                         "Today",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18,
+                                          fontSize: 19,
                                         ),
                                       )),
                                   SizedBox(
@@ -364,7 +364,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                         "Day 5",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18,
+                                          fontSize: 19,
                                         ),
                                       )),
                                   SizedBox(
@@ -387,7 +387,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                         "Day 7",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18,
+                                          fontSize: 19,
                                         ),
                                       )),
                                   SizedBox(
@@ -554,7 +554,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: const Center(
                                     child: Text(
                                       "Others",
@@ -574,7 +574,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                     ),
                                   ),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: const Center(
                                       child: Text(
                                     "Mindway",
@@ -601,7 +601,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/black_tick.png",
                                     height: 20,
@@ -612,7 +612,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -640,7 +640,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -651,7 +651,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -679,7 +679,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -690,7 +690,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -718,7 +718,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -729,7 +729,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -757,7 +757,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -768,7 +768,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                   padding: const EdgeInsets.all(10),
                                   color: const Color(0xff688EDC),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -796,7 +796,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
@@ -812,7 +812,7 @@ class _PayWallIntroState extends State<PayWallIntro> {
                                         bottomRight: Radius.circular(20)),
                                   ),
                                   width:
-                                      MediaQuery.of(context).size.width * 0.18,
+                                      MediaQuery.of(context).size.width * 0.19,
                                   child: Image.asset(
                                     "assets/icons/white_tick.png",
                                     height: 20,
