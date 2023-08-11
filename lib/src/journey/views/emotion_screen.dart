@@ -219,24 +219,19 @@ class _EmotionScreenState extends State<EmotionScreen> {
                 children: [
                   Expanded(
                     child: Container(
-                      height: 110,
+                      height: todayNote.isEmpty ? 110 : null,
                       padding: const EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(color: Colors.grey.shade300),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(10))),
-                      child: SingleChildScrollView(
-                        child: Text(
-                          todayNote.isEmpty
-                              ? "Write about your day."
-                              : todayNote,
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: todayNote.isEmpty
-                                  ? Colors.grey
-                                  : Colors.black),
-                        ),
+                      child: Text(
+                        todayNote.isEmpty ? "Write about your day." : todayNote,
+                        style: TextStyle(
+                            fontSize: 15,
+                            color:
+                                todayNote.isEmpty ? Colors.grey : Colors.black),
                       ),
                     ),
                   ),

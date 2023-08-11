@@ -175,11 +175,11 @@ class _PayWallIntroState extends State<PayWallIntro> {
                         makePurchase(1).then((value) {
                           if (value) {
                             setState(() {
-                              makingPurchase = true;
+                              makingPurchase = false;
                             });
                           } else {
                             setState(() {
-                              makingPurchase = true;
+                              makingPurchase = false;
                             });
                             Fluttertoast.showToast(msg: "Error creating plan");
                           }
